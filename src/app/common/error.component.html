@@ -1,0 +1,36 @@
+<div class="error-container">
+    <div *ngIf="data?.error" class="errorMessage">
+      <h1>Error {{ data?.error}}</h1>
+      <h5 *ngIf="data?.error === 404">Not found :(</h5>
+    </div>
+  
+    <div *ngIf="routeParams.message">
+      <h1 *ngIf="routeParams?.status"> Error {{ routeParams?.status }}</h1>
+      <h1 *ngIf="routeParams?.url && routeParams?.url !== '/'">Error in {{ routeParams?.url | uppercase }} page, sorry {{ routeParams?.user }} :(</h1>
+      <h3 *ngIf="routeParams?.message">Error message: {{ routeParams?.message }}</h3><br/>
+      <a
+        [routerLink]="routeParams?.url"
+        *ngIf="routeParams?.url && routeParams.status !== '404'">
+          <h5>Go Back to {{routeParams?.url}}</h5>
+      </a>
+      <a
+         routerLink="/"
+         *ngIf="!routeParams.url || routeParams.status === '404'">
+          <h5>Go Back to home</h5>
+      </a>
+    </div>
+  
+    <div *ngIf="!routeParams && !data">
+        <h1>Unknown error, sorry :(</h1>
+        <a [routerLink]="'/'">
+          <h5>Go Home</h5>
+        </a>
+    </div>
+  </div>
+  
+  <div class="pre-container" *ngIf="routeParams?.message">
+    <p>Error sent to the server</p>
+    <pre>
+      {{ this.routeParams | json }}
+    </pre>
+  </div>

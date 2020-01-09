@@ -1,0 +1,21 @@
+<div *ngIf="product$ | async as product">
+    <h2>{{product.name | uppercase}}</h2>
+    <img style="float:right" [src]="product.imageUrl" *ngIf="product.imageUrl" width="250" />
+    <h3>{{product.description}}</h3>
+    <p>Price: {{product.price | currency:'CAD':'symbol-narrow':'.2'}}</p>
+    <p>Fixed price? {{product.fixedPrice}}</p>
+    <p>Discontinued? {{product.discontinued}}
+    </p>
+    <p>Modified date:
+        {{product.modifiedDate | date}}</p>
+    <hr />
+    <p>
+      <button (click)="addToCart(product)">
+          Add to cart
+      </button> 
+      <button *ngIf="showAddToFavouritesButton(product)" (click)="addToFavourites(product)">Add to favourites</button>
+      <button *ngIf="!showAddToFavouritesButton(product)" (click)="removeFromFavourites(product)">Remove from favourites</button>
+      <button (click)="updateProduct(product)">Update</button>
+      <button (confirm)="deleteProduct(product.id)" [confirmMessage]="'Are you sure to delete product ' + product.name + '?'">Delete</button>
+    </p>
+</div>

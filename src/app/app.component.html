@@ -1,4 +1,24 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<h1>
+  {{ title }}
+</h1>
+
+<nav>
+  <a routerLink="/home" routerLinkActive="active">Home</a>
+  <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
+  <a routerLink="/products/cart" routerLinkActive="active">Cart ({{nbCart}})</a> 
+  <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  <a routerLink="/admin" routerLinkActive="active">Admin</a>
+</nav>
+
+<router-outlet></router-outlet>
+
+<app-notification></app-notification>
+
+<footer>
+  <hr>
+  <a href="http://www.angularacademy.ca" taget="_blank">www.angularacademy.ca</a> 2020 (running Angular v{{version}})
+  <div class="right">
+    <a (click)="login()" *ngIf="!isLoggedIn">login</a>
+    <a (click)="logout()" *ngIf="isLoggedIn">logout</a>
+  </div>
+</footer>

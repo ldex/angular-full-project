@@ -1,0 +1,13 @@
+<h2>Shopping Cart</h2>
+<p *ngIf="products?.length == 0">No product in your cart!</p>
+
+<div *ngIf="products?.length > 0">
+    <ul class="products">
+        <li *ngFor="let product of products | groupBy:'id'">
+            {{product.value[0].name}} ({{product.value[0].price | currency:'CAD':'symbol-narrow':'.2'}}) x{{product.value.length}}
+        </li>
+    </ul>
+    <h2>Total = {{total | currency:'CAD':'symbol-narrow':'.2'}}</h2>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
