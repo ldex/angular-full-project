@@ -2,6 +2,7 @@ import { Product } from "./../products/product.interface";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject, concat, of } from "rxjs";
+import { config } from '../../environments/environment';
 import {
   flatMap,
   first,
@@ -14,8 +15,7 @@ import {
 
 @Injectable()
 export class ProductService {
-  private baseUrl: string =
-    "http://storerestservice.azurewebsites.net/api/products/";
+  private baseUrl: string = config.apiUrl;
 
   private products = new BehaviorSubject<Product[]>([]);
   products$: Observable<Product[]> = this.products.asObservable();
@@ -23,7 +23,9 @@ export class ProductService {
   private productsTotalNumber = new BehaviorSubject<number>(0);
   productsTotalNumber$: Observable<number> = this.productsTotalNumber.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+
+  }
 
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(this.baseUrl + id);
@@ -45,14 +47,13 @@ export class ProductService {
 
   getProductById(id: number): Observable<Product> {
     return this.products$.pipe(
-      flatMap(products => products),
+      flatMap(p => p),
       first(product => product.id == id)
     );
   }
 
   loadProducts(skip: number = 0, take: number = 10): void {
-    let url: string =
-      this.baseUrl + `?$skip=${skip}&$top=${take}&$orderby=ModifiedDate%20desc`;
+    let url = this.baseUrl + `?$skip=${skip}&$top=${take}&$orderby=ModifiedDate%20desc`;
 
     if (skip == 0 && this.products.value.length > 0) return;
 

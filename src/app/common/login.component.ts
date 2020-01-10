@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Component, ViewChild, AfterViewInit, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { fadeInAnimation } from '../animations';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../services/seo.service';
 
 @Component({
     templateUrl: './login.component.html',
@@ -17,8 +17,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     constructor(
         private authService: AuthService,
         private router: Router,
-        private titleService: Title,
-        private metaTagService: Meta
+        private seoService: SeoService
     ) { }
 
     loginUser(form: NgForm) {
@@ -48,11 +47,8 @@ export class LoginComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit(): void {
-        this.setSEO();
+        this.seoService.setTitleAndDescription('Login');
     }
 
-    private setSEO() {
-        this.titleService.setTitle('Login');
-        this.metaTagService.updateTag({ name: 'description', content: 'This is the Angular Store Login Page.' });
-    }
+
 }

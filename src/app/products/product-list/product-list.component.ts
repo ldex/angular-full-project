@@ -13,9 +13,11 @@ import {
   tap,
   startWith,
   flatMap,
-  max
+  max,
+  debounceTime
 } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: "app-product-list",
@@ -27,21 +29,23 @@ export class ProductListComponent implements OnInit {
   title: string = "Products";
 
   products$: Observable<Product[]>;
-  filteredProducts$: Observable<Product[]>;
+  productsNumber: number = 0;
   productsTotalNumber$: Observable<number>;
   mostExpensiveProduct$: Observable<Product>;
 
   selectedProduct: Product;
   sorter: string = "-modifiedDate";
 
-  filter: FormControl;
+  filter: FormControl = new FormControl("");
   filter$: Observable<string>;
+  filteredProducts$: Observable<Product[]>;
   filtered: boolean = false;
 
-  pageSize: number = 5;
-  start: number = 0;
-  end: number = this.pageSize;
-  currentPage: number = 1;
+  // Pagination
+  pageSize = 5;
+  start = 0;
+  end = this.pageSize;
+  currentPage = 1;
 
   firstPage(): void {
     this.start = 0;
@@ -53,12 +57,14 @@ export class ProductListComponent implements OnInit {
     this.start += this.pageSize;
     this.end += this.pageSize;
     this.currentPage++;
+    this.selectedProduct = null;
   }
 
   previousPage(): void {
     this.start -= this.pageSize;
     this.end -= this.pageSize;
     this.currentPage--;
+    this.selectedProduct = null;
   }
 
   loadMore(): void {
@@ -99,14 +105,16 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private favouriteService: FavouriteService,
-    private router: Router
+    private router: Router,
+    private seoService: SeoService
   ) {}
 
   ngOnInit() {
     this.products$ = this.productService.products$;
-    this.filter = new FormControl("");
+
     this.filter$ = this.filter.valueChanges
                         .pipe(
+                            debounceTime(500),
                             startWith(""),
                             tap(
                                 term => {
@@ -115,16 +123,23 @@ export class ProductListComponent implements OnInit {
                                 }
                             )
                         );
-    this.filteredProducts$ = combineLatest(this.products$, this.filter$).pipe(
-      map(([products, filterString]) =>
-        products.filter(product =>
-          product.name.toLowerCase().includes(filterString.toLowerCase())
-        )
-      )
+
+    this.filteredProducts$ = 
+      combineLatest(this.products$, this.filter$)
+      .pipe(
+        map(
+          ([products, filterString]) =>
+            products.filter(product =>
+              product.name.toLowerCase().includes(filterString.toLowerCase()))
+        ),
+        tap(lst => this.productsNumber = lst.length)
     );
+
     this.productService.loadProducts();
     this.productsTotalNumber$ = this.productService.productsTotalNumber$;
     this.productService.loadProductsTotalNumber();
     this.mostExpensiveProduct$ = this.productService.getMostExpensiveProduct();
+    
+    this.seoService.setTitle('Products List');
   }
 }

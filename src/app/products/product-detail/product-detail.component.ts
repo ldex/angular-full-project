@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { NotificationService } from '../../services/notification.service';
 import { CartService } from 'src/app/services/cart.service';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -24,7 +25,8 @@ export class ProductDetailComponent implements OnInit {
     private cartService: CartService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private seoService: SeoService
   ) { }
 
   deleteProduct(id: number) {
@@ -34,7 +36,7 @@ export class ProductDetailComponent implements OnInit {
             () => {
                 this.productService.clearCache();
                 this.notificationService.notifyMessage('Product deleted');
-                this.router.navigateByUrl("/products");
+                this.router.navigateByUrl("/products?refresh");
             },
             error => this.notificationService.notifyError('Could not delete product. ' + error)
         ,);
@@ -62,6 +64,7 @@ export class ProductDetailComponent implements OnInit {
     if (id) {
         this.product$ = this.productService.getProductById(id);
     }
+    this.seoService.setTitle('Product Details');
   }
   
   showAddToFavouritesButton(product:Product):boolean {

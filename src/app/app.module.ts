@@ -25,6 +25,8 @@ import { DialogService } from './services/dialog.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
+import { RouteReuseStrategy } from '@angular/router';
+import { CacheRouteReuseStrategy } from './cache-route-reuse.strategy';
 
 
 export function GetToken(): string {
@@ -84,6 +86,10 @@ const moduleServices = [
     useClass: HttpErrorInterceptor,
     multi: true,
   },
+  {
+    provide: RouteReuseStrategy,
+    useClass: CacheRouteReuseStrategy
+  }
 ]
 
 @NgModule({

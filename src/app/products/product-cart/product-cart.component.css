@@ -8,7 +8,6 @@
     padding: 0;
   }
   .products li {
-    cursor: pointer;
     position: relative;
     left: 0;
     background-color: #EEE;

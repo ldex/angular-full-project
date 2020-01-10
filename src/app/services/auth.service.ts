@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { Observable, of } from 'rxjs';
+import { map, catchError } from "rxjs/operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { config } from '../../environments/environment';
 
 interface LoginResponse {
   error: string,
@@ -13,9 +14,8 @@ interface LoginResponse {
 export class AuthService {
 
   private loggedIn: boolean = false;
-  private storageTokenKey: string = 'auth_token';
-  // Use mocky to fake auth from server
-  private baseUrl: string = 'http://www.mocky.io/v2/5b9149823100002a00939952';
+  private readonly storageTokenKey: string = 'auth_token';
+  private baseUrl: string = config.authUrl;
 
   constructor(
     private http: HttpClient,
@@ -23,7 +23,6 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    let tokenFromServer: string;
 
     let body = {
       email: username,
@@ -31,44 +30,55 @@ export class AuthService {
     };
 
     // Use http and your backend to async authenticate the user
-    // Get back a security token
+    // If no error, you get back a security token
     return this.http
       .post<LoginResponse>(this.baseUrl, body)
       .pipe(
         map(
           response => {
-            if(response.error) {
+            if (response.error) {
+              console.error(response.error);
               return false;
             } else {
-              tokenFromServer = response.token;
-              // Store the token locally  in Local Storage (HTML5)
-              // Check in Chrome Dev Tools / Application / Local Storage
-              localStorage.setItem(this.storageTokenKey, tokenFromServer);
+              this.storeToken(response.token);
               this.loggedIn = true;
               return true;
             }
           }
-        )
-    );
+        ),
+        catchError(err => {
+          console.error(err);
+          return of(false);
+        })
+      );
   }
 
   logout(): void {
-    localStorage.removeItem(this.storageTokenKey);
+    this.removeTokens();
     this.loggedIn = false;
-  }
-
-  public getToken(): string {
-    return localStorage.getItem(this.storageTokenKey);
   }
 
   isLoggedIn(): boolean {
 
-    let token: string = this.getToken();
+    const token: string = this.getToken();
 
-    if(this.loggedIn && token != null) {
+    if (token != null && this.loggedIn) {
       return !this.jwtHelper.isTokenExpired(token);
     }
-
     return false;
+  }
+
+  private storeToken(token) {
+    // Store the token locally  in Local Storage (HTML5)
+    // Check in Chrome Dev Tools / Application / Local Storage
+    localStorage.setItem(this.storageTokenKey, token);
+  }
+
+  private getToken(): string {
+    return localStorage.getItem(this.storageTokenKey);
+  }
+
+  private removeTokens() {
+    localStorage.removeItem(this.storageTokenKey);
   }
 }

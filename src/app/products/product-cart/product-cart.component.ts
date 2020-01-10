@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.interface';
 import { CartService } from './../../services/cart.service';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
     selector: 'cart-content',
@@ -11,10 +12,14 @@ export class ProductCartComponent implements OnInit {
     
     products:Product[];
     
-    constructor(private cartService:CartService) { }
+    constructor(
+        private cartService:CartService,
+        private seoService: SeoService
+    ) { }
 
     ngOnInit() {
         this.products = this.cartService.getProducts();
+        this.seoService.setTitle('Shopping Cart');
      }
 
      get total() : number {

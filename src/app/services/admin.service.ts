@@ -1,15 +1,14 @@
-import { environment } from './../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment, config } from './../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map } from "rxjs/operators";
 
 @Injectable()
 export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  private baseUrl: string = 'http://your_rest_api.net/api/profile';
+  private baseUrl: string = config.adminApiUrl;
   private storageKey: string = 'auth_token';
 
   getProfile(): Observable<string> {
