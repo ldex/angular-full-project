@@ -9,7 +9,9 @@ import {
   shareReplay,
   max,
   combineLatest,
-  tap
+  tap,
+  map,
+  share
 } from "rxjs/operators";
 
 
@@ -19,12 +21,39 @@ export class ProductService {
 
   private products = new BehaviorSubject<Product[]>([]);
   products$: Observable<Product[]> = this.products.asObservable();
+  mostExpensiveProduct$: Observable<Product>;
+  productsTotalNumber$: Observable<number>;
 
-  private productsTotalNumber = new BehaviorSubject<number>(0);
-  productsTotalNumber$: Observable<number> = this.productsTotalNumber.asObservable();
+  constructor(private http: HttpClient) {
 
-  constructor(private http: HttpClient) { 
+    this.loadProducts();
+    this.initProductsTotalNumber();
+    this.initMostExpensiveProduct();
 
+  }
+
+  private initProductsTotalNumber() {
+    this.productsTotalNumber$ =
+      this
+        .http
+        .get<number>(this.baseUrl + "count")
+        .pipe(
+          map(res => res - 1),
+          shareReplay()
+        );
+  }
+
+  private initMostExpensiveProduct() {
+    this.mostExpensiveProduct$ =
+      this
+        .products$
+        .pipe(
+          map(products => {
+            var maxPrice = Math.max.apply(Math, products.map(function (p) { return p.price; }));
+            return products.find(function (p) { return p.price == maxPrice; })
+          }
+          )
+        )
   }
 
   deleteProduct(id: number): Observable<any> {
@@ -65,21 +94,6 @@ export class ProductService {
         let mergedProducts = currentProducts.concat(products);
         this.products.next(mergedProducts);
       });
-  }
-
-  loadProductsTotalNumber(): void {
-    this.http
-      .get<number>(this.baseUrl + "count")
-      .subscribe(total => this.productsTotalNumber.next(total - 1));
-  }
-
-  getMostExpensiveProduct(): Observable<Product> {
-    return this
-      .products$
-      .pipe(
-        flatMap(results => results),
-        max<Product>((a: Product, b: Product) => a.price < b.price ? -1 : 1)
-      );
   }
 
   clearCache() {

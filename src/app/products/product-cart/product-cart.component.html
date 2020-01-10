@@ -4,8 +4,14 @@
 <div style="margin-bottom: 80px" *ngIf="products?.length > 0">
     <ul class="products">
         <li *ngFor="let product of products | groupBy:'id'">
-            {{product.value[0].name}} ({{product.value[0].price | currency:'CAD':'symbol-narrow':'.2'}}) x{{product.value.length}}
+            <span class="name">{{product.value[0].name}}</span>
+            <span class="description">{{product.value[0].description}}</span>
+            <span class="price">{{product.value[0].price | currency:'CAD':'symbol-narrow':'.2'}}
+                x{{product.value.length}}</span>
         </li>
     </ul>
     <h2>Total = {{total | currency:'CAD':'symbol-narrow':'.2'}}</h2>
+    <p>
+        <button (click)="buy()">Buy Now</button>
+    </p>
 </div>

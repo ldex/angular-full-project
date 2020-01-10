@@ -9,23 +9,27 @@ import { SeoService } from 'src/app/services/seo.service';
     styleUrls: ['./product-cart.component.css']
 })
 export class ProductCartComponent implements OnInit {
-    
-    products:Product[];
-    
+
+    products: Product[];
+
     constructor(
-        private cartService:CartService,
+        private cartService: CartService,
         private seoService: SeoService
     ) { }
 
     ngOnInit() {
         this.products = this.cartService.getProducts();
         this.seoService.setTitle('Shopping Cart');
-     }
+    }
 
-     get total() : number {
-         let sum:number = 0;
-         this.products.forEach(p => sum += p.price);
-         return sum;
-     }
+    get total(): number {
+        let sum: number = 0;
+        this.products.forEach(p => sum += p.price);
+        return sum;
+    }
+
+    buy() {
+        alert('Todo ;-)');
+    }
 
 }

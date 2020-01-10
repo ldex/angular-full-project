@@ -26,26 +26,36 @@ import { SeoService } from 'src/app/services/seo.service';
   encapsulation: ViewEncapsulation.Emulated
 })
 export class ProductListComponent implements OnInit {
-  title: string = "Products";
+  
+  constructor(
+    private productService: ProductService,
+    private favouriteService: FavouriteService,
+    private router: Router,
+    private seoService: SeoService
+  ) {}
+
+  title = "Products";
+  message = "";
 
   products$: Observable<Product[]>;
-  productsNumber: number = 0;
+  productsNumber = 0;
   productsTotalNumber$: Observable<number>;
   mostExpensiveProduct$: Observable<Product>;
 
   selectedProduct: Product;
-  sorter: string = "-modifiedDate";
+  sorter = "-modifiedDate";
 
   filter: FormControl = new FormControl("");
   filter$: Observable<string>;
   filteredProducts$: Observable<Product[]>;
-  filtered: boolean = false;
+  filtered = false;
 
   // Pagination
   pageSize = 5;
   start = 0;
   end = this.pageSize;
   currentPage = 1;
+  productsToLoad = this.pageSize * 2;
 
   firstPage(): void {
     this.start = 0;
@@ -68,7 +78,7 @@ export class ProductListComponent implements OnInit {
   }
 
   loadMore(): void {
-    let take: number = this.pageSize * 2;
+    let take: number = this.productsToLoad;
     let skip: number = this.end + 1;
 
     this.productService.loadProducts(skip, take);
@@ -90,8 +100,6 @@ export class ProductListComponent implements OnInit {
     this.productService.loadProducts();
   }
 
-  message: string = "";
-
   newFavourite(product: Product): void {
     this.message = `Product
                         ${product.name} 
@@ -102,15 +110,10 @@ export class ProductListComponent implements OnInit {
     return this.favouriteService.getFavouritesNb();
   }
 
-  constructor(
-    private productService: ProductService,
-    private favouriteService: FavouriteService,
-    private router: Router,
-    private seoService: SeoService
-  ) {}
-
   ngOnInit() {
     this.products$ = this.productService.products$;
+    this.productsTotalNumber$ = this.productService.productsTotalNumber$;
+    this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
     this.filter$ = this.filter.valueChanges
                         .pipe(
@@ -135,10 +138,6 @@ export class ProductListComponent implements OnInit {
         tap(lst => this.productsNumber = lst.length)
     );
 
-    this.productService.loadProducts();
-    this.productsTotalNumber$ = this.productService.productsTotalNumber$;
-    this.productService.loadProductsTotalNumber();
-    this.mostExpensiveProduct$ = this.productService.getMostExpensiveProduct();
     
     this.seoService.setTitle('Products List');
   }
