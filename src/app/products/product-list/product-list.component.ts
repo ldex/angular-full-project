@@ -1,4 +1,4 @@
-import { Observable, Subject, combineLatest } from "rxjs";
+import { Observable, combineLatest } from "rxjs";
 import { FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
@@ -13,7 +13,8 @@ import {
   startWith,
   flatMap,
   max,
-  debounceTime
+  debounceTime,
+  catchError
 } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 
@@ -109,7 +110,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products$ = this.productService.products$;
+    this.products$ = this.productService.products$
     this.productsTotalNumber$ = this.productService.productsTotalNumber$;
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
