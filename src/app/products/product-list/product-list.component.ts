@@ -1,6 +1,5 @@
 import { Observable, Subject, combineLatest } from "rxjs";
-import { FavouriteService } from "./../../services/favourite.service";
-import { ProductService } from "./../../services/product.service";
+import { FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
   Component,
@@ -17,7 +16,6 @@ import {
   debounceTime
 } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
-import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: "app-product-list",
@@ -26,13 +24,13 @@ import { SeoService } from 'src/app/services/seo.service';
   encapsulation: ViewEncapsulation.Emulated
 })
 export class ProductListComponent implements OnInit {
-  
+
   constructor(
     private productService: ProductService,
     private favouriteService: FavouriteService,
     private router: Router,
     private seoService: SeoService
-  ) {}
+  ) { }
 
   title = "Products";
   message = "";
@@ -116,29 +114,29 @@ export class ProductListComponent implements OnInit {
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
     this.filter$ = this.filter.valueChanges
-                        .pipe(
-                            debounceTime(500),
-                            startWith(""),
-                            tap(
-                                term => {
-                                    this.firstPage();
-                                    this.filtered = term.trim().length > 0 ? true : false;
-                                }
-                            )
-                        );
-
-    this.filteredProducts$ = 
-      combineLatest(this.products$, this.filter$)
       .pipe(
-        map(
-          ([products, filterString]) =>
-            products.filter(product =>
-              product.name.toLowerCase().includes(filterString.toLowerCase()))
-        ),
-        tap(lst => this.productsNumber = lst.length)
-    );
+        debounceTime(500),
+        startWith(""),
+        tap(
+          term => {
+            this.firstPage();
+            this.filtered = term.trim().length > 0 ? true : false;
+          }
+        )
+      );
 
-    
+    this.filteredProducts$ =
+      combineLatest(this.products$, this.filter$)
+        .pipe(
+          map(
+            ([products, filterString]) =>
+              products.filter(product =>
+                product.name.toLowerCase().includes(filterString.toLowerCase()))
+          ),
+          tap(lst => this.productsNumber = lst.length)
+        );
+
+
     this.seoService.setTitle('Products List');
   }
 }

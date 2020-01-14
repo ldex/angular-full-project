@@ -7,10 +7,9 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { NotificationService } from '../../services/notification.service';
-import { CustomValidators } from 'src/app/customValidators';
+import { NotificationService, DialogService } from '../../services';
 import { Observable, from } from 'rxjs';
-import { DialogService } from 'src/app/services/dialog.service';
+import { CustomValidators } from '../../customValidators';
 
 @Component({
   selector: 'app-product-insert',
@@ -24,7 +23,7 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
   price: FormControl;
   description: FormControl;
   imageUrl: FormControl;
-  submitted:boolean= false;
+  submitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,12 +38,12 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
     this.productService
       .insertProduct(newProduct)
       .subscribe(
-      product => {
-        this.productService.clearCache();
-        this.notificationService.notifyMessage('New Product Saved.');
-        this.router.navigateByUrl("/products");
-      },
-      error => this.notificationService.notifyError('Could not save product. ' + error)
+        product => {
+          this.productService.clearCache();
+          this.notificationService.notifyMessage('New Product Saved.');
+          this.router.navigateByUrl("/products");
+        },
+        error => this.notificationService.notifyError('Could not save product. ' + error)
       );
   }
 
@@ -55,7 +54,7 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
     this.price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000000)]);
     this.description = new FormControl('', [Validators.minLength(3), Validators.maxLength(50)]);
     this.imageUrl = new FormControl('', [Validators.pattern(validImgUrlRegex)]);
-   
+
     this.insertForm = this.fb.group(
       {
         'name': this.name,
@@ -64,15 +63,15 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
         'discontinued': false,
         'fixedPrice': false,
         'imageUrl': this.imageUrl
-      }, {validator: CustomValidators.priceWithDescription}
+      }, { validator: CustomValidators.priceWithDescription }
     );
   }
-  
-      
-  canDeactivate() : Observable<boolean> | boolean {
+
+
+  canDeactivate(): Observable<boolean> | boolean {
     // Allow synchronous navigation (`true`) if product is unchanged or submitted.
-    if(!this.insertForm.dirty || this.submitted) {
-        return true;
+    if (!this.insertForm.dirty || this.submitted) {
+      return true;
     }
     // Otherwise ask the user with the dialog service and return its
     // promise which resolves to true or false when the user decides

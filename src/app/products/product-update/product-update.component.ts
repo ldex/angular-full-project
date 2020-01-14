@@ -1,5 +1,5 @@
 import { Router, ActivatedRoute, CanDeactivate } from '@angular/router';
-import { ProductService } from './../../services/product.service';
+import { ProductService, DialogService, NotificationService } from './../../services';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,11 +7,9 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { NotificationService } from '../../services/notification.service';
 import { Product } from '../product.interface';
 import { Observable, from } from 'rxjs';
-import { DialogService } from 'src/app/services/dialog.service';
-import { CustomValidators } from 'src/app/customValidators';
+import { CustomValidators } from '../../customValidators';
 
 @Component({
   selector: 'app-product-update',
@@ -27,14 +25,14 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
   imageUrl: FormControl;
   discontinued: FormControl;
   fixedPrice: FormControl;
-  product:Product;
-  submitted:boolean= false;
+  product: Product;
+  submitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private notificationService: NotificationService,
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute,
     private dialogService: DialogService) { }
 
@@ -44,12 +42,12 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
     this.productService
       .updateProduct(this.product.id, updatedProduct)
       .subscribe(
-      product => {
-        this.productService.clearCache();
-        this.notificationService.notifyMessage('Product Updated.');
-        this.router.navigateByUrl("/products");
-      },
-      error => this.notificationService.notifyError('Could not update product. ' + error)
+        product => {
+          this.productService.clearCache();
+          this.notificationService.notifyMessage('Product Updated.');
+          this.router.navigateByUrl("/products");
+        },
+        error => this.notificationService.notifyError('Could not update product. ' + error)
       );
   }
 
@@ -57,10 +55,10 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
     this.product = this.route.snapshot.data['product'];
   }
 
-  ngOnInit() {   
+  ngOnInit() {
     this.getProductFromRoute();
-    this.createForm();    
-    this.subscribeToFormChanges(); 
+    this.createForm();
+    this.subscribeToFormChanges();
   }
 
   createForm() {
@@ -72,7 +70,7 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
     this.imageUrl = new FormControl(this.product.imageUrl, [Validators.pattern(validImgUrlRegex)]);
     this.discontinued = new FormControl(this.product.discontinued);
     this.fixedPrice = new FormControl(this.product.fixedPrice);
-      
+
     this.updateForm = this.fb.group(
       {
         'name': this.name,
@@ -81,19 +79,19 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
         'discontinued': this.discontinued,
         'fixedPrice': this.fixedPrice,
         'imageUrl': this.imageUrl
-      }, {validator: CustomValidators.priceWithDescription}
+      }, { validator: CustomValidators.priceWithDescription }
     );
   }
 
   subscribeToFormChanges() {
-      const upsertFormValueChanges$ = this.updateForm.valueChanges;
-      upsertFormValueChanges$.subscribe(x => console.log({ event: 'VALUE CHANGED', object: x}));
+    const upsertFormValueChanges$ = this.updateForm.valueChanges;
+    upsertFormValueChanges$.subscribe(x => console.log({ event: 'VALUE CHANGED', object: x }));
   }
-      
-  canDeactivate() : Observable<boolean> | boolean {
+
+  canDeactivate(): Observable<boolean> | boolean {
     // Allow synchronous navigation (`true`) if product is unchanged or submitted.
-    if(!this.updateForm.dirty || this.submitted) {
-        return true;
+    if (!this.updateForm.dirty || this.submitted) {
+      return true;
     }
     // Otherwise ask the user with the dialog service and return its
     // promise which resolves to true or false when the user decides

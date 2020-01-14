@@ -11,7 +11,8 @@ import {
   combineLatest,
   tap,
   map,
-  share
+  share,
+  delay
 } from "rxjs/operators";
 
 
@@ -88,7 +89,10 @@ export class ProductService {
 
     this.http
       .get<Product[]>(url)
-      .pipe(shareReplay())
+      .pipe(
+        delay(2000),
+        shareReplay()
+      )
       .subscribe(products => {
         let currentProducts = this.products.value;
         let mergedProducts = currentProducts.concat(products);
