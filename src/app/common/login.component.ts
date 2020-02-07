@@ -40,7 +40,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
         this.setFocus();
     }
 
-    @ViewChild('username', { static: false }) myInput: ElementRef;
+    @ViewChild('username') myInput: ElementRef;
 
     setFocus() {
         this.myInput.nativeElement.focus();
