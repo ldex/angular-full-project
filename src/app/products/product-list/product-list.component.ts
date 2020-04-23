@@ -95,8 +95,7 @@ export class ProductListComponent implements OnInit {
 
   refreshList() {
     this.productService.clearCache();
-    this.firstPage();
-    this.productService.loadProducts();
+    this.router.navigateByUrl('/products');
   }
 
   newFavourite(product: Product): void {

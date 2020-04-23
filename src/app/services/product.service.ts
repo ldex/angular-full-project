@@ -90,7 +90,7 @@ export class ProductService {
     this.http
       .get<Product[]>(url)
       .pipe(
-        delay(2000),
+        delay(1000),
         shareReplay()
       )
       .subscribe(products => {
@@ -102,5 +102,6 @@ export class ProductService {
 
   clearCache() {
     this.products.next([]);
+    this.loadProducts();
   }
 }
