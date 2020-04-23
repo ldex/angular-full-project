@@ -86,10 +86,10 @@ const moduleServices = [
     useClass: HttpErrorInterceptor,
     multi: true,
   },
-  {
-    provide: RouteReuseStrategy,
-    useClass: CacheRouteReuseStrategy
-  }
+  // {
+  //   provide: RouteReuseStrategy,
+  //   useClass: CacheRouteReuseStrategy
+  // }
 ]
 
 @NgModule({

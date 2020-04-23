@@ -1,10 +1,11 @@
 <div class="error-container">
+
     <div *ngIf="data?.error" class="errorMessage">
       <h2>Error {{ data?.error}}</h2>
       <h5 *ngIf="data?.error === 404">Not found :(</h5>
     </div>
   
-    <div *ngIf="routeParams.message">
+    <div *ngIf="state$ | async as routeParams; else noparams">
       <h2 *ngIf="routeParams?.status"> Error {{ routeParams?.status }}</h2>
       <h2 *ngIf="routeParams?.url && routeParams?.url !== '/'">Error in {{ routeParams?.url | uppercase }} page, sorry {{ routeParams?.user }} :(</h2>
       <h3 *ngIf="routeParams?.message">Error message: <i>{{ routeParams?.message }}</i></h3><br/>
@@ -18,18 +19,20 @@
          *ngIf="!routeParams.url || routeParams.status === '404'">
           <h5>Go Back to home</h5>
       </a>
+
+      <div class="pre-container" *ngIf="routeParams?.message">
+        <p><b>[For dev purpose only]<br>This is the Error object that was sent to the server:</b></p>
+        <pre>{{ this.routeParams | json }}</pre>
+      </div>
     </div>
   
-    <div *ngIf="!routeParams && !data">
+    <ng-template #noparams>
+      <div *ngIf="!data">
         <h1>Unknown error, sorry :(</h1>
         <a [routerLink]="'/'">
           <h5>Go Home</h5>
         </a>
     </div>
-  </div>
-  
-  <div class="pre-container" *ngIf="routeParams?.message">
-    <p><b>This is the Error object that was sent to the server:</b></p>
-    <pre>{{ this.routeParams | json }}
-    </pre>
+    </ng-template>
+
   </div>

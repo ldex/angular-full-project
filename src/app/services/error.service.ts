@@ -9,7 +9,7 @@ import * as StackTraceParser from 'error-stack-parser';
 export class ErrorService {
 
   constructor(
-    private injector: Injector
+    private locationStrategy: LocationStrategy
   ) {
   }
 
@@ -26,8 +26,7 @@ export class ErrorService {
     const user = 'Angular Academy';
     const time = new Date().getTime();
     const id = `${appId}-${user}-${time}`;
-    const location = this.injector.get(LocationStrategy);
-    const url = location instanceof PathLocationStrategy ? location.path() : '';
+    const url = this.locationStrategy.path();
     const status = error.status || null;
     const message = error.message || error.toString();
     const stack = error instanceof HttpErrorResponse ? null : this.getStack(error);
