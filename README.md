@@ -1,6 +1,6 @@
 # Angular Demo Full Project
 
-Demo Full Project part of <a href="https://angular.ac" target="_blank">Angular Academy Workshop</a>.
+Demo Full Project part of <a href="https://angular.ac" target="_blank">Angular Academy Workshop</a> in 2020.
 
 ## Try it live in Stackblitz without installation!
 
