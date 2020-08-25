@@ -31,7 +31,7 @@ export class ProductDetailComponent implements OnInit {
       .deleteProduct(id)
       .subscribe(
         () => {
-          this.productService.clearCache();
+          this.productService.clearList();
           this.notificationService.notifyMessage('Product deleted');
           this.router.navigateByUrl("/products?refresh");
         },

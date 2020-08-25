@@ -1,4 +1,4 @@
-import { Observable, combineLatest } from "rxjs";
+import { Observable, combineLatest, of } from "rxjs";
 import { FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
@@ -31,7 +31,9 @@ export class ProductListComponent implements OnInit {
     private favouriteService: FavouriteService,
     private router: Router,
     private seoService: SeoService
-  ) { }
+  ) { 
+
+  }
 
   title = "Products";
   message = "";
@@ -78,7 +80,7 @@ export class ProductListComponent implements OnInit {
 
   loadMore(): void {
     let take: number = this.productsToLoad;
-    let skip: number = this.end + 1;
+    let skip: number = this.end;
 
     this.productService.loadProducts(skip, take);
   }
@@ -94,8 +96,7 @@ export class ProductListComponent implements OnInit {
   }
 
   refreshList() {
-    this.productService.clearCache();
-    this.router.navigateByUrl('/products');
+    this.productService.clearList();
   }
 
   newFavourite(product: Product): void {

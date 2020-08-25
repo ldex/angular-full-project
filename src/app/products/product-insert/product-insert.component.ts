@@ -39,7 +39,7 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
       .insertProduct(newProduct)
       .subscribe(
         product => {
-          this.productService.clearCache();
+          this.productService.clearList();
           this.notificationService.notifyMessage('New Product Saved.');
           this.router.navigateByUrl("/products");
         },

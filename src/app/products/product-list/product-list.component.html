@@ -53,7 +53,7 @@
     <a routerLink="insert">Add new product</a> |
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> | 
     <span *ngIf="mostExpensiveProduct$ | async as mostExpensiveProduct">
-      Most expensive product:
+      Most expensive product:      
       {{ mostExpensiveProduct?.name }}
       {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
     </span>

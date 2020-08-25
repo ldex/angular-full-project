@@ -43,7 +43,7 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
       .updateProduct(this.product.id, updatedProduct)
       .subscribe(
         product => {
-          this.productService.clearCache();
+          this.productService.clearList();
           this.notificationService.notifyMessage('Product Updated.');
           this.router.navigateByUrl("/products");
         },

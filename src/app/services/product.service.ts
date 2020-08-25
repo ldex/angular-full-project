@@ -12,9 +12,14 @@ import {
   tap,
   map,
   share,
-  delay
+  delay,
+  filter,
+  find,
+  mergeMap,
+  mergeAll,
+  switchMap,
+  skipWhile
 } from "rxjs/operators";
-
 
 
 @Injectable()
@@ -40,7 +45,6 @@ export class ProductService {
         .http
         .get<number>(this.baseUrl + "count")
         .pipe(
-          map(res => res - 1),
           shareReplay()
         );
   }
@@ -48,14 +52,19 @@ export class ProductService {
   private initMostExpensiveProduct() {
     this.mostExpensiveProduct$ =
       this
-        .products$
-        .pipe(
-          map(products => {
-            var maxPrice = Math.max.apply(Math, products.map(function (p) { return p.price; }));
-            return products.find(function (p) { return p.price == maxPrice; })
-          }
-          )
+      .products$  
+      .pipe(   
+        filter(products => products.length != 0),
+        //skipWhile(products => products.length == 0),
+        switchMap(
+          products => of(products)
+                        .pipe(
+                          map(products => [...products].sort((p1, p2) => p1.price > p2.price ? -1 : 1)),
+                          flatMap(p => p), // ou mergeAll(),
+                          first() // complete!
+                        )
         )
+      )
   }
 
   deleteProduct(id: number): Observable<any> {
@@ -95,14 +104,16 @@ export class ProductService {
         shareReplay()
       )
       .subscribe(products => {
+        console.log("subscribe");
         let currentProducts = this.products.value;
         let mergedProducts = currentProducts.concat(products);
         this.products.next(mergedProducts);
       });
   }
 
-  clearCache() {
+  clearList() {
     this.products.next([]);
-    this.loadProducts();
+    this.loadProducts();    
+    this.initProductsTotalNumber();
   }
 }
