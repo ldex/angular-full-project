@@ -1,24 +1,16 @@
 import { Product } from "./../products/product.interface";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, BehaviorSubject, concat, of } from "rxjs";
+import { Observable, BehaviorSubject, of } from "rxjs";
 import { config } from '../../environments/environment';
 import {
   flatMap,
   first,
   shareReplay,
-  max,
-  combineLatest,
-  tap,
   map,
-  share,
   delay,
   filter,
-  find,
-  mergeMap,
-  mergeAll,
-  switchMap,
-  skipWhile
+  switchMap
 } from "rxjs/operators";
 
 
@@ -55,12 +47,12 @@ export class ProductService {
       .products$  
       .pipe(   
         filter(products => products.length != 0),
-        //skipWhile(products => products.length == 0),
+        //or skipWhile(products => products.length == 0),
         switchMap(
           products => of(products)
                         .pipe(
                           map(products => [...products].sort((p1, p2) => p1.price > p2.price ? -1 : 1)),
-                          flatMap(p => p), // ou mergeAll(),
+                          flatMap(p => p), // or mergeAll(),
                           first() // complete!
                         )
         )

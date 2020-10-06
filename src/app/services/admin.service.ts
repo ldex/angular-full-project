@@ -27,7 +27,8 @@ export class AdminService {
         .http
         .get<string>(this.baseUrl);
 
-      // The following is only if you want to manually send the token (without interceptor)
+      // The following is only needed if you want to manually send the token (without http interceptor)
+      //
       // const authToken = localStorage.getItem(this.storageKey);
       // const headers = { 'Authorization': `Bearer ${authToken}` };
       // return this

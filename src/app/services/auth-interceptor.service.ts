@@ -15,7 +15,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
         return next.handle(req);
 
-        // The following is taken care ob by the @auth0/angular-jwt library
+        // Not needed anymore
+        // The following is now taken care of by the @auth0/angular-jwt library
+        //
         // if (authToken) {
 
         //     // inject the token to the Http Headers
