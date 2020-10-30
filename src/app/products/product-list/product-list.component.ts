@@ -14,7 +14,9 @@ import {
   flatMap,
   max,
   debounceTime,
-  catchError
+  catchError,
+  filter,
+  shareReplay
 } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 
@@ -39,7 +41,7 @@ export class ProductListComponent implements OnInit {
   message = "";
 
   products$: Observable<Product[]>;
-  productsNumber = 0;
+  productsNumber$: Observable<number>;
   productsTotalNumber$: Observable<number>;
   mostExpensiveProduct$: Observable<Product>;
 
@@ -110,7 +112,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products$ = this.productService.products$
+    this.products$ = this.productService.products$.pipe(filter(products => products.length > 0))    
     this.productsTotalNumber$ = this.productService.productsTotalNumber$;
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
@@ -127,16 +129,17 @@ export class ProductListComponent implements OnInit {
       );
 
     this.filteredProducts$ =
-      combineLatest(this.products$, this.filter$)
+      combineLatest([this.products$, this.filter$])
         .pipe(
           map(
             ([products, filterString]) =>
               products.filter(product =>
                 product.name.toLowerCase().includes(filterString.toLowerCase()))
           ),
-          tap(lst => this.productsNumber = lst.length)
+          shareReplay()
         );
 
+    this.productsNumber$ = this.filteredProducts$.pipe(map(products => products.length))
 
     this.seoService.setTitle('Products List');
   }

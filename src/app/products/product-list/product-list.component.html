@@ -8,13 +8,10 @@
   <h1 class="loading">Loading products</h1>
 </ng-template>
 
-<ng-container *ngIf="(filteredProducts$ | async)?.length > 0; else loading">
+<ng-container *ngIf="(products$ | async)?.length > 0; else loading">
   <div class="right">
-    {{ productsNumber }} products listed <span *ngIf="filtered">(filtered)</span> |
-    {{
-      productsTotalNumber$ | async
-    }}
-    on server |
+    {{ productsNumber$ | async }} products displayed <span *ngIf="filtered">(filtered)</span> |
+    {{ productsTotalNumber$ | async }} on server |
     <span>
       {favourites, plural, =0 {no favourite} =1 {1 favourite} other
       {{{favourites}} favourites} }
@@ -27,7 +24,7 @@
     <button (click)="sortList('modifiedDate')">Sort by date</button>
 
     Search :
-    <input type="text" [formControl]="filter" placeholder="filter by name" />
+    <input type="text" [formControl]="filter" placeholder="filter by name" maxlength="50" style="width:100px" />
   </div>
 
   <ul
@@ -53,7 +50,7 @@
     <a routerLink="insert">Add new product</a> |
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> | 
     <span *ngIf="mostExpensiveProduct$ | async as mostExpensiveProduct">
-      Most expensive product:      
+      Most expensive:      
       {{ mostExpensiveProduct?.name }}
       {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
     </span>
@@ -66,7 +63,7 @@
     Page {{ currentPage }}
     <button
       (click)="nextPage()"
-      *ngIf="productsNumber > end"
+      *ngIf="(productsNumber$ | async) > end"
     >
       Next Page >
     </button>
@@ -74,8 +71,8 @@
       (click)="loadMore()"
       *ngIf="
         !filtered &&
-        productsNumber <= end &&
-        productsNumber < (productsTotalNumber$ | async)
+        (productsNumber$ | async) <= end &&
+        (productsNumber$ | async) < (productsTotalNumber$ | async)
       "
     >
       Load {{productsToLoad}} more...

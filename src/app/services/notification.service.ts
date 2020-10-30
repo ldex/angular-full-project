@@ -9,8 +9,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 export class NotificationService {
 
   private _notification: BehaviorSubject<AppNotification> = new BehaviorSubject(null);
-  readonly notification$: Observable<AppNotification> = this._notification.asObservable().pipe(publish(),refCount());
-  // publish+refCount: once the observer completes, it will not restart if a new subscriber is added after completion.
+  readonly notification$: Observable<AppNotification> = this._notification.asObservable();
 
   constructor(
       private locationStrategy: LocationStrategy

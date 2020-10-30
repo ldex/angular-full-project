@@ -4,6 +4,9 @@ Angular Reference Demo, a project from <a href="https://angular.ac" target="_bla
 
 ![Angular Academy](https://www.angularacademy.ca/images/classroom.jpg "Angular Academy")
 
+Angular Academy is the #1 hands-on instructor-led Angular training provider.  
+We have a long history of <a href="https://www.angularacademy.ca/world-firsts" target="_blank">World Firsts</a>...
+
 Visit www.angularacademy.ca for our list of Angular related courses:
 * Angular Fundamentals
 * Advanced Angular
