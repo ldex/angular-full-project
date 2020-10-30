@@ -25,8 +25,8 @@ export class LoginComponent implements AfterViewInit, OnInit {
             this.authService
                 .login(form.value.username, form.value.password)
                 .subscribe(
-                    result => {
-                        if (result) {
+                    loginSuccess => {
+                        if (loginSuccess) {
                             this.router.navigateByUrl('/admin');
                         } else {
                             this.error = 'Invalid username or password!';
@@ -40,10 +40,10 @@ export class LoginComponent implements AfterViewInit, OnInit {
         this.setFocus();
     }
 
-    @ViewChild('username') myInput: ElementRef;
+    @ViewChild('username') usernameInput: ElementRef;
 
     setFocus() {
-        this.myInput.nativeElement.focus();
+        this.usernameInput.nativeElement.focus();
     }
 
     ngOnInit(): void {
