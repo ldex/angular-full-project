@@ -99,6 +99,7 @@ export class ProductListComponent implements OnInit {
 
   refreshList() {
     this.productService.clearList();
+    this.firstPage();
   }
 
   newFavourite(product: Product): void {
