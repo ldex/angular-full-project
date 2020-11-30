@@ -1,9 +1,8 @@
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService, SeoService } from '../../services';
 import { Component, ViewChild, AfterViewInit, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { fadeInAnimation } from '../animations';
-import { SeoService } from '../services/seo.service';
+import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './login.component.html',

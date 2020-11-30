@@ -1,7 +1,6 @@
-import { AdminService } from './../services/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { SeoService } from '../services/seo.service';
-import { fadeInAnimation } from '../animations';
+import { AdminService, SeoService } from '../../services';
+import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './admin.component.html',

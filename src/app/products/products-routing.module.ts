@@ -6,13 +6,13 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductCartComponent } from './product-cart/product-cart.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
-import { CanDeactivateGuard } from '../services/can-deactivate-guard.service';
+import { CanDeactivateGuardService } from '../services/can-deactivate-guard.service';
 import { ProductDetailResolveService } from '../services/product-details-resolve.service';
 
 const routes: Routes = [
   { path: '',       component: ProductListComponent },
-  { path: 'insert', component: ProductInsertComponent, canDeactivate: [CanDeactivateGuard] },
-  { path: 'update/:id', component: ProductUpdateComponent, canDeactivate: [CanDeactivateGuard], resolve: { product: ProductDetailResolveService } },
+  { path: 'insert', component: ProductInsertComponent, canDeactivate: [CanDeactivateGuardService] },
+  { path: 'update/:id', component: ProductUpdateComponent, canDeactivate: [CanDeactivateGuardService], resolve: { product: ProductDetailResolveService } },
   { path: 'cart',   component: ProductCartComponent },
   { path: ':id',    component: ProductDetailComponent }
 ];

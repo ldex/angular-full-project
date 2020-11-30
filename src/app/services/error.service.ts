@@ -14,16 +14,16 @@ export class ErrorService {
   }
 
   log(error) {
-    // Send error to server
+    // Get error details
     const errorToSend = this.addContextInfo(error);
-    return fakeHttpService.post(errorToSend);
+    // Send error to server
+    return HttpService.post(errorToSend);
   }
 
   private addContextInfo(error) {
-    // You can include context details here (usually coming from other services: UserService...)
     const name = error.name || null;
     const appId = 'DemoApp';
-    const user = 'Angular Academy';
+    const user = 'Angular Academy'; // Get it from UserService if you have any...
     const time = new Date().getTime();
     const id = `${appId}-${user}-${time}`;
     const url = this.locationStrategy.path();
@@ -45,7 +45,8 @@ export class ErrorService {
 }
 
 
-class fakeHttpService {
+class HttpService {
+    // Pretend that we send an error to the server...
   static post(error): Observable<any> {
     console.log('Error sent to the server: ', error);
     return of(error);

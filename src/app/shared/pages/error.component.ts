@@ -1,9 +1,10 @@
-import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SeoService } from '../services/seo.service';
-import { fadeInAnimation } from '../animations';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { SeoService } from '../../services';
+import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './error.component.html',
@@ -14,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class ErrorComponent implements OnInit {
 
     state$: Observable<any>;
-    data;
+    routeData;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -22,11 +23,7 @@ export class ErrorComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
-
-        this.data = this.activatedRoute.snapshot.data;
-        
+        this.routeData = this.activatedRoute.snapshot.data;
         this.seoService.setTitle('Error!');
     }
 }

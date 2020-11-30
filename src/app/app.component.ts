@@ -13,14 +13,14 @@ export class AppComponent implements OnInit {
   version = VERSION.full;
 
   constructor(
-    private loginService: AuthService,
+    private authService: AuthService,
     private cartService:CartService,
     private router: Router) {
 
     }
 
   get isLoggedIn(): boolean {
-    return this.loginService.isLoggedIn();
+    return this.authService.isLoggedIn();
   }
 
   get nbCart() {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
+    this.authService.logout();
     this.router.navigateByUrl("/home");
   }
 

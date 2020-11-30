@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ErrorHandler, ChangeDetectorRef } from '@angular/core';
-import { AppNotification } from '../appnotification.interface';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService } from '../services/notification.service';
+import { AppNotification } from 'src/app/appnotification.interface';
+import { NotificationService } from 'src/app/services';
 
 @Component( {
     selector: 'app-notification',

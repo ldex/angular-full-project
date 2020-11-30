@@ -1,53 +1,37 @@
-import { FavouriteService } from './services/favourite.service';
-import { AdminService } from './services/admin.service';
-import { ErrorComponent } from './common/error.component';
-import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './common/login.component';
-import { AuthService } from './services/auth.service';
-import { LoginRouteGuard } from './services/login-route-guard.service';
-import { AdminComponent } from './common/admin.component';
-import { ContactComponent } from './common/contact.component';
-import { HomeComponent } from './common/home.component';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { GlobalErrorHandler } from './services/global-error.handler';
-import { NotificationComponent } from './common/notification.component';
-import { JwtModule } from '@auth0/angular-jwt';
-import { NotificationService } from './services/notification.service';
-import { ErrorService } from './services/error.service';
-import { HttpErrorInterceptor } from './services/http-error.interceptor';
-import { CartService } from './services/cart.service';
-import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
-import { DialogService } from './services/dialog.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment';
-import { RouteReuseStrategy } from '@angular/router';
-import { CacheRouteReuseStrategy } from './cache-route-reuse.strategy';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { MaterialModule } from './material/material.module';
 
+import { JwtModule } from '@auth0/angular-jwt';
+
+import {
+  ErrorService,
+  AdminService,
+  FavouriteService,
+  DialogService,
+  NotificationService,
+  CartService,
+  LoginRouteGuardService,
+  CanDeactivateGuardService,
+  LoadingDialogService,
+  ErrorDialogService,
+  AuthService }
+  from './services';
+
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
+
+import { AppComponent } from './app.component';
+import { ErrorHandlerModule } from './errors/error-handler.module';
 
 export function GetToken(): string {
   return localStorage.getItem('auth_token');
 }
-
-const moduleComponents = [
-  AppComponent,
-  HomeComponent,
-  ContactComponent,
-  AdminComponent,
-  LoginComponent,
-  ErrorComponent,
-  NotificationComponent
-]
-
-const moduleDirectives = [
-]
-
-const modulePipes = [
-]
 
 const moduleImports = [
   BrowserModule,
@@ -60,50 +44,34 @@ const moduleImports = [
       whitelistedDomains: ['localhost:10001', 'storerestservice.azurewebsites.net']
     }
   }),
-  AppRoutingModule
-]
-
-
-const moduleExports = [
+  AppRoutingModule,
+  ErrorHandlerModule,
+  MaterialModule,
+  SharedModule,
+  ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+  NoopAnimationsModule
 ]
 
 const moduleServices = [
   FavouriteService,
-  LoginRouteGuard,
+  LoginRouteGuardService,
   AuthService,
   AdminService,
   ErrorService,
   CartService,
   NotificationService,
-  CanDeactivateGuard,
+  CanDeactivateGuardService,
   DialogService,
-  {
-    provide: ErrorHandler,
-    useClass: GlobalErrorHandler
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptor,
-    multi: true,
-  },
-  // {
-  //   provide: RouteReuseStrategy,
-  //   useClass: CacheRouteReuseStrategy
-  // }
+  LoadingDialogService,
+  ErrorDialogService
 ]
 
 @NgModule({
   declarations: [
-    ...moduleComponents,
-    ...moduleDirectives,
-    ...modulePipes
+    AppComponent
   ],
   imports: [
-    ...moduleImports,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-  ],
-  exports: [
-    ...moduleExports
+    ...moduleImports
   ],
   providers: [
     ...moduleServices

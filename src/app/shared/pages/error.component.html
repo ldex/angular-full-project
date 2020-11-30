@@ -1,0 +1,19 @@
+<div class="error-container">
+
+    <div *ngIf="routeData?.error;else nodata" class="errorMessage">
+      <h2>Error</h2>
+
+      <h5 *ngIf="routeData?.error == 404">Page Not found :(</h5>
+    </div>
+
+    <ng-template #nodata>
+      <div>
+        <h1>Unknown error, sorry :(</h1>
+      </div>
+    </ng-template>
+
+    <a [routerLink]="'/'">
+      <h5>Go Back to Home Page</h5>
+    </a>
+
+</div>
