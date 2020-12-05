@@ -5,8 +5,19 @@ import { MaterialModule } from '../material/material.module';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NotificationComponent } from './notification/notification.component';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home.component';
+import { AdminComponent } from './pages/admin.component';
+import { ContactComponent } from './pages/contact.component';
+import { LoginComponent } from './pages/login.component';
+import { ErrorComponent } from './pages/error.component';
 
 const pagesComponents = [
+  HomeComponent,
+  AdminComponent,
+  ContactComponent,
+  LoginComponent,
+  ErrorComponent
 ];
 
 @NgModule({
@@ -16,7 +27,12 @@ const pagesComponents = [
     ErrorDialogComponent,
     NotificationComponent
   ],
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+    FormsModule
+  ],
   exports: [
     ...pagesComponents,
     LoadingDialogComponent,

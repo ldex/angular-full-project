@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { SeoService } from '../../services';
 import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './error.component.html',
-    styleUrls: ['./error.component.css'],
     animations: [fadeInAnimation],
     host: { '[@fadeInAnimation]': '' }
 })
 export class ErrorComponent implements OnInit {
 
     state$: Observable<any>;
-    routeData;
+    routeParams;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -23,7 +21,7 @@ export class ErrorComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.routeData = this.activatedRoute.snapshot.data;
+        this.activatedRoute.queryParams.subscribe(res => this.routeParams = res);
         this.seoService.setTitle('Error!');
     }
 }

@@ -96,7 +96,6 @@ export class ProductService {
         shareReplay()
       )
       .subscribe(products => {
-        console.log("subscribe");
         let currentProducts = this.products.value;
         let mergedProducts = currentProducts.concat(products);
         this.products.next(mergedProducts);

@@ -23,7 +23,7 @@ export class HomeComponent {
     }
 
     http_error(): void {
-        this.http.get("https://httpstat.us/404?sleep=2000").toPromise();
+        this.http.get("https://httpstat.us/408?sleep=1000").toPromise();
     }
 
     http_ok(): void {

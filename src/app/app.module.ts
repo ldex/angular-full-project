@@ -45,11 +45,10 @@ const moduleImports = [
     }
   }),
   AppRoutingModule,
-  ErrorHandlerModule,
   MaterialModule,
   SharedModule,
+  ErrorHandlerModule,
   ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-  NoopAnimationsModule
 ]
 
 const moduleServices = [

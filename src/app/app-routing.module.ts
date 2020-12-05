@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [LoginRouteGuardService] },
   { path: 'error', component: ErrorComponent },
-  { path: '**', redirectTo:'/error', data: { error: 404 }  }
+  { path: '**', redirectTo:'/error?status=404' }
 ];
 
 @NgModule({
