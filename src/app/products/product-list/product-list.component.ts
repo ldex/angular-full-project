@@ -1,4 +1,4 @@
-import { Observable, combineLatest, of } from "rxjs";
+import { Observable, combineLatest } from "rxjs";
 import { FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
     private favouriteService: FavouriteService,
     private router: Router,
     private seoService: SeoService
-  ) { 
+  ) {
 
   }
 
@@ -104,7 +104,7 @@ export class ProductListComponent implements OnInit {
 
   newFavourite(product: Product): void {
     this.message = `Product
-                        ${product.name} 
+                        ${product.name}
                         added to your favourites!`;
   }
 
@@ -113,7 +113,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.products$ = this.productService.products$.pipe(filter(products => products.length > 0))    
+    this.products$ = this.productService.products$.pipe(filter(products => products.length > 0))
     this.productsTotalNumber$ = this.productService.productsTotalNumber$;
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 

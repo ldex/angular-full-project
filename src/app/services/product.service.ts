@@ -44,8 +44,8 @@ export class ProductService {
   private initMostExpensiveProduct() {
     this.mostExpensiveProduct$ =
       this
-      .products$  
-      .pipe(   
+      .products$
+      .pipe(
         filter(products => products.length != 0),
         //or skipWhile(products => products.length == 0),
         switchMap(
@@ -104,7 +104,7 @@ export class ProductService {
 
   clearList() {
     this.products.next([]);
-    this.loadProducts();    
+    this.loadProducts();
     this.initProductsTotalNumber();
   }
 }

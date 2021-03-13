@@ -12,7 +12,25 @@ export class HomeComponent {
     constructor(
         private router: Router,
         private http: HttpClient
-    ) { }
+    ) {
+        this.runInWorker();
+    }
+
+    private runInWorker() {
+        if (typeof Worker !== 'undefined') {
+            console.time('web worker duration');
+            const worker = new Worker('./home.worker', { type: 'module' });
+            worker.onmessage = ({ data }) => {
+                console.log(data);
+                console.timeEnd('web worker duration');
+            };
+            worker.postMessage(2000);
+          } else {
+            // Web Workers are not supported in this environment (IE 6-9 ?).
+            // Check support: https://caniuse.com/?search=web%20worker
+            // You should add a fallback so that your program still executes correctly.
+          }
+    }
 
     code_error(): void {
         throw new Error("App Component has thrown an error!");
