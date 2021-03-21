@@ -5,7 +5,7 @@
 <nav>
   <a routerLink="/home" routerLinkActive="active">Home</a>
   <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
-  <a routerLink="/products/cart" routerLinkActive="active">Cart ({{nbCart}})</a> 
+  <a routerLink="/products/cart" routerLinkActive="active">Cart ({{nbCart}})</a>
   <a routerLink="/contact" routerLinkActive="active">Contact</a>
   <a routerLink="/admin" routerLinkActive="active">Admin</a>
 </nav>
@@ -18,6 +18,12 @@
   <hr>
   <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2021 (using Angular v{{version}})
   <div class="right">
+    <span *ngIf="isOnline$ | async">
+      online
+    </span>
+    <span *ngIf="!(isOnline$ | async)">
+      offline
+    </span> |
     <a (click)="login()" *ngIf="!isLoggedIn">login</a>
     <a (click)="logout()" *ngIf="isLoggedIn">logout</a>
   </div>

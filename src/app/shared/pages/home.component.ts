@@ -13,7 +13,16 @@ export class HomeComponent {
         private router: Router,
         private http: HttpClient
     ) {
+        //this.blockingScript(2000);
         this.runInWorker();
+    }
+
+    private blockingScript(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+            currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
     }
 
     private runInWorker() {

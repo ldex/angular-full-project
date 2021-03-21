@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { CartService } from './services/cart.service';
+import { NetworkStatusService } from './services/network-status.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +13,12 @@ import { CartService } from './services/cart.service';
 export class AppComponent implements OnInit {
   title = 'Angular Store';
   version = VERSION.full;
+  isOnline$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
     private cartService:CartService,
+    private networkStatusService: NetworkStatusService,
     private router: Router) {
 
     }
@@ -37,5 +41,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isOnline$ = this.networkStatusService.isOnline$;
   }
 }

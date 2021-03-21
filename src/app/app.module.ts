@@ -28,6 +28,7 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { ErrorHandlerModule } from './errors/error-handler.module';
+import { NetworkStatusService } from './services/network-status.service';
 
 export function GetToken(): string {
   return localStorage.getItem('auth_token');
@@ -62,7 +63,8 @@ const moduleServices = [
   CanDeactivateGuardService,
   DialogService,
   LoadingDialogService,
-  ErrorDialogService
+  ErrorDialogService,
+  NetworkStatusService
 ]
 
 @NgModule({
