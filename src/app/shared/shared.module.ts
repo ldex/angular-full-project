@@ -11,13 +11,15 @@ import { AdminComponent } from './pages/admin.component';
 import { ContactComponent } from './pages/contact.component';
 import { LoginComponent } from './pages/login.component';
 import { ErrorComponent } from './pages/error.component';
+import { TestComponent } from "./pages/test.component";
 
 const pagesComponents = [
   HomeComponent,
   AdminComponent,
   ContactComponent,
   LoginComponent,
-  ErrorComponent
+  ErrorComponent,
+  TestComponent
 ];
 
 @NgModule({

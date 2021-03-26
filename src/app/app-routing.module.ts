@@ -8,6 +8,7 @@ import { AdminComponent } from './shared/pages/admin.component';
 import { ContactComponent } from './shared/pages/contact.component';
 import { HomeComponent } from './shared/pages/home.component';
 import { ErrorComponent } from './shared/pages/error.component';
+import { TestComponent } from './shared/pages/test.component';
 
 const routes: Routes = [
   { path: '', redirectTo:'/home', pathMatch:'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [LoginRouteGuardService] },
+  { path: 'test', component: TestComponent },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo:'/error?status=404' }
 ];
