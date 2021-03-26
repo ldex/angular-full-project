@@ -5,7 +5,10 @@
 <nav>
   <a routerLink="/home" routerLinkActive="active">Home</a>
   <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
-  <a routerLink="/products/cart" routerLinkActive="active">Cart ({{nbCart}})</a>
+  <a routerLink="/products/cart" routerLinkActive="active">Cart
+    ({{cartProductsNb$ | async}})
+    <!-- ({{cartProductsNb}}) -->
+  </a>
   <a routerLink="/contact" routerLinkActive="active">Contact</a>
   <a routerLink="/admin" routerLinkActive="active">Admin</a>
 </nav>

@@ -13,7 +13,7 @@ export class HomeComponent {
         private router: Router,
         private http: HttpClient
     ) {
-        //this.blockingScript(2000);
+       // this.blockingScript(2000);
         this.runInWorker();
     }
 

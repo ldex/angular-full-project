@@ -15,7 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       this.errorDialogService.openDialog('No Internet Connection');
     } else {
       // Handle Client Error (Angular Error, ReferenceError...)
-      this.errorService.log(error).subscribe();
+      this.errorService.log(error);
       this.errorDialogService.openDialog(
         error.message || "Undefined client error"
       );

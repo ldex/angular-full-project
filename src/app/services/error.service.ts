@@ -17,7 +17,7 @@ export class ErrorService {
     // Get error details
     const errorToSend = this.addContextInfo(error);
     // Send error to server
-    return HttpService.post(errorToSend);
+    HttpService.post(errorToSend).toPromise();
   }
 
   private addContextInfo(error) {
@@ -33,7 +33,7 @@ export class ErrorService {
     const errorWithContext = {name, appId, user, time, id, url, status, message, stack};
     return errorWithContext;
   }
-  
+
   private getStack(error) {
       try {
           return StackTraceParser.parse(error);

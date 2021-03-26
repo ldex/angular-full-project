@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { filter, flatMap, map } from 'rxjs/operators';
 import { Product } from '../product.interface';
-import { CartService, SeoService } from './../../services';
+import { CartSubjectService, SeoService } from './../../services';
 
 @Component({
     selector: 'cart-content',
@@ -9,22 +11,22 @@ import { CartService, SeoService } from './../../services';
 })
 export class ProductCartComponent implements OnInit {
 
-    products: Product[];
+    products$: Observable<Product[]>;
+    productsTotal$: Observable<number>;
 
     constructor(
-        private cartService: CartService,
+        private cartService: CartSubjectService,
         private seoService: SeoService
     ) { }
 
     ngOnInit() {
-        this.products = this.cartService.getProducts();
         this.seoService.setTitle('Shopping Cart');
-    }
-
-    get total(): number {
-        let sum: number = 0;
-        this.products.forEach(p => sum += p.price);
-        return sum;
+        this.products$ = this.cartService.products$;
+        this.productsTotal$ = this
+                                .products$
+                                .pipe(
+                                    map(list => list.reduce((total, product) => total + product.price, 0))
+                                )
     }
 
     buy() {

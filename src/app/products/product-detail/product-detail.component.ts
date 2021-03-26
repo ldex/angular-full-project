@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { ProductService, FavouriteService, CartService, SeoService, NotificationService } from './../../services';
+import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService } from './../../services';
 import { Product } from './../product.interface';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private favouriteService: FavouriteService,
     private productService: ProductService,
-    private cartService: CartService,
+    private cartService: CartSubjectService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,

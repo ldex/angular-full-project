@@ -1,8 +1,6 @@
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
 import { Component, OnInit, VERSION } from '@angular/core';
-import { CartService } from './services/cart.service';
-import { NetworkStatusService } from './services/network-status.service';
+import { AuthService, CartService, CartSubjectService, NetworkStatusService } from './services/';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,10 +12,12 @@ export class AppComponent implements OnInit {
   title = 'Angular Store';
   version = VERSION.full;
   isOnline$: Observable<boolean>;
+  cartProductsNb$: Observable<number>;
 
   constructor(
     private authService: AuthService,
     private cartService:CartService,
+    private cartServiceSubject:CartSubjectService,
     private networkStatusService: NetworkStatusService,
     private router: Router) {
 
@@ -27,7 +27,8 @@ export class AppComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
-  get nbCart() {
+  get cartProductsNb() {
+    console.warn("*** cartProductsNb.");
     return this.cartService.NbProducts;
   }
 
@@ -42,5 +43,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.isOnline$ = this.networkStatusService.isOnline$;
+
+    this.cartProductsNb$ = this
+                            .cartServiceSubject
+                            .productsNb$;
   }
 }
