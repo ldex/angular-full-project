@@ -2,8 +2,7 @@ import { Injectable, Injector} from '@angular/core';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-
-import * as StackTraceParser from 'error-stack-parser';
+import * as StackTrace from 'stacktrace-js';
 
 @Injectable()
 export class ErrorService {
@@ -34,14 +33,15 @@ export class ErrorService {
     return errorWithContext;
   }
 
+
+
   private getStack(error) {
       try {
-          return StackTraceParser.parse(error);
+          return StackTrace.fromError(error, {offline: true});
       } catch (error) {
           return '';
       }
   }
-
 }
 
 
