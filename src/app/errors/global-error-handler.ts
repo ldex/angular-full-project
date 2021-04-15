@@ -17,7 +17,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       // Handle Client Error (Angular Error, ReferenceError...)
       this.errorService.log(error);
       this.errorDialogService.openDialog(
-        error.message || "Undefined client error"
+        error?.message || "Undefined client error"
       );
       console.error("Error from global error handler", error);
     }
