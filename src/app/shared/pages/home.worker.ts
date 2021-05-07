@@ -3,7 +3,7 @@
 addEventListener('message', ({ data }) => {
   sleep(data);
   const response = `worker has finished.`;
-  postMessage(response);
+  postMessage(response); // Send the response back to the component
 });
 
 function sleep(milliseconds) {

@@ -28,7 +28,7 @@ export class HomeComponent {
                 console.log(data);
                 console.timeEnd('web worker duration');
             };
-            worker.postMessage(2000);
+            worker.postMessage(2000); // trigger the work inside the worker
           } else {
             // Web Workers are not supported in this environment (IE 6-9 ?).
             // Check support: https://caniuse.com/?search=web%20worker
