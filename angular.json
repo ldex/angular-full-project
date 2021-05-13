@@ -97,19 +97,24 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
-            }
-          }
+            },
+            "development": {}
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "DemoApp:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "DemoApp:build:production"
+            },
+            "development": {
+              "browserTarget": "DemoApp:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -139,14 +144,17 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "DemoApp:serve"
+            "protractorConfig": "e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "DemoApp:serve:production"
+            },
+            "development": {
+              "devServerTarget": "DemoApp:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
