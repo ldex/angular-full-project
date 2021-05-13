@@ -22,12 +22,12 @@ export class FavouriteService {
     removeFromFavourites(product:Product): void {
         this._favourites.delete(product);
         this.notificationService.notifyMessage(`Product ${product.name} removed from your favourites.`);
-    }  
+    }
 
     getFavouritesNb() : number {
         return this._favourites.size;
     }
-    
+
     IsInFavourites(product:Product) : boolean {
         let productInFavourites = Array.from(this.favourites).find(p => p.id == product.id);
         if(productInFavourites) {
