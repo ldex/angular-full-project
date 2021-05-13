@@ -23,7 +23,7 @@ export class HomeComponent {
     private runInWorker() {
         if (typeof Worker !== 'undefined') {
             console.time('web worker duration');
-            const worker = new Worker('./home.worker', { type: 'module' });
+            const worker = new Worker(new URL('./home.worker', import.meta.url), { type: 'module' });
             worker.onmessage = ({ data }) => {
                 console.log(data);
                 console.timeEnd('web worker duration');
