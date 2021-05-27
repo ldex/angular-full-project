@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
-  get cartProductsNb() {
+  cartProductsNb() {
     console.warn("*** cartProductsNb.");
     return this.cartService.NbProducts;
   }
