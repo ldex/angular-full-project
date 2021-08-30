@@ -9,13 +9,12 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError, finalize, retry } from "rxjs/operators";
 
-import { LoadingDialogService, ErrorDialogService } from '../services';
+import { LoadingDialogService } from '../services';
 import { delayedRetry } from '../delayedRetry.operator';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
-    private errorDialogService: ErrorDialogService,
     private loadingDialogService: LoadingDialogService
   ) {}
 
@@ -24,9 +23,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
     .pipe(
       // If the call fails, immediately retry up to 3 times
-      //retry(3),
+      retry(3),
       // Even better with a custom operator!
-      delayedRetry(500, 3),
+      //delayedRetry(500, 3),
       // Then catch error and throw a specific error message
       catchError(this.handleError),
       finalize(() => {

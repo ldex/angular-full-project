@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, BehaviorSubject } from 'rxjs';
-import { publish, refCount } from "rxjs/operators";
 import { AppNotification } from '../appnotification.interface';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 

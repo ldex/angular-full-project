@@ -45,12 +45,12 @@
       }}</span>
     </li>
   </ul>
-    
+
   <div class="left">
     <a routerLink="insert">Add new product</a> |
-    <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> | 
+    <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
     <span *ngIf="mostExpensiveProduct$ | async as mostExpensiveProduct">
-      Most expensive:      
+      Most expensive:
       {{ mostExpensiveProduct?.name }}
       {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
     </span>
