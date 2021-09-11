@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -7,10 +7,10 @@ import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './error.component.html',
-    animations: [fadeInAnimation],
-    host: { '[@fadeInAnimation]': '' }
+    animations: [fadeInAnimation]
 })
 export class ErrorComponent implements OnInit {
+    @HostBinding('@fadeInAnimation') animation = true;
 
     state$: Observable<any>;
     routeParams;

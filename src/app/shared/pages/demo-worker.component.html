@@ -1,0 +1,5 @@
+<h2>Web Worker</h2>
+<div style="margin-bottom: 80px;margin-top: 40px">
+    <h3 *ngIf="useWorker" style="color:green">Running intensive computation within a Web Worker...</h3>
+    <h3 *ngIf="!useWorker" style="color: red">Running intensive computation without a Web Worker (Blocking script!)</h3>
+</div>

@@ -23,9 +23,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
     .pipe(
       // If the call fails, immediately retry up to 3 times
-      retry(3),
+      //retry(3),
       // Even better with a custom operator!
-      //delayedRetry(500, 3),
+      delayedRetry(500, 3),
       // Then catch error and throw a specific error message
       catchError(this.handleError),
       finalize(() => {

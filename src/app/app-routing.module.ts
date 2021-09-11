@@ -9,6 +9,7 @@ import { ContactComponent } from './shared/pages/contact.component';
 import { HomeComponent } from './shared/pages/home.component';
 import { ErrorComponent } from './shared/pages/error.component';
 import { TestComponent } from './shared/pages/test.component';
+import { DemoWorkerComponent } from './shared/pages/demo-worker.component';
 
 const routes: Routes = [
   { path: '', redirectTo:'/home', pathMatch:'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [LoginRouteGuardService] },
   { path: 'test', component: TestComponent },
+  { path: 'worker', component: DemoWorkerComponent },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo:'/error?status=404' }
 ];

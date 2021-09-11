@@ -1,12 +1,12 @@
 /// <reference lib="webworker" />
 
 addEventListener('message', ({ data }) => {
-  sleep(data);
+  compute(data);
   const response = `worker has finished.`;
   postMessage(response); // Send the response back to the component
 });
 
-function sleep(milliseconds) {
+function compute(milliseconds) {
   const date = Date.now();
   let currentDate = null;
   do {

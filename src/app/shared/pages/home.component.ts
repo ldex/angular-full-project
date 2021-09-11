@@ -1,38 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations';
 
 @Component({
     templateUrl: './home.component.html',
-    animations: [fadeInAnimation],
-    host: { '[@fadeInAnimation]': '' }
+    animations: [fadeInAnimation]
 })
 export class HomeComponent {
+    @HostBinding('@fadeInAnimation') animation = true;
     constructor() {
-       // this.blockingScript(2000);
-        this.runInWorker();
-    }
 
-    private blockingScript(milliseconds) {
-        const date = Date.now();
-        let currentDate = null;
-        do {
-            currentDate = Date.now();
-        } while (currentDate - date < milliseconds);
-    }
-
-    private runInWorker() {
-        if (typeof Worker !== 'undefined') {
-            console.time('web worker duration');
-            const worker = new Worker(new URL('./home.worker', import.meta.url), { type: 'module' });
-            worker.onmessage = ({ data }) => {
-                console.log(data);
-                console.timeEnd('web worker duration');
-            };
-            worker.postMessage(2000); // trigger the work inside the worker
-          } else {
-            // Web Workers are not supported in this environment (IE 6-9 ?).
-            // Check support: https://caniuse.com/?search=web%20worker
-            // You should add a fallback so that your program still executes correctly.
-          }
     }
 }

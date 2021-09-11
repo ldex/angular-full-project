@@ -12,6 +12,7 @@ import { ContactComponent } from './pages/contact.component';
 import { LoginComponent } from './pages/login.component';
 import { ErrorComponent } from './pages/error.component';
 import { TestComponent } from "./pages/test.component";
+import { DemoWorkerComponent } from "./pages/demo-worker.component";
 
 const pagesComponents = [
   HomeComponent,
@@ -19,7 +20,8 @@ const pagesComponents = [
   ContactComponent,
   LoginComponent,
   ErrorComponent,
-  TestComponent
+  TestComponent,
+  DemoWorkerComponent
 ];
 
 @NgModule({
