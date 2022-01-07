@@ -22,7 +22,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     loginUser(form: NgForm) {
         if (form.valid) {
             this.authService
-                .login(form.value.username, form.value.password)
+                .login(form.value.username, form.value.password) // ngModel automatically map model from html input's names (use [(ngModel)] for a custom ts model)
                 .subscribe(
                     loginSuccess => {
                         if (loginSuccess) {
@@ -35,15 +35,17 @@ export class LoginComponent implements AfterViewInit, OnInit {
         }
     }
 
-    ngAfterViewInit(): void {
-        this.setFocus();
-    }
-
-    @ViewChild('username') usernameInput: ElementRef;
+    // #region Auto focus
+    @ViewChild('username') private usernameInput: ElementRef;
 
     setFocus() {
         this.usernameInput.nativeElement.focus();
     }
+
+    ngAfterViewInit(): void {
+        this.setFocus();
+    }
+    // #endregion
 
     ngOnInit(): void {
         this.seoService.setTitleAndDescription('Login');
