@@ -13,7 +13,6 @@ interface AuthResponse {
 @Injectable()
 export class AuthService {
 
-  private loggedIn: boolean = false;
   private readonly storageTokenKey: string = 'auth_token';
   private baseUrl: string = config.authUrl;
 
@@ -36,7 +35,6 @@ export class AuthService {
               return false;
             } else {
               this.storeToken(response.token);
-              this.loggedIn = true;
               return true;
             }
           }
@@ -50,14 +48,12 @@ export class AuthService {
 
   logout(): void {
     this.removeTokens();
-    this.loggedIn = false;
   }
 
   isLoggedIn(): boolean {
-
     const token: string = this.getToken();
 
-    if (token != null && this.loggedIn) {
+    if (token != null) {
       return !this.jwtHelper.isTokenExpired(token);
     }
     return false;
