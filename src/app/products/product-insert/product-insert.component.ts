@@ -6,7 +6,6 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  NonNullableFormBuilder
 } from '@angular/forms';
 import { NotificationService, DialogService } from '../../services';
 import { Observable, from } from 'rxjs';
@@ -20,6 +19,7 @@ interface ProductForm {
   imageUrl: FormControl<string>;
   discontinued: FormControl<boolean>;
   fixedPrice: FormControl<boolean>;
+  modifiedDate: FormControl<Date>;
 }
 
 @Component({
@@ -30,22 +30,17 @@ interface ProductForm {
 export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
 
   insertForm: FormGroup<ProductForm>;
-  name: FormControl<string>;
-  price: FormControl<number>;
-  description: FormControl<string>;
-  imageUrl: FormControl<string>;
-
   submitted: boolean = false;
 
   constructor(
-    private fb: NonNullableFormBuilder,
+    private fb: FormBuilder,
     private productService: ProductService,
     private notificationService: NotificationService,
     private router: Router,
     private dialogService: DialogService) { }
 
   onSubmit() {
-    let newProduct: Product = this.insertForm.value as Product;
+    let newProduct: Product = this.insertForm.getRawValue();
 
     this.submitted = true;
     this.productService
@@ -63,23 +58,23 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
   ngOnInit() {
     let validImgUrlRegex: string = '^(https?\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,5}(?:\/\S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+\.(?:jpg|jpeg|gif|png))$';
 
-    this.name = new FormControl<string>('', [Validators.required, Validators.maxLength(50), CustomValidators.productNameValidator]);
-    this.price = new FormControl<number>(null, [Validators.required, Validators.min(0), Validators.max(10000000)]);
-    this.description = new FormControl<string>('', [Validators.minLength(3), Validators.maxLength(50)]);
-    this.imageUrl = new FormControl<string>('', [Validators.pattern(validImgUrlRegex)]);
-
     this.insertForm = this.fb.group(
       {
-        name: this.name,
-        price: this.price,
-        description: this.description,
-        imageUrl: this.imageUrl,
-        discontinued: new FormControl(false),
-        fixedPrice: new FormControl(false)
+        name: ['', [Validators.required, Validators.maxLength(50), CustomValidators.productNameValidator]],
+        price: [null as number, [Validators.required, Validators.min(0), Validators.max(10000000)]],
+        description: ['', [Validators.minLength(5), Validators.maxLength(50)]],
+        imageUrl: ['', [Validators.pattern(validImgUrlRegex)]],
+        discontinued: [false],
+        fixedPrice: [false],
+        modifiedDate: [null]
       }, { validators: CustomValidators.priceWithDescription }
     );
   }
 
+  get name() { return this.insertForm.get('name'); }
+  get price() { return this.insertForm.get('price'); }
+  get description() { return this.insertForm.get('description'); }
+  get imageUrl() { return this.insertForm.get('imageUrl'); }
 
   canDeactivate(): Observable<boolean> | boolean {
     // Allow synchronous navigation (`true`) if product is unchanged or submitted.
