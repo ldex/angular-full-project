@@ -5,19 +5,19 @@
 <nav>
   <a routerLink="/home" routerLinkActive="active">Home</a>
   <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
-  <a routerLink="/products/cart" routerLinkActive="active">Cart
-    ({{cartProductsNb$ | async}})
-    <!-- ({{ cartProductsNb() }}) -->
-  </a>
+  <a *ngIf="useCartSubject" routerLink="/products/cart" routerLinkActive="active">Cart ({{cartProductsNb$ | async}})</a>
+  <a *ngIf="!useCartSubject" routerLink="/products/cart" routerLinkActive="active">Cart ({{ cartProductsNb() }})</a>
   <a routerLink="/test" routerLinkActive="active">Errors</a>
   <a routerLink="/worker" routerLinkActive="active">Web Worker</a>
   <a routerLink="/contact" routerLinkActive="active">Contact</a>
   <a routerLink="/admin" routerLinkActive="active">Admin</a>
 </nav>
 
-<router-outlet></router-outlet>
 
 <app-notification></app-notification>
+
+<router-outlet></router-outlet>
+
 
 <footer>
   <hr>

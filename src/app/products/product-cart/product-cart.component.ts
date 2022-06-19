@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, flatMap, map } from 'rxjs/operators';
+import { Observable, filter, map } from 'rxjs';
 import { Product } from '../product.interface';
 import { CartSubjectService, SeoService } from './../../services';
 

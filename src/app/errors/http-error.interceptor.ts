@@ -6,11 +6,8 @@ import {
   HttpInterceptor
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { catchError, finalize, retry } from "rxjs/operators";
-
+import { Observable, throwError, catchError, finalize, retry } from "rxjs";
 import { LoadingDialogService } from '../services';
-import { delayedRetry } from '../delayedRetry.operator';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -22,10 +19,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     this.loadingDialogService.openDialog();
     return next.handle(request)
     .pipe(
-      // If the call fails, immediately retry up to 3 times
-      //retry(3),
-      // Even better with a custom operator!
-      delayedRetry(500, 3),
+      // If the call fails, retry up to 3 times
+      retry({delay: 500, count: 3}),
       // Then catch error and throw a specific error message
       catchError(this.handleError),
       finalize(() => {
@@ -37,6 +32,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   private handleError(errorResponse: HttpErrorResponse) {
     console.error("Error from Http Error Interceptor", errorResponse);
     // Will be handled by GlobalErrorHandler
-    return throwError(errorResponse.message);
+    return throwError(() => errorResponse.message);
   }
 }

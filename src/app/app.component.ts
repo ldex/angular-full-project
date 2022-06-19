@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { AuthService, CartService, CartSubjectService, NetworkStatusService } from './services/';
 import { Observable } from 'rxjs';
+import { config } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   version = VERSION.full;
   isOnline$: Observable<boolean>;
   cartProductsNb$: Observable<number>;
+  useCartSubject = config.useCartSubject;
 
   constructor(
     private authService: AuthService,
@@ -28,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   cartProductsNb() {
-    console.warn("*** cartProductsNb.");
+    console.count("*** cartProductsNb");
     return this.cartService.NbProducts;
   }
 

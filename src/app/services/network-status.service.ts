@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, merge, Observable, of, map } from 'rxjs';
 
 @Injectable()
 export class NetworkStatusService {
@@ -9,10 +8,10 @@ export class NetworkStatusService {
     isOnline$: Observable<boolean> = this.isOnlineSubject.asObservable();
 
     constructor() {
-        merge<boolean>(
-            fromEvent(window, "offline").pipe(mapTo(false)),
-            fromEvent(window, "online").pipe(mapTo(true)),
-            of(navigator.onLine)
+        merge(
+            fromEvent<boolean>(window, "offline").pipe(map(() => false)),
+            fromEvent<boolean>(window, "online").pipe(map(() => true)),
+            of<boolean>(navigator.onLine)
         )
         .subscribe(online => this.isOnlineSubject.next(online));
     }

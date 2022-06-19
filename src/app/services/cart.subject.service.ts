@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, filter, map, startWith, tap } from 'rxjs';
 import { Product } from '../products/product.interface';
 
 @Injectable()
@@ -18,7 +17,7 @@ export class CartSubjectService {
                                         .pipe(
                                             map(products => products.length),
                                             startWith(0),
-                                            tap(() => console.warn("*** productsNb$")),
+                                            tap(() => console.count("*** productsNb$")),
                                         );
 
     constructor() {

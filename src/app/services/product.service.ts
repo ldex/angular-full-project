@@ -1,18 +1,19 @@
 import { Product } from "./../products/product.interface";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, BehaviorSubject, of } from "rxjs";
-import { config } from '../../environments/environment';
 import {
-  flatMap,
+  Observable,
+  BehaviorSubject,
+  of,
   first,
   shareReplay,
   map,
   delay,
   filter,
-  switchMap
-} from "rxjs/operators";
-
+  switchMap,
+  mergeMap
+} from "rxjs";
+import { config } from "../../environments/environment";
 
 @Injectable()
 export class ProductService {
@@ -24,39 +25,31 @@ export class ProductService {
   productsTotalNumber$: Observable<number>;
 
   constructor(private http: HttpClient) {
-
     this.loadProducts();
     this.initProductsTotalNumber();
     this.initMostExpensiveProduct();
-
   }
 
   private initProductsTotalNumber() {
-    this.productsTotalNumber$ =
-      this
-        .http
-        .get<number>(this.baseUrl + "count")
-        .pipe(
-          shareReplay()
-        );
+    this.productsTotalNumber$ = this.http
+      .get<number>(this.baseUrl + "count")
+      .pipe(shareReplay());
   }
 
   private initMostExpensiveProduct() {
-    this.mostExpensiveProduct$ =
-      this
-      .products$
-      .pipe(
-        filter(products => products.length != 0),
-        //or skipWhile(products => products.length == 0),
-        switchMap(
-          products => of(products)
-                        .pipe(
-                          map(products => [...products].sort((p1, p2) => p1.price > p2.price ? -1 : 1)),
-                          flatMap(p => p), // or mergeAll(),
-                          first() // complete!
-                        )
+    this.mostExpensiveProduct$ = this.products$.pipe(
+      filter((products) => products.length != 0),
+      //or skipWhile(products => products.length == 0),
+      switchMap((products) =>
+        of(products).pipe(
+          map((products) =>
+            [...products].sort((p1, p2) => (p1.price > p2.price ? -1 : 1))
+          ),
+          mergeMap((p) => p), // or mergeAll(),
+          first() // complete!
         )
       )
+    );
   }
 
   deleteProduct(id: number): Observable<any> {
@@ -79,23 +72,21 @@ export class ProductService {
 
   getProductById(id: number): Observable<Product> {
     return this.products$.pipe(
-      flatMap(p => p),
-      first(product => product.id == id)
+      mergeMap((p) => p),
+      first((product) => product.id == id)
     );
   }
 
   loadProducts(skip: number = 0, take: number = 10): void {
-    let url = this.baseUrl + `?$skip=${skip}&$top=${take}&$orderby=ModifiedDate%20desc`;
+    let url =
+      this.baseUrl + `?$skip=${skip}&$top=${take}&$orderby=ModifiedDate%20desc`;
 
     if (skip == 0 && this.products.value.length > 0) return;
 
     this.http
       .get<Product[]>(url)
-      .pipe(
-        delay(1000),
-        shareReplay()
-      )
-      .subscribe(products => {
+      .pipe(delay(1000), shareReplay())
+      .subscribe((products) => {
         let currentProducts = this.products.value;
         let mergedProducts = currentProducts.concat(products);
         this.products.next(mergedProducts);

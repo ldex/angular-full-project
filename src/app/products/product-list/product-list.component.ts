@@ -1,4 +1,3 @@
-import { Observable, combineLatest } from "rxjs";
 import { FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
@@ -8,6 +7,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import {
+  Observable, combineLatest,
   map,
   tap,
   startWith,
@@ -17,7 +17,7 @@ import {
   catchError,
   filter,
   shareReplay
-} from "rxjs/operators";
+} from "rxjs";
 import { FormControl } from "@angular/forms";
 
 @Component({

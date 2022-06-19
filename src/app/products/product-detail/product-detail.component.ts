@@ -1,8 +1,9 @@
 import { Observable, Subscription } from 'rxjs';
-import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService } from './../../services';
+import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService } from './../../services';
 import { Product } from './../product.interface';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { config } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,11 +16,13 @@ export class ProductDetailComponent implements OnInit {
   @Input() product: Product;
   product$: Observable<Product>;
   productSub: Subscription;
+  useCartSubject = config.useCartSubject;
 
   constructor(
     private favouriteService: FavouriteService,
     private productService: ProductService,
-    private cartService: CartSubjectService,
+    private cartService:CartService,
+    private cartServiceSubject:CartSubjectService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -40,7 +43,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    this.cartService.addToCart(product);
+    if(this.useCartSubject)
+      this.cartServiceSubject.addToCart(product);
+    else
+      this.cartService.addToCart(product);
   }
 
   updateProduct(product: Product) {
