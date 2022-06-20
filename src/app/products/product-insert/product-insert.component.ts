@@ -45,14 +45,14 @@ export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
     this.submitted = true;
     this.productService
       .insertProduct(newProduct)
-      .subscribe(
-        product => {
+      .subscribe({
+        next: (product) => {
           this.productService.clearList();
-          this.notificationService.notifyMessage('New Product Saved.');
+          this.notificationService.notifyMessage('New product saved on server with id: ' + product.id);
           this.router.navigateByUrl("/products");
         },
-        error => this.notificationService.notifyError('Could not save product. ' + error)
-      );
+        error: (error) => this.notificationService.notifyError('Could not save product. ' + error)
+      });
   }
 
   ngOnInit() {

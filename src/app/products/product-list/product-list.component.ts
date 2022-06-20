@@ -11,10 +11,7 @@ import {
   map,
   tap,
   startWith,
-  flatMap,
-  max,
   debounceTime,
-  catchError,
   filter,
   shareReplay
 } from "rxjs";

@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
     .pipe(
       // If the call fails, retry up to 3 times
-      retry({delay: 500, count: 3}),
+      retry({delay: 500, count: 3}), // New syntax since RxJS 7
       // Then catch error and throw a specific error message
       catchError(this.handleError),
       finalize(() => {

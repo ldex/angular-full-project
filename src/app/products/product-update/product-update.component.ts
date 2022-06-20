@@ -42,13 +42,14 @@ export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
     this.productService
       .updateProduct(this.product.id, updatedProduct)
       .subscribe(
-        product => {
-          this.productService.clearList();
-          this.notificationService.notifyMessage('Product Updated.');
-          this.router.navigateByUrl("/products");
-        },
-        error => this.notificationService.notifyError('Could not update product. ' + error)
-      );
+        {
+          next: (product) => {
+            this.productService.clearList();
+            this.notificationService.notifyMessage('Product ' + product.name + ' updated.');
+            this.router.navigateByUrl("/products");
+          },
+          error: (error) => this.notificationService.notifyError('Could not update product. ' + error)
+        });
   }
 
   getProductFromRoute() {

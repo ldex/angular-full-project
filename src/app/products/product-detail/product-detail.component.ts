@@ -33,13 +33,14 @@ export class ProductDetailComponent implements OnInit {
     this.productService
       .deleteProduct(id)
       .subscribe(
-        () => {
-          this.productService.clearList();
-          this.notificationService.notifyMessage('Product deleted');
-          this.router.navigateByUrl("/products?refresh");
-        },
-        error => this.notificationService.notifyError('Could not delete product. ' + error)
-        ,);
+        {
+          next: () => {
+            this.productService.clearList();
+            this.notificationService.notifyMessage('Product deleted');
+            this.router.navigateByUrl("/products?refresh");
+          },
+          error: error => this.notificationService.notifyError('Could not delete product. ' + error)
+        });
   }
 
   addToCart(product: Product) {
