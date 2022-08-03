@@ -43,7 +43,7 @@ const moduleImports = [
   JwtModule.forRoot({
     config: {
       tokenGetter: GetToken,
-      whitelistedDomains: ['localhost:10001', 'storerestservice.azurewebsites.net']
+      allowedDomains: ['localhost:10001', 'storerestservice.azurewebsites.net']
     }
   }),
   AppRoutingModule,

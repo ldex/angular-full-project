@@ -13,15 +13,13 @@
   <a routerLink="/admin" routerLinkActive="active">Admin</a>
 </nav>
 
+<router-outlet></router-outlet>
 
 <app-notification></app-notification>
 
-<router-outlet></router-outlet>
-
-
 <footer>
   <hr>
-  <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2022 (using Angular v{{version}})
+  <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2022 (using Angular {{version}})
   <div class="right">
     <span *ngIf="isOnline$ | async">
       online
