@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   cartProductsNb() {
-    console.count("*** cartProductsNb");
+    console.count("*** cartProductsNb()");
     return this.cartService.NbProducts;
   }
 

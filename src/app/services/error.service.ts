@@ -15,7 +15,7 @@ export class ErrorService {
   log(error) {
     // Get error details
     const errorToSend = this.addContextInfo(error || {});
-    // Send error to server
+    // Send those details to server
     HttpService.post(errorToSend).toPromise();
   }
 
