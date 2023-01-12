@@ -12,7 +12,6 @@ import { fadeInAnimation } from '../../animations';
 export class ErrorComponent implements OnInit {
     @HostBinding('@fadeInAnimation') animation = true;
 
-    state$: Observable<any>;
     routeParams;
 
     constructor(

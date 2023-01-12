@@ -16,7 +16,7 @@ export class ErrorService {
     // Get error details
     const errorToSend = this.addContextInfo(error || {});
     // Send those details to server
-    HttpService.post(errorToSend).toPromise();
+    HttpService.LogToServer(errorToSend);
   }
 
   private addContextInfo(error) {
@@ -47,7 +47,7 @@ export class ErrorService {
 
 class HttpService {
     // Pretend that we send an error to the server...
-  static post(error): Observable<any> {
+  static LogToServer(error): Observable<any> {
     console.log('Error sent to the server: ', error);
     return of(error);
   }
