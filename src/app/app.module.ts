@@ -24,7 +24,7 @@ import {
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment';
+import { config, environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { ErrorHandlerModule } from './errors/error-handler.module';
@@ -32,7 +32,7 @@ import { NetworkStatusService } from './services/network-status.service';
 import { CartSubjectService } from './services/cart.subject.service';
 
 export function GetToken(): string {
-  return localStorage.getItem('auth_token');
+  return localStorage.getItem(config.storageTokenKey);
 }
 
 const moduleImports = [

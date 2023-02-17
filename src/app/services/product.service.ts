@@ -53,7 +53,7 @@ export class ProductService {
   }
 
   deleteProduct(id: number): Observable<any> {
-    return this.http.delete(this.baseUrl + id);
+    return this.http.delete(this.baseUrl + '/' + id);
   }
 
   insertProduct(newProduct: Product): Observable<Product> {
@@ -62,11 +62,11 @@ export class ProductService {
 
   updateProduct(id: number, updatedProduct: Product): Observable<Product> {
     updatedProduct.id = id;
-    return this.http.put<Product>(this.baseUrl + id, updatedProduct);
+    return this.http.put<Product>(this.baseUrl + '/' + id, updatedProduct);
   }
 
   getProduct(id: number | string): Observable<Product> {
-    let url: string = this.baseUrl + id;
+    let url: string = this.baseUrl + '/' + id;
     return this.http.get<Product>(url);
   }
 

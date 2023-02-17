@@ -9,7 +9,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   private baseUrl: string = config.adminApiUrl;
-  private storageKey: string = 'auth_token';
+  private readonly storageKey: string = config.storageTokenKey;
 
   getProfile(): Observable<any> {
 

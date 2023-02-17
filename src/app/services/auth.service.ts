@@ -11,7 +11,7 @@ interface AuthResponse {
 
 @Injectable()
 export class AuthService {
-  private readonly storageTokenKey: string = "auth_token";
+  private readonly storageTokenKey: string = config.storageTokenKey;
   private baseUrl: string = config.authUrl;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
