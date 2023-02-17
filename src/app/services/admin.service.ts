@@ -1,7 +1,7 @@
-import { environment, config } from './../../environments/environment';
+import { config } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class AdminService {
@@ -19,7 +19,6 @@ export class AdminService {
         .http
         .get<any>(this.baseUrl)
         .pipe(
-          tap(console.info),
           map(response => response.profile)
         );
 
