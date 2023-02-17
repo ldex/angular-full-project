@@ -17,7 +17,7 @@ import { config } from "../../environments/environment";
 
 @Injectable()
 export class ProductService {
-  private baseUrl: string = config.apiUrl;
+  private baseUrl: string = `${config.apiUrl}/products`;
 
   private products = new BehaviorSubject<Product[]>([]);
   products$: Observable<Product[]> = this.products.asObservable();
@@ -32,7 +32,7 @@ export class ProductService {
 
   private initProductsTotalNumber() {
     this.productsTotalNumber$ = this.http
-      .get<number>(this.baseUrl + "count")
+      .get<number>(this.baseUrl + "/count")
       .pipe(shareReplay());
   }
 

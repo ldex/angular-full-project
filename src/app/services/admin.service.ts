@@ -1,7 +1,7 @@
 import { environment, config } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 
 @Injectable()
 export class AdminService {
@@ -11,21 +11,17 @@ export class AdminService {
   private baseUrl: string = config.adminApiUrl;
   private storageKey: string = 'auth_token';
 
-  getProfile(): Observable<string> {
+  getProfile(): Observable<any> {
 
-    if (environment.demo) {
-
-      // Demo mode
-      return of('Secured info!');
-
-    } else {
-
-      // Real server call here!
       // Authorization token will be automatically sent to the server in the Http Headers with an interceptor
       // (auth-interceptor or automatically via the angular-jwt library)
       return this
         .http
-        .get<string>(this.baseUrl);
+        .get<any>(this.baseUrl)
+        .pipe(
+          tap(console.info),
+          map(response => response.profile)
+        );
 
       // The following is only needed if you want to manually send the token (without http interceptor)
       //
@@ -34,7 +30,6 @@ export class AdminService {
       // return this
       //   .http
       //   .get<string>(this.baseUrl, { headers });
-    }
   }
 
 }
