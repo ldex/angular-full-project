@@ -1,11 +1,11 @@
 import { Injectable }             from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable }             from 'rxjs';
 import { ProductService } from './product.service';
 import { Product } from '../products/product.interface';
 
 @Injectable()
-export class ProductDetailResolveService implements Resolve<Product> {
+export class ProductDetailResolveService  {
 
   constructor(
     private ps: ProductService

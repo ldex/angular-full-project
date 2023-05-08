@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute, CanDeactivate } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService, DialogService, NotificationService } from './../../services';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -16,7 +16,7 @@ import { CustomValidators } from '../../customValidators';
   templateUrl: './product-update.component.html',
   styleUrls: ['./product-update.component.css']
 })
-export class ProductUpdateComponent implements CanDeactivate<any>, OnInit {
+export class ProductUpdateComponent  implements OnInit {
 
   updateForm: FormGroup;
   name: FormControl;

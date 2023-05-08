@@ -1,4 +1,4 @@
-import { Router, CanDeactivate } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -27,7 +27,7 @@ interface ProductForm {
   templateUrl: './product-insert.component.html',
   styleUrls: ['./product-insert.component.css']
 })
-export class ProductInsertComponent implements CanDeactivate<any>, OnInit {
+export class ProductInsertComponent  implements OnInit {
 
   insertForm: FormGroup<ProductForm>;
   submitted: boolean = false;
