@@ -13,6 +13,7 @@ import { ProductCartComponent } from './product-cart/product-cart.component';
 import { ProductDetailResolveService } from '../services/product-details-resolve.service';
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { DefaultPipe } from './default.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 const moduleComponents = [
     ProductDetailComponent,
@@ -36,7 +37,8 @@ const moduleImports = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    SharedModule
 ]
 
 const moduleExports = [

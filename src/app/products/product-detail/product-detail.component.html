@@ -14,8 +14,16 @@
           Add to cart
       </button>
       <button *ngIf="showAddToFavouritesButton(product)" (click)="addToFavourites(product)">Add to favourites</button>
-      <button *ngIf="!showAddToFavouritesButton(product)" (click)="removeFromFavourites(product)">Remove from favourites</button>
+      <button *ngIf="!showAddToFavouritesButton(product)" (confirm)="removeFromFavourites(product)" [confirmMessage]="'Are you sure to remove this product from your favourites?'">Remove from favourites</button>
       <button (click)="updateProduct(product)">Update</button>
-      <button (confirm)="deleteProduct(product.id)" [confirmMessage]="'Are you sure to delete product ' + product.name + '?'">Delete</button>
+      <button (click)="dialog.open()">Delete</button>
+      <modal-dialog #dialog [title]="product.name" (onClose)="deleteConfirmClosed($event)">
+        <p>Are you sure to delete this product?</p>
+        <div class="right">
+          <button (click)="deleteProduct(product.id)" autofocus>Ok</button>
+          &nbsp;
+          <button (click)="dialog.close()">Cancel</button>
+        </div>
+      </modal-dialog>
     </p>
 </div>

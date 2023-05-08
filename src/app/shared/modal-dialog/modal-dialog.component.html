@@ -1,0 +1,9 @@
+<dialog #modal>
+    <span class="close" (click)="close()">&times;</span>
+    <div class="modal-header" *ngIf="title">
+        <h2>{{title}}</h2>
+    </div>
+    <div class="modal-body">
+        <ng-content></ng-content>
+    </div>
+</dialog>

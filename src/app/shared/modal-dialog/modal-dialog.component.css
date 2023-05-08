@@ -1,0 +1,41 @@
+dialog {
+    background-color: rgba(32, 82, 221);
+    color: white;
+    border-color: transparent;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    min-width: 200px;
+  }
+  dialog::backdrop {
+    background: rgba(117, 117, 117, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Close Button */
+  .close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal-header {
+    padding: 2px 16px;
+  }
+
+  .modal-header h2 {
+    color: white;
+  }
+
+  .modal-body {
+    padding: 10px 10px;
+    min-height: 50px;
+  }

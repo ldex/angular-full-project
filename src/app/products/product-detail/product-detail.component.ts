@@ -17,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
   product$: Observable<Product>;
   productSub: Subscription;
   useCartSubject = config.useCartSubject;
+  showDeleteConfirmDialog: boolean = false;
 
   constructor(
     private favouriteService: FavouriteService,
@@ -28,6 +29,14 @@ export class ProductDetailComponent implements OnInit {
     private router: Router,
     private seoService: SeoService
   ) { }
+
+  deleteConfirm() {
+    this.showDeleteConfirmDialog = true;
+  }
+
+  deleteConfirmClosed(msg) {
+    console.info("Delete confirm: " + msg);
+  }
 
   deleteProduct(id: number) {
     this.productService
@@ -64,6 +73,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showDeleteConfirmDialog = false;
     let id = this.route.snapshot.params["id"];
     if (id) {
       this.product$ = this.productService.getProductById(id);

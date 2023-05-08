@@ -13,6 +13,7 @@ import { LoginComponent } from './pages/login.component';
 import { ErrorComponent } from './pages/error.component';
 import { TestComponent } from "./pages/test.component";
 import { DemoWorkerComponent } from "./pages/demo-worker.component";
+import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 
 const pagesComponents = [
   HomeComponent,
@@ -29,7 +30,8 @@ const pagesComponents = [
     ...pagesComponents,
     LoadingDialogComponent,
     ErrorDialogComponent,
-    NotificationComponent
+    NotificationComponent,
+    ModalDialogComponent
   ],
   imports: [
     CommonModule,
@@ -41,11 +43,8 @@ const pagesComponents = [
     ...pagesComponents,
     LoadingDialogComponent,
     ErrorDialogComponent,
-    NotificationComponent
-  ],
-  entryComponents: [
-    LoadingDialogComponent,
-    ErrorDialogComponent,
-    NotificationComponent]
+    NotificationComponent,
+    ModalDialogComponent
+  ]
 })
 export class SharedModule {}
