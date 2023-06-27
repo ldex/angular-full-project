@@ -1,0 +1,84 @@
+<h2>
+    {{ title }} (with Signals)
+  </h2>
+  
+  <h3>{{ message }}</h3>
+  
+  <ng-template #loading>
+    <h1 class="loading">Loading products</h1>
+  </ng-template>
+  
+  <ng-container *ngIf="products()?.length > 0; else loading">
+    <div class="right">
+      {{ productsNumber() }} products displayed <span *ngIf="filtered">(filtered)</span> |
+      {{ productsTotalNumber() }} on server |
+      <span>
+        {favourites(),
+          plural, =0
+          {no favourite} =1
+          {1 favourite} other {{{favourites()}} favourites} }
+      </span>
+    </div>
+  
+    <div>
+      <button (click)="sortList('price')">Sort by price</button>
+      <button (click)="sortList('name')">Sort by name</button>
+      <button (click)="sortList('modifiedDate')">Sort by date</button>
+  
+      Search :
+      <input type="text" [formControl]="filter" placeholder="filter by name" maxlength="50" style="width:100px" />
+    </div>
+  
+    <ul
+      class="products"
+      *ngIf="filteredProducts() as products"
+    >
+      <li
+        *ngFor="let product of products | orderBy: [sorter] | slice: start:end"
+        [title]="product | json"
+        (click)="onSelect(product)"
+        [class.discontinued]="product.discontinued"
+        [class.selected]="product === selectedProduct"
+      >
+        <span class="name">{{ product.name | uppercase }}</span>
+        <span class="description">{{ product.description }}</span>
+        <span class="price">{{
+          product.price | currency: "CAD":"symbol-narrow":".2"
+        }}</span>
+      </li>
+    </ul>
+  
+    <div class="left">
+      <a routerLink="insert">Add new product</a> |
+      <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> | 
+      <a routerLink="/products">RxJS version</a> | 
+      <span *ngIf="mostExpensiveProduct() as mostExpensiveProduct">
+        Most expensive:
+        {{ mostExpensiveProduct?.name }}
+        {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
+      </span>
+    </div>
+  
+    <div class="right">
+      <button (click)="previousPage()" [disabled]="start == 0">
+        < Previous Page
+      </button>
+      Page {{ currentPage }}
+      <button
+        (click)="nextPage()"
+        *ngIf="productsNumber() > end"
+      >
+        Next Page >
+      </button>
+      <button
+        (click)="loadMore()"
+        *ngIf="
+          !filtered &&
+          productsNumber() <= end &&
+          productsNumber() < productsTotalNumber()
+        "
+      >
+        Load {{productsToLoad}} more...
+      </button>
+    </div>
+  </ng-container>

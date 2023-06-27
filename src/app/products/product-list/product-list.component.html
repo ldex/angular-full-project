@@ -48,7 +48,8 @@
 
   <div class="left">
     <a routerLink="insert">Add new product</a> |
-    <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
+    <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> | 
+    <a routerLink="signals">Signals version</a> | 
     <span *ngIf="mostExpensiveProduct$ | async as mostExpensiveProduct">
       Most expensive:
       {{ mostExpensiveProduct?.name }}

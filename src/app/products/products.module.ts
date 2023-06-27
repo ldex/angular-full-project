@@ -14,10 +14,12 @@ import { ProductDetailResolveService } from '../services/product-details-resolve
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { DefaultPipe } from './default.pipe';
 import { SharedModule } from '../shared/shared.module';
+import { ProductListSignalsComponent } from './product-list-signals/product-list-signals.component';
 
 const moduleComponents = [
     ProductDetailComponent,
     ProductListComponent,
+    ProductListSignalsComponent,
     ProductInsertComponent,
     ProductUpdateComponent,
     ProductCartComponent
