@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'signals',       component: ProductListSignalsComponent, title: 'Products List' },
   { path: 'insert', component: ProductInsertComponent, canDeactivate: [CanDeactivateGuardService], title: 'Creating a new Product' },
   { path: 'update/:id', component: ProductUpdateComponent, canDeactivate: [CanDeactivateGuardService], resolve: { product: ProductDetailResolveService } },
-  { path: 'cart',   component: ProductCartComponent },
-  { path: ':id',    component: ProductDetailComponent }
+  { path: 'cart',   component: ProductCartComponent, title: 'Shopping Cart' },
+  { path: ':id',    component: ProductDetailComponent, title: 'Product Details' }
 ];
 
 @NgModule({

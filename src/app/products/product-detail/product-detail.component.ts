@@ -1,8 +1,8 @@
 import { Observable, Subscription } from 'rxjs';
 import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService } from './../../services';
 import { Product } from './../product.interface';
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from "@angular/router";
 import { config } from 'src/environments/environment';
 
 @Component({
@@ -11,9 +11,15 @@ import { config } from 'src/environments/environment';
   styleUrls: ['./product-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent {
 
   @Input() product: Product;
+
+  @Input()
+  set id(productId: string) {
+    this.product$ = this.productService.getProductById(+productId);
+  }
+
   product$: Observable<Product>;
   productSub: Subscription;
   useCartSubject = config.useCartSubject;
@@ -25,9 +31,7 @@ export class ProductDetailComponent implements OnInit {
     private cartService:CartService,
     private cartServiceSubject:CartSubjectService,
     private notificationService: NotificationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private seoService: SeoService
+    private router: Router
   ) { }
 
   deleteConfirm() {
@@ -70,15 +74,6 @@ export class ProductDetailComponent implements OnInit {
 
   removeFromFavourites(product: Product) {
     this.favouriteService.removeFromFavourites(product);
-  }
-
-  ngOnInit() {
-    this.showDeleteConfirmDialog = false;
-    let id = this.route.snapshot.params["id"];
-    if (id) {
-      this.product$ = this.productService.getProductById(id);
-    }
-    this.seoService.setTitle('Product Details');
   }
 
   showAddToFavouritesButton(product: Product): boolean {
