@@ -6,7 +6,7 @@ import { OrderBy } from './orderBy.pipe'
 import { NgModule } from '@angular/core'
 import { CommonModule } from "@angular/common"
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ProductInsertComponent } from './product-insert/product-insert.component';
+import { ProductInsertReactiveComponent } from './product-insert-reactive/product-insert.component';
 import { ConfirmDirective } from './confirm.directive'
 import { GroupByPipe } from './groupBy.pipe'
 import { ProductCartComponent } from './product-cart/product-cart.component';
@@ -15,12 +15,14 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
 import { DefaultPipe } from './default.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { ProductListSignalsComponent } from './product-list-signals/product-list-signals.component';
+import { ProductInsertTemplateComponent } from './product-insert-template/product-insert.component';
 
 const moduleComponents = [
     ProductDetailComponent,
     ProductListComponent,
     ProductListSignalsComponent,
-    ProductInsertComponent,
+    ProductInsertReactiveComponent,
+    ProductInsertTemplateComponent,
     ProductUpdateComponent,
     ProductCartComponent
 ]
@@ -56,7 +58,8 @@ const moduleServices = [
     declarations: [
         ...moduleComponents,
         ...moduleDirectives,
-        ...modulePipes
+        ...modulePipes,
+        ProductInsertTemplateComponent
     ],
     imports: [
         ...moduleImports

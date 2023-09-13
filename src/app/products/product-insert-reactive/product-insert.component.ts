@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { ProductService } from './../../services/product.service';
+import { ProductService } from '../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -23,11 +23,11 @@ interface ProductForm {
 }
 
 @Component({
-  selector: 'app-product-insert',
+  selector: 'app-product-insert-reactive',
   templateUrl: './product-insert.component.html',
   styleUrls: ['./product-insert.component.css']
 })
-export class ProductInsertComponent  implements OnInit {
+export class ProductInsertReactiveComponent  implements OnInit {
 
   insertForm: FormGroup<ProductForm>;
   submitted: boolean = false;
@@ -60,9 +60,9 @@ export class ProductInsertComponent  implements OnInit {
 
     this.insertForm = this.fb.group(
       {
-        name: ['', [Validators.required, Validators.maxLength(50), CustomValidators.productNameValidator]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), CustomValidators.productNameValidator]],
         price: [null as number, [Validators.required, Validators.min(0), Validators.max(10000000)]],
-        description: ['', [Validators.minLength(5), Validators.maxLength(50)]],
+        description: ['', [Validators.minLength(5), Validators.maxLength(500)]],
         imageUrl: ['', [Validators.pattern(validImgUrlRegex)]],
         discontinued: [false],
         fixedPrice: [false],
