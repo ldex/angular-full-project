@@ -12,7 +12,7 @@
         maxlength="50"
         #name="ngModel"
         required>
-    <div *ngIf="name.touched && name.errors" class="errorMessage">
+    <div *ngIf="name.dirty && name.invalid" class="errorMessage">
         <span *ngIf="name.hasError('required')">Name is required</span>
         <span *ngIf="name.hasError('minlength')">Min 3 characters for Name.</span>
         <span *ngIf="name.hasError('maxlength')">Only 50 characters allowed for Name.</span>
@@ -30,7 +30,7 @@
         required
         min="0"
         max="10000000">
-    <div *ngIf="price.touched && price.errors" class="errorMessage">
+    <div *ngIf="price.dirty && price.invalid" class="errorMessage">
         <span *ngIf="price.hasError('required')">Price is required.</span>
         <span *ngIf="price.hasError('min')">Negative price not allowed.</span>
         <span *ngIf="price.hasError('max')">Max price allowed is 10 000 000.</span>
@@ -44,7 +44,7 @@
         maxlength="500"
         #description="ngModel">
     </textarea>
-    <div *ngIf="description.touched && description.errors" class="errorMessage">
+    <div *ngIf="description.dirty && description.invalid" class="errorMessage">
         <span *ngIf="description.hasError('required')">Description is required.</span>
         <span *ngIf="description.hasError('minlength')">Min 5 characters</span>
         <span *ngIf="description.hasError('maxlength')">Max 500 characters</span>
@@ -58,7 +58,7 @@
            ngModel
            #imageUrl="ngModel"
            pattern="^(https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,5}(?:/S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+.(?:jpg|jpeg|gif|png))$">
-    <div *ngIf="imageUrl.touched && imageUrl.errors"
+    <div *ngIf="imageUrl.dirty && imageUrl.invalid"
          class="errorMessage">
         <span *ngIf="imageUrl.hasError('pattern')">Invalid image url.</span>
     </div>
