@@ -4,8 +4,8 @@ export const environment = {
 
 export const config = {
   apiUrl: 'https://storerestservice.azurewebsites.net/api',
-  adminApiUrl: 'https://run.mocky.io/v3/2f4c5296-0578-4a2b-b447-fb8c45a04643',
-  authUrl: 'https://run.mocky.io/v3/219bc775-c20e-448e-85b2-d935eeedc7ab',
+  adminApiUrl: 'https://run.mocky.io/v3/4a98d5e8-6631-4004-811c-25d6528ca174',
+  authUrl: 'https://run.mocky.io/v3/34db3e7e-7f68-4752-ab44-34cb16cf57f5',
   storageTokenKey: 'auth_token',
   useCartSubject: true
 };
