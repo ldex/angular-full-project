@@ -5,8 +5,12 @@
 <nav>
   <a routerLink="/home" routerLinkActive="active">Home</a>
   <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Products</a>
-  <a *ngIf="useCartSubject" routerLink="/products/cart" routerLinkActive="active">Cart ({{cartProductsNb$ | async}})</a>
-  <a *ngIf="!useCartSubject" routerLink="/products/cart" routerLinkActive="active">Cart ({{ cartProductsNb() }})</a>
+  @if (useCartSubject) {
+    <a routerLink="/products/cart" routerLinkActive="active">Cart ({{cartProductsNb$ | async}})</a>
+  }
+  @if (!useCartSubject) {
+    <a routerLink="/products/cart" routerLinkActive="active">Cart ({{ cartProductsNb() }})</a>
+  }
   <a routerLink="/test" routerLinkActive="active">Errors</a>
   <a routerLink="/worker" routerLinkActive="active">Web Worker</a>
   <a routerLink="/contact" routerLinkActive="active">Contact</a>
@@ -19,15 +23,23 @@
 
 <footer>
   <hr>
-  <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2024 (using Angular {{version}})
-  <div class="right">
-    <span *ngIf="isOnline$ | async">
-      online
-    </span>
-    <span *ngIf="!(isOnline$ | async)">
-      offline
-    </span> |
-    <a (click)="login()" *ngIf="!isLoggedIn">login</a>
-    <a (click)="logout()" *ngIf="isLoggedIn">logout</a>
-  </div>
-</footer>
+    <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2024 (using Angular {{version}})
+    <div class="right">
+      @if (isOnline$ | async) {
+        <span>
+          online
+        </span>
+      }
+      @if (!(isOnline$ | async)) {
+        <span>
+          offline
+        </span>
+        } |
+        @if (!isLoggedIn) {
+          <a (click)="login()">login</a>
+        }
+        @if (isLoggedIn) {
+          <a (click)="logout()">logout</a>
+        }
+      </div>
+    </footer>

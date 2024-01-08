@@ -1,16 +1,18 @@
 <div style="margin-bottom: 80px">
 
-    <div *ngIf="routeParams?.status;else nodata" class="errorMessage">
+  @if (routeParams?.status) {
+    <div class="errorMessage">
       <h2>Error</h2>
-
-      <h5 *ngIf="routeParams?.status == 404">Page Not found :(</h5>
+      @if (routeParams?.status == 404) {
+        <h5>Page Not found :(</h5>
+      }
     </div>
+  } @else {
+    <div>
+      <h2>Unknown error, sorry :(</h2>
+    </div>
+  }
 
-    <ng-template #nodata>
-      <div>
-        <h2>Unknown error, sorry :(</h2>
-      </div>
-    </ng-template>
 
 </div>
 

@@ -1,4 +1,5 @@
-<div *ngIf="product$ | async as product">
+@if (product$ | async; as product) {
+  <div>
     <h2>{{product.name | uppercase}}</h2>
     <img style="float:right" [src]="product.imageUrl | default:'https://picsum.photos/250/150'" width="250" />
     <h3>{{product.description}}</h3>
@@ -7,14 +8,18 @@
     <p>Discontinued? {{product.discontinued}}
     </p>
     <p>Modified date:
-        {{product.modifiedDate | date}}</p>
+    {{product.modifiedDate | date}}</p>
     <hr />
     <p>
       <button (click)="addToCart(product)">
-          Add to cart
+        Add to cart
       </button>
-      <button *ngIf="showAddToFavouritesButton(product)" (click)="addToFavourites(product)">Add to favourites</button>
-      <button *ngIf="!showAddToFavouritesButton(product)" (confirm)="removeFromFavourites(product)" [confirmMessage]="'Are you sure to remove this product from your favourites?'">Remove from favourites</button>
+      @if (showAddToFavouritesButton(product)) {
+        <button (click)="addToFavourites(product)">Add to favourites</button>
+      }
+      @if (!showAddToFavouritesButton(product)) {
+        <button (confirm)="removeFromFavourites(product)" [confirmMessage]="'Are you sure to remove this product from your favourites?'">Remove from favourites</button>
+      }
       <button (click)="updateProduct(product)">Update</button>
       <button (click)="dialog.open()">Delete</button>
       <modal-dialog #dialog [title]="product.name" (onClose)="deleteConfirmClosed($event)">
@@ -26,4 +31,5 @@
         </div>
       </modal-dialog>
     </p>
-</div>
+  </div>
+}

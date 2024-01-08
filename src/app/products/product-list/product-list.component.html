@@ -8,75 +8,80 @@
   <h1 class="loading">Loading products</h1>
 </ng-template>
 
-<ng-container *ngIf="(products$ | async)?.length > 0; else loading">
+@if ((products$ | async)?.length > 0) {
   <div class="right">
-    {{ productsNumber$ | async }} products displayed <span *ngIf="filtered">(filtered)</span> |
+    {{ productsNumber$ | async }} products displayed @if (filtered) {
+    <span>(filtered)</span>
+    } |
     {{ productsTotalNumber$ | async }} on server |
     <span>
       {favourites, plural, =0 {no favourite} =1 {1 favourite} other
       {{{favourites}} favourites} }
     </span>
   </div>
-
   <div>
     <button (click)="sortList('price')">Sort by price</button>
     <button (click)="sortList('name')">Sort by name</button>
     <button (click)="sortList('modifiedDate')">Sort by date</button>
-
     Search :
     <input type="text" [formControl]="filter" placeholder="filter by name" maxlength="50" style="width:100px" />
   </div>
-
-  <ul
-    class="products"
-    *ngIf="filteredProducts$ | async as products"
-  >
-    <li
-      *ngFor="let product of products | orderBy: [sorter] | slice: start:end"
-      [title]="product | json"
-      (click)="onSelect(product)"
-      [class.discontinued]="product.discontinued"
-      [class.selected]="product === selectedProduct"
-    >
-      <span class="name">{{ product.name | uppercase }}</span>
-      <span class="description">{{ product.description }}</span>
-      <span class="price">{{
-        product.price | currency: "CAD":"symbol-narrow":".2"
-      }}</span>
-    </li>
-  </ul>
-
+  @if (filteredProducts$ | async; as products) {
+    <ul
+      class="products"
+      >
+      @for (product of products | orderBy: [sorter] | slice: start:end; track product) {
+        <li
+          [title]="product | json"
+          (click)="onSelect(product)"
+          [class.discontinued]="product.discontinued"
+          [class.selected]="product === selectedProduct"
+          >
+          <span class="name">{{ product.name | uppercase }}</span>
+          <span class="description">{{ product.description }}</span>
+          <span class="price">{{
+            product.price | currency: "CAD":"symbol-narrow":".2"
+          }}</span>
+        </li>
+      }
+    </ul>
+  }
   <div class="left">
     <a routerLink="insert/reactive">Add new product</a> |
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
     <a routerLink="signals">Signals version</a> |
-    <span *ngIf="mostExpensiveProduct$ | async as mostExpensiveProduct">
-      Most expensive:
-      {{ mostExpensiveProduct?.name }}
-      {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
-    </span>
+    @if (mostExpensiveProduct$ | async; as mostExpensiveProduct) {
+      <span>
+        Most expensive:
+        {{ mostExpensiveProduct?.name }}
+        {{ mostExpensiveProduct?.price | currency: "CAD":"symbol-narrow":".2" }}
+      </span>
+    }
   </div>
-
   <div class="right">
     <button (click)="previousPage()" [disabled]="start == 0">
       < Previous Page
     </button>
     Page {{ currentPage }}
-    <button
-      (click)="nextPage()"
-      *ngIf="(productsNumber$ | async) > end"
-    >
-      Next Page >
-    </button>
-    <button
-      (click)="loadMore()"
-      *ngIf="
-        !filtered &&
-        (productsNumber$ | async) <= end &&
-        (productsNumber$ | async) < (productsTotalNumber$ | async)
-      "
-    >
-      Load {{productsToLoad}} more...
-    </button>
+    @if ((productsNumber$ | async) > end) {
+      <button
+        (click)="nextPage()"
+        >
+        Next Page >
+      </button>
+    }
+    @if (
+      !filtered &&
+      (productsNumber$ | async) <= end &&
+      (productsNumber$ | async) < (productsTotalNumber$ | async)
+      ) {
+      <button
+        (click)="loadMore()"
+        >
+        Load {{productsToLoad}} more...
+      </button>
+    }
   </div>
-</ng-container>
+} @else {
+  <h1 class="loading">Loading products</h1>
+}
