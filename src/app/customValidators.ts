@@ -7,29 +7,29 @@ export interface ValidationResult {
 export class CustomValidators {
 
 static priceWithDescription(group) {
-  
+
   let price = group.controls.price;
   let description = group.controls.description;
-  
+
   // Mark group as touched so we can add invalid class easily
   group.markAsTouched();
 
-  if (price.value > 100 && description.value == "") {
+  if (!isNaN(price.value) && price.value > 100 && description.value == "") {
     return { "descriptionRequiredFromPrice": true }
   }
 
   return null;
 }
 
- static startsWithNumber(control: NgControl): ValidationResult {  
+ static startsWithNumber(control: NgControl): ValidationResult {
    if ( control.value !="" && !isNaN(control.value.charAt(0)) ){
      return { "startsWithNumber": true };
-   } 
+   }
    return null;
  }
 
   static productNameValidator(control): ValidationResult {
-    // Alphabets, numbers and space(' ') no special characters min 3 and max 50 characters. 
+    // Alphabets, numbers and space(' ') no special characters min 3 and max 50 characters.
     if (control.value == "") {
       return null;
     }
@@ -48,7 +48,7 @@ static priceWithDescription(group) {
       return { 'invalidCreditCard': true };
     }
   }
-     
+
   static emailValidator(control): ValidationResult {
     // RFC 2822 compliant regex
     if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
@@ -57,7 +57,7 @@ static priceWithDescription(group) {
         return { 'invalidEmailAddress': true };
       }
     }
-     
+
    static passwordValidator(control): ValidationResult {
      // {6,100}           - Assert password is between 6 and 100 characters
      // (?=.*[0-9])       - Assert a string has at least one number
@@ -75,5 +75,5 @@ static priceWithDescription(group) {
     }
     return { "invalidZip":true };
 }
- 
+
 }

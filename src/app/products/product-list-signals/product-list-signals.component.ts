@@ -58,7 +58,7 @@ export class ProductListSignalsComponent {
     private router: Router
   ) {
     this.products = toSignal(this.productService.products$.pipe(filter(products => products.length > 0)), {initialValue: []});
-    this.productsTotalNumber = toSignal(this.productService.productsTotalNumber$, {initialValue: 0});
+    this.productsTotalNumber = toSignal(this.productService.productsTotalNumber$.asObservable(), {initialValue: 0});
     this.mostExpensiveProduct = toSignal(this.productService.mostExpensiveProduct$);
     this.favourites = signal(favouriteService.getFavouritesNb());
 

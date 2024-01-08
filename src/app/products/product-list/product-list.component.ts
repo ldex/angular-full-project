@@ -51,11 +51,11 @@ export class ProductListComponent implements OnInit {
   filtered = false;
 
   // Pagination
-  pageSize = 5;
+  productsToLoad = this.productService.productsToLoad;
+  pageSize = this.productsToLoad / 2;
   start = 0;
   end = this.pageSize;
   currentPage = 1;
-  productsToLoad = this.pageSize * 2;
 
   firstPage(): void {
     this.start = 0;
@@ -111,7 +111,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.productService.products$.pipe(filter(products => products.length > 0))
-    this.productsTotalNumber$ = this.productService.productsTotalNumber$;
+    this.productsTotalNumber$ = this.productService.productsTotalNumber$.asObservable();
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
     this.filter$ = this.filter.valueChanges

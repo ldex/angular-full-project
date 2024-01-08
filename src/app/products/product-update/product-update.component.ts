@@ -63,7 +63,7 @@ export class ProductUpdateComponent  implements OnInit {
   }
 
   createForm() {
-    let validImgUrlRegex: string = '^(https?\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,5}(?:\/\S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+\.(?:jpg|jpeg|gif|png))$';
+    let validImgUrlRegex: string = '^(https?\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,8}(?:\/\S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+\.(?:jpg|jpeg|gif|png|webp))(\/?[\/S]*)?$';
 
     this.name = new FormControl(this.product.name, [Validators.required, Validators.maxLength(50), CustomValidators.productNameValidator]);
     this.price = new FormControl(this.product.price, [Validators.required, Validators.min(0), Validators.max(10000000)]);
