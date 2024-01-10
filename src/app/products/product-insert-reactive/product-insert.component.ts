@@ -56,12 +56,12 @@ export class ProductInsertReactiveComponent  implements OnInit {
   }
 
   ngOnInit() {
-    const validImgUrlRegex: RegExp = new RegExp('^(https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,5}(?:/S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+.(?:jpg|jpeg|gif|png))$')
+    const validImgUrlRegex: RegExp = new RegExp('^(https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,5}(?:/S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+.(?:jpg|jpeg|gif|png))(\\?(?:&?[^=&]*=[^=&]*)*)?$')
 
     this.insertForm = this.fb.group(
       {
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), CustomValidators.productNameValidator]],
-        price: [null as number, [Validators.required, Validators.min(0), Validators.max(10000000)]],
+        price: [null as number, [Validators.required, Validators.min(0), Validators.max(100000)]],
         description: ['', [Validators.minLength(5), Validators.maxLength(500)]],
         imageUrl: ['', [Validators.pattern(validImgUrlRegex)]],
         discontinued: [false],

@@ -80,7 +80,7 @@ export class ProductService {
     const params = {
         _start: skip,
         _limit: take,
-        _sort: 'price',
+        _sort: 'modifiedDate',
         _order: 'desc'
     }
 

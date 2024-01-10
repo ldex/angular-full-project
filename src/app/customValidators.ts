@@ -33,7 +33,7 @@ static priceWithDescription(group) {
     if (control.value == "") {
       return null;
     }
-    if (control.value.match(/^[A-Za-z0-9 ]{3,50}$/)) {
+    if (control.value.match(/^[A-Za-z0-9- ]{3,50}$/)) {
       return null;
     } else {
       return { 'invalidProductName': true };
