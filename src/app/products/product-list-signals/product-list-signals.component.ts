@@ -1,4 +1,4 @@
-import { FavouriteService, ProductService } from "./../../services";
+import { AuthService, FavouriteService, ProductService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
   Component,
@@ -55,7 +55,8 @@ export class ProductListSignalsComponent {
   constructor(
     private productService: ProductService,
     favouriteService: FavouriteService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.products = toSignal(this.productService.products$.pipe(filter(products => products.length > 0)), {initialValue: []});
     this.productsTotalNumber = toSignal(this.productService.productsTotalNumber$.asObservable(), {initialValue: 0});
@@ -79,6 +80,10 @@ export class ProductListSignalsComponent {
     this.filteredProducts = computed(() => this.products().filter(product => product.name.toLowerCase().includes(this.filterSig().toLowerCase())));
 
     this.productsNumber = computed(() => this.filteredProducts().length);
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
   firstPage(): void {

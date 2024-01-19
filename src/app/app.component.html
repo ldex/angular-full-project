@@ -36,10 +36,10 @@
         </span>
         } |
         @if (!isLoggedIn) {
-          <a (click)="login()">login</a>
+          <a (click)="login()" style="cursor: pointer">login</a>
         }
         @if (isLoggedIn) {
-          <a (click)="logout()">logout</a>
+          <a (click)="logout()" style="cursor: pointer">logout</a>
         }
       </div>
     </footer>

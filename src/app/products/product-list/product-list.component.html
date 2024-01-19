@@ -4,10 +4,6 @@
 
 <h3>{{ message }}</h3>
 
-<ng-template #loading>
-  <h1 class="loading">Loading products</h1>
-</ng-template>
-
 @if ((products$ | async)?.length > 0) {
   <div class="right">
     {{ productsNumber$ | async }} products displayed @if (filtered) {
@@ -27,15 +23,12 @@
     <input type="text" [formControl]="filter" placeholder="filter by name" maxlength="50" style="width:100px" />
   </div>
   @if (filteredProducts$ | async; as products) {
-    <ul
-      class="products"
-      >
-      @for (product of products | orderBy: [sorter] | slice: start:end; track product) {
+    <ul class="products">
+      @for (product of products | orderBy: [sorter] | slice: start:end; track product.id) {
         <li
           [title]="product | json"
           (click)="onSelect(product)"
           [class.discontinued]="product.discontinued"
-          [class.selected]="product === selectedProduct"
           >
           <span class="name">{{ product.name | uppercase }}</span>
           <span class="description">{{ product.description }}</span>
@@ -47,7 +40,9 @@
     </ul>
   }
   <div class="left">
+    @if (isLoggedIn) {
     <a routerLink="insert/reactive">Add new product</a> |
+     }
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
     <a routerLink="signals">Signals version</a> |
     @if (mostExpensiveProduct$ | async; as mostExpensiveProduct) {
@@ -83,5 +78,5 @@
     }
   </div>
 } @else {
-  <h1 class="loading">Loading products</h1>
+  <div class="loading"></div>
 }

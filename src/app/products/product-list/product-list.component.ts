@@ -1,4 +1,4 @@
-import { FavouriteService, ProductService, SeoService } from "./../../services";
+import { AuthService, FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
   Component,
@@ -29,7 +29,8 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private favouriteService: FavouriteService,
     private router: Router,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private authService: AuthService
   ) {
 
   }
@@ -42,7 +43,6 @@ export class ProductListComponent implements OnInit {
   productsTotalNumber$: Observable<number>;
   mostExpensiveProduct$: Observable<Product>;
 
-  selectedProduct: Product;
   sorter = "-modifiedDate";
 
   filter: FormControl = new FormControl("");
@@ -67,14 +67,12 @@ export class ProductListComponent implements OnInit {
     this.start += this.pageSize;
     this.end += this.pageSize;
     this.currentPage++;
-    this.selectedProduct = null;
   }
 
   previousPage(): void {
     this.start -= this.pageSize;
     this.end -= this.pageSize;
     this.currentPage--;
-    this.selectedProduct = null;
   }
 
   loadMore(): void {
@@ -90,7 +88,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onSelect(product: Product): void {
-    this.selectedProduct = product;
     this.router.navigateByUrl("/products/" + product.id);
   }
 
@@ -107,6 +104,10 @@ export class ProductListComponent implements OnInit {
 
   get favourites(): number {
     return this.favouriteService.getFavouritesNb();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
   ngOnInit() {

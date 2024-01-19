@@ -112,7 +112,7 @@ nav a.active {
 }
 
 dialog {
-  background: rgb(241,22,83);
+  background: #f11653;
   background: linear-gradient(75deg, rgba(241,22,83,1) 8%, rgba(233,4,100,1) 21%, rgba(220,8,125,1) 44%, rgba(151,23,231,1) 74%, rgba(92,68,228,1) 92%);
   color: white;
   border-color: #000;
@@ -126,4 +126,34 @@ dialog {
 dialog::backdrop {
   background: rgba(117, 117, 117, 0.5);
   backdrop-filter: blur(2px);
+}
+
+.loading {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  border-radius: 50%;
+  -webkit-mask:radial-gradient(farthest-side,#0000 40%,#000 41%);
+  background:
+    linear-gradient(0deg ,#f1165380 50%,#f11653FF 0) center/8px 100%,
+    linear-gradient(90deg,#f1165340 50%,#f11653BF 0) center/100% 8px;
+  background-repeat: no-repeat;
+  animation: s3 0.5s infinite steps(12);
+}
+.loading::before,
+.loading::after {
+   content:"";
+   grid-area: 1/1;
+   border-radius: 50%;
+   background:inherit;
+   opacity: 0.915;
+   transform: rotate(30deg);
+}
+.loading::after {
+   opacity: 0.83;
+   transform: rotate(60deg);
+}
+
+@keyframes s3 {
+  100% {transform: rotate(1turn)}
 }
