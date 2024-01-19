@@ -20,8 +20,10 @@
       @if (!showAddToFavouritesButton(product)) {
         <button (confirm)="removeFromFavourites(product)" [confirmMessage]="'Are you sure to remove this product from your favourites?'">Remove from favourites</button>
       }
-      <button (click)="updateProduct(product)">Update</button>
-      <button (click)="dialog.open()">Delete</button>
+      @if (isLoggedIn) {
+        <button (click)="updateProduct(product)">Update</button>
+        <button (click)="dialog.open()">Delete</button>
+      }
       <modal-dialog #dialog [title]="product.name" (onClose)="deleteConfirmClosed($event)">
         <p>Are you sure to delete this product?</p>
         <div class="right">

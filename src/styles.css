@@ -1,9 +1,14 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+/* Master Styles */
 h1 {
-  color: #369;
+  display: inline;
+  background:  linear-gradient(75deg, rgba(241,22,83,1) 8%, rgba(233,4,100,1) 21%, rgba(220,8,125,1) 44%, rgba(151,23,231,1) 74%, rgba(92,68,228,1) 92%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
+  font-weight: 800;
   margin: 0px;
 }
 h2,
@@ -23,8 +28,11 @@ button {
   font-family: Cambria, Georgia;
 }
 a {
-  cursor: pointer;
   cursor: hand;
+  color: #F637E3;
+}
+a:hover {
+  color: #0546FF;
 }
 button {
   font-family: Arial;
@@ -32,16 +40,20 @@ button {
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
+  color: #607d8b;
   cursor: pointer;
   cursor: hand;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
 button:hover {
-  background-color: #cfd8dc;
+  background-color: #0546FF;
+  color: #fff;
 }
 button:disabled {
   background-color: #eee;
   color: #aaa;
   cursor: not-allowed;
+  box-shadow: none;
 }
 footer {
   padding-top: 10px;
@@ -57,102 +69,33 @@ footer {
 
 /* Navigation link styles */
 nav a {
-  padding: 5px 10px;
+  background-color: #EEE;
+  color: #5C44E4;
+  border: 2px solid #5C44E4;
   text-decoration: none;
-  margin-top: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 10rem;
+  position: relative;
+  transition: box-shadow .35s,top .3s,transform .45s;
+  top: 0;
+  left: 0;
   display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
-}
-nav a:visited,
-a:link {
-  color: #607d8b;
+  box-shadow: 0 1px 0 0 #5C44E4,0 2px 0 0 #5C44E4,0 3px 0 0 #5C44E4;
+  transform: rotateX(0) rotateY(0) rotateZ(0);
 }
 nav a:hover {
-  color: #039be5;
-  background-color: #cfd8dc;
+  color: #5C44E4;
+  box-shadow: 0 0 0 0 #5C44E4,0 0 0 0 #5C44E4,0 0 0 0 #5C44E4;
+  top: 3px;
+  transform: rotateX(5deg) rotateY(10deg) rotateZ(.5deg);
 }
 nav a.active {
-  color: #039be5;
-  background-color: yellow;
-}
-
-/* items class */
-.items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 24em;
-}
-.items li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #eee;
-  margin: 0.5em;
-  padding: 0.3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.items li:hover {
-  color: #607d8b;
-  background-color: #ddd;
-  left: 0.1em;
-}
-.items li.selected:hover {
-  background-color: #bbd8dc;
-  color: white;
-}
-.items .text {
-  position: relative;
-  top: -3px;
-}
-.items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 24em;
-}
-.items li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #eee;
-  margin: 0.5em;
-  padding: 0.3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.items li:hover {
-  color: #607d8b;
-  background-color: #ddd;
-  left: 0.1em;
-}
-.items li.selected {
-  background-color: #cfd8dc;
-  color: white;
-}
-
-.items li.selected:hover {
-  background-color: #bbd8dc;
-}
-.items .text {
-  position: relative;
-  top: -3px;
-}
-.items .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607d8b;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  margin-right: 0.8em;
-  border-radius: 4px 0 0 4px;
+  background-color: #F637E3;
+  color: #FFF;
+  box-shadow: 0 0 0 0;
+  top: 3px;
+  border: 2px solid #5C44E4!important;
+  outline: 0;
 }
 
 /* everywhere else */
@@ -168,5 +111,19 @@ nav a.active {
   color: red;
 }
 
-html, body { height: 100%; }
-body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+dialog {
+  background: rgb(241,22,83);
+  background: linear-gradient(75deg, rgba(241,22,83,1) 8%, rgba(233,4,100,1) 21%, rgba(220,8,125,1) 44%, rgba(151,23,231,1) 74%, rgba(92,68,228,1) 92%);
+  color: white;
+  border-color: #000;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 20px 8px #d0d0d0;
+  height: 100px;
+  width: 200px;
+}
+dialog::backdrop {
+  background: rgba(117, 117, 117, 0.5);
+  backdrop-filter: blur(2px);
+}

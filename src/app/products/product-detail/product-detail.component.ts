@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService } from './../../services';
+import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService, AuthService } from './../../services';
 import { Product } from './../product.interface';
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from "@angular/router";
@@ -31,8 +31,13 @@ export class ProductDetailComponent {
     private cartService:CartService,
     private cartServiceSubject:CartSubjectService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
   deleteConfirm() {
     this.showDeleteConfirmDialog = true;
