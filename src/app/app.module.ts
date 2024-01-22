@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './material/material.module';
@@ -19,7 +19,8 @@ import {
   CanDeactivateGuardService,
   LoadingDialogService,
   ErrorDialogService,
-  AuthService }
+  AuthService,
+  LoadingInterceptor}
   from './services';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -71,7 +72,12 @@ const moduleServices = [
   DialogService,
   LoadingDialogService,
   ErrorDialogService,
-  NetworkStatusService
+  NetworkStatusService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingInterceptor,
+    multi: true
+  }
 ]
 
 @NgModule({

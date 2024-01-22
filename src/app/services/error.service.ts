@@ -22,7 +22,7 @@ export class ErrorService {
   private addContextInfo(error) {
     const name = error.name || null;
     const appId = 'DemoApp';
-    const user = 'Angular Academy'; // Get it from UserService if you have any...
+    const user = 'Angular Academy'; // Get it from a UserService if you have any...
     const time = new Date().getTime();
     const id = `${appId}-${user}-${time}`;
     const url = this.locationStrategy.path();
@@ -36,6 +36,7 @@ export class ErrorService {
 
 
   private getStack(error) {
+    console.info(error)
       try {
           return StackTrace.fromError(error, {offline: true});
       } catch (error) {

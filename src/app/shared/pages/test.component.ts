@@ -23,10 +23,6 @@ export class TestComponent {
     }
 
     http_error(): void {
-        this.http.get("https://httpstat.us/408?sleep=1000").toPromise();
-    }
-
-    http_ok(): void {
-        this.http.get("https://httpstat.us/200?sleep=2000").toPromise();
+        this.http.get("https://run.mocky.io/v3/78c4a834-ff6b-4b35-8ad1-78423870ee1b").subscribe();
     }
 }

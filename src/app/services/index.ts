@@ -9,6 +9,7 @@ export * from './error-dialog.service';
 export * from './error.service';
 export * from './favourite.service';
 export * from './loading-dialog.service';
+export * from './loading-interceptor.service';
 export * from './login-route-guard.service';
 export * from './notification.service';
 export * from './product-details-resolve.service';
