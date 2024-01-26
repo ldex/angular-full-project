@@ -30,7 +30,7 @@
     {
       "name": "products-api",
       "urls": [
-        "http://storerestservice.azurewebsites.net/api/products/"
+        "https://retoolapi.dev/U1A9pK/products/"
       ],
       "cacheConfig": {
         "strategy": "performance",
