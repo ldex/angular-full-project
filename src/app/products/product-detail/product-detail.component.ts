@@ -39,14 +39,6 @@ export class ProductDetailComponent {
     return this.authService.isLoggedIn();
   }
 
-  deleteConfirm() {
-    this.showDeleteConfirmDialog = true;
-  }
-
-  deleteConfirmClosed(msg) {
-    console.info("Delete confirm: " + msg);
-  }
-
   deleteProduct(id: number) {
     this.productService
       .deleteProduct(id)

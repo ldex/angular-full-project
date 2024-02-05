@@ -1,12 +1,8 @@
 <h2>
-  {{ title }} (with Signals)
+  {{ title() }} (with Signals)
 </h2>
 
-<h3>{{ message }}</h3>
-
-<ng-template #loading>
-  <h1 class="loading">Loading products</h1>
-</ng-template>
+<h3>{{ message() }}</h3>
 
 @if (products()?.length > 0) {
   <div class="right">
@@ -32,7 +28,7 @@
     <ul
       class="products"
       >
-      @for (product of products | orderBy: [sorter] | slice: start:end; track product) {
+      @for (product of products | orderBy: [sorter()] | slice: start():end(); track product) {
         <li
           [title]="product | json"
           (click)="onSelect(product)"
@@ -63,11 +59,11 @@
     }
   </div>
   <div class="right">
-    <button (click)="previousPage()" [disabled]="start == 0">
+    <button (click)="previousPage()" [disabled]="start() == 0">
       < Previous Page
     </button>
-    Page {{ currentPage }}
-    @if (productsNumber() > end) {
+    Page {{ currentPage() }}
+    @if (productsNumber() > end()) {
       <button
         (click)="nextPage()"
         >
@@ -76,13 +72,13 @@
     }
     @if (
       !filtered &&
-      productsNumber() <= end &&
+      productsNumber() <= end() &&
       productsNumber() < productsTotalNumber()
       ) {
       <button
         (click)="loadMore()"
         >
-        Load {{productsToLoad}} more...
+        Load {{productsToLoad()}} more...
       </button>
     }
   </div>

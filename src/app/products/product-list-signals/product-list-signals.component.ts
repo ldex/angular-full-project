@@ -26,8 +26,8 @@ import { Title } from "@angular/platform-browser";
 })
 export class ProductListSignalsComponent {
 
-  title = "Products";
-  message = "";
+  title = signal("Products");
+  message = signal("");
 
   products: Signal<Product[]>;
   productsNumber: Signal<number>;
@@ -37,7 +37,7 @@ export class ProductListSignalsComponent {
 
 
   selectedProduct: Product;
-  sorter = "-modifiedDate";
+  sorter = signal("-modifiedDate");
 
   filter: FormControl = new FormControl("");
   filter$: Observable<string>;
@@ -46,11 +46,11 @@ export class ProductListSignalsComponent {
   filtered = false;
 
   // Pagination
-  pageSize = 5;
-  start = 0;
-  end = this.pageSize;
-  currentPage = 1;
-  productsToLoad = this.pageSize * 2;
+  pageSize = signal(5);
+  start = signal(0);
+  end = signal(this.pageSize());
+  currentPage = signal(1);
+  productsToLoad = computed(() => this.pageSize() * 2);
 
   constructor(
     private productService: ProductService,
@@ -87,34 +87,34 @@ export class ProductListSignalsComponent {
   }
 
   firstPage(): void {
-    this.start = 0;
-    this.end = this.pageSize;
-    this.currentPage = 1;
+    this.start.set(0);
+    this.end.set(this.pageSize());
+    this.currentPage.set(1);
   }
 
   nextPage(): void {
-    this.start += this.pageSize;
-    this.end += this.pageSize;
-    this.currentPage++;
+    this.start.update(value => value + this.pageSize());
+    this.end.update(value => value + this.pageSize());
+    this.currentPage.update(value => value++);
     this.selectedProduct = null;
   }
 
   previousPage(): void {
-    this.start -= this.pageSize;
-    this.end -= this.pageSize;
-    this.currentPage--;
+    this.start.update(value => value - this.pageSize());
+    this.end.update(value => value - this.pageSize());
+    this.currentPage.update(value => value--);
     this.selectedProduct = null;
   }
 
   loadMore(): void {
-    let take: number = this.productsToLoad;
-    let skip: number = this.end;
+    let take = this.productsToLoad;
+    let skip = this.end;
 
-    this.productService.loadProducts(skip, take);
+    this.productService.loadProducts(skip(), take());
   }
 
   sortList(propertyName: string): void {
-    this.sorter = this.sorter.startsWith("-") ? propertyName : "-" + propertyName;
+    this.sorter.set(this.sorter().startsWith("-") ? propertyName : "-" + propertyName);
     this.firstPage();
   }
 
@@ -129,8 +129,8 @@ export class ProductListSignalsComponent {
   }
 
   newFavourite(product: Product): void {
-    this.message = `Product
+    this.message.set(`Product
                         ${product.name}
-                        added to your favourites!`;
+                        added to your favourites!`);
   }
 }

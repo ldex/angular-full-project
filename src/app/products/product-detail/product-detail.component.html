@@ -22,16 +22,16 @@
       }
       @if (isLoggedIn) {
         <button (click)="updateProduct(product)">Update</button>
-        <button (click)="dialog.open()">Delete</button>
+        <button (click)="confirm.showModal()">Delete</button>
       }
-      <modal-dialog #dialog [title]="product.name" (onClose)="deleteConfirmClosed($event)">
-        <p>Are you sure to delete this product?</p>
+      <dialog #confirm>
+        <p>Are you sure to delete this product ?</p>
         <div class="right">
           <button (click)="deleteProduct(product.id)" autofocus>Ok</button>
           &nbsp;
-          <button (click)="dialog.close()">Cancel</button>
+          <button (click)="confirm.close()">Cancel</button>
         </div>
-      </modal-dialog>
+      </dialog>
     </p>
   </div>
 }
