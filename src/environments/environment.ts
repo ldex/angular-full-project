@@ -9,8 +9,8 @@ export const environment = {
 
 export const config = {
   apiUrl: 'https://retoolapi.dev/U1A9pK',
-  adminApiUrl: 'https://run.mocky.io/v3/4a98d5e8-6631-4004-811c-25d6528ca174',
-  authUrl: 'https://run.mocky.io/v3/34db3e7e-7f68-4752-ab44-34cb16cf57f5',
+  adminApiUrl: 'https://angular.wiremockapi.cloud/admin/',
+  authUrl: 'https://angular.wiremockapi.cloud/auth/',
   storageTokenKey: 'auth_token',
   useCartSubject: true
 };

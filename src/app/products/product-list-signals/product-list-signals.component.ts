@@ -27,6 +27,7 @@ import { Title } from "@angular/platform-browser";
 export class ProductListSignalsComponent {
 
   title = signal("Products");
+
   message = signal("");
 
   products: Signal<Product[]>;
