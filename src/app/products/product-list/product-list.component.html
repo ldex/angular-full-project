@@ -6,7 +6,7 @@
 
 @if ((products$ | async)?.length > 0) {
   <div class="right">
-    {{ productsNumber$ | async }} products displayed @if (filtered) {
+    {{ productsNumber$ | async | i18nPlural:{"=0": "no product to display", "=1": "1 product displayed", "other": "# products displayed"} }} @if (filtered) {
     <span>(filtered)</span>
     } |
     {{ productsTotalNumber$ | async }} on server |

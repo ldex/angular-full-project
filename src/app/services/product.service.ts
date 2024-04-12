@@ -40,7 +40,9 @@ export class ProductService {
           map((products) =>
             [...products].sort((p1, p2) => (p1.price > p2.price ? -1 : 1))
           ),
+          // [{p1}, {p2}, {p3}]
           mergeMap((p) => p), // or mergeAll(),
+          // {p1}, {p2}, {p3}
           first() // complete!
         )
       )
