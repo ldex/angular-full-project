@@ -20,7 +20,8 @@ import {
   LoadingDialogService,
   ErrorDialogService,
   AuthService,
-  LoadingInterceptor}
+  LoadingInterceptor,
+  AuthInterceptor}
   from './services';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -44,7 +45,7 @@ const moduleImports = [
   JwtModule.forRoot({
     config: {
       tokenGetter: GetToken,
-      allowedDomains: ['localhost:10001', 'storerestservice.azurewebsites.net']
+      allowedDomains: ['localhost:4200', 'https://angular.wiremockapi.cloud/admin/']
     }
   }),
   AppRoutingModule,
@@ -73,6 +74,11 @@ const moduleServices = [
   LoadingDialogService,
   ErrorDialogService,
   NetworkStatusService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: LoadingInterceptor,
