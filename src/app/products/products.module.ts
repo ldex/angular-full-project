@@ -55,14 +55,12 @@ const moduleServices = [
 ]
 
 @NgModule({
-    declarations: [
+    imports: [
+        ...moduleImports,
         ...moduleComponents,
         ...moduleDirectives,
         ...modulePipes,
         ProductInsertTemplateComponent
-    ],
-    imports: [
-        ...moduleImports
     ],
     exports: [
         ...moduleExports

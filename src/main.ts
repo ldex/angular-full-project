@@ -1,20 +1,13 @@
-import { enableProdMode, ApplicationRef } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { ApplicationRef } from '@angular/core';
+import { enableDebugTools, bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-import { enableDebugTools } from '@angular/platform-browser';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, appConfig)
 .then(moduleRef => {
 	const applicationRef = moduleRef.injector.get(ApplicationRef);
 	const componentRef = applicationRef.components[0];
 	// allows to run `ng.profiler.timeChangeDetection();`
 	enableDebugTools(componentRef);
-})
-.catch(err => console.log(err));
+});
 

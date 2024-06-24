@@ -3,7 +3,8 @@ import { fadeInAnimation } from 'src/app/animations';
 
 @Component({
     templateUrl: './demo-worker.component.html',
-    animations: [fadeInAnimation]
+    animations: [fadeInAnimation],
+    standalone: true
 })
 export class DemoWorkerComponent {
 

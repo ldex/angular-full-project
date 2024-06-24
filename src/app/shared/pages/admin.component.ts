@@ -4,7 +4,8 @@ import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './admin.component.html',
-    animations: [fadeInAnimation]
+    animations: [fadeInAnimation],
+    standalone: true
 })
 export class AdminComponent implements OnInit {
 

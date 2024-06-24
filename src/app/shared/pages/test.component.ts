@@ -6,7 +6,8 @@ import { fadeInAnimation } from 'src/app/animations';
 @Component({
     templateUrl: './test.component.html',
     animations: [fadeInAnimation],
-    host: { '[@fadeInAnimation]': '' }
+    host: { '[@fadeInAnimation]': '' },
+    standalone: true
 })
 export class TestComponent {
     constructor(

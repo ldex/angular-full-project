@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { Product } from '../product.interface';
 import { Router } from '@angular/router';
 import { ProductService, NotificationService } from 'src/app/services';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-product-insert-template',
-  templateUrl: './product-insert.component.html',
-  styleUrls: ['./product-insert.component.css']
+    selector: 'app-product-insert-template',
+    templateUrl: './product-insert.component.html',
+    styleUrls: ['./product-insert.component.css'],
+    standalone: true,
+    imports: [FormsModule]
 })
 export class ProductInsertTemplateComponent {
 

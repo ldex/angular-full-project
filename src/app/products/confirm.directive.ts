@@ -1,7 +1,8 @@
 import { Directive, Input, HostListener, EventEmitter, Output } from '@angular/core';
 
 @Directive({
-    selector: '[confirm]'
+    selector: '[confirm]',
+    standalone: true
 })
 export class ConfirmDirective {
     @Output() confirm = new EventEmitter<any>(); // interesting: we can reuse the selector name for an output!

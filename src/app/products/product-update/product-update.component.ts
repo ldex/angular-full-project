@@ -1,20 +1,17 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService, DialogService, NotificationService } from './../../services';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../product.interface';
 import { Observable, from } from 'rxjs';
 import { CustomValidators } from '../../customValidators';
 
 @Component({
-  selector: 'app-product-update',
-  templateUrl: './product-update.component.html',
-  styleUrls: ['./product-update.component.css']
+    selector: 'app-product-update',
+    templateUrl: './product-update.component.html',
+    styleUrls: ['./product-update.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class ProductUpdateComponent  implements OnInit {
 

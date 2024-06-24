@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'groupBy'})
+@Pipe({
+    name: 'groupBy',
+    standalone: true
+})
 export class GroupByPipe implements PipeTransform {
   transform(value: Array<any>, field: string): Array<any> {
     const groupedObj = value.reduce((prev, cur)=> {

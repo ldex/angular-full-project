@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, filter, map } from 'rxjs';
 import { Product } from '../product.interface';
 import { CartSubjectService, SeoService } from './../../services';
+import { GroupByPipe } from '../groupBy.pipe';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
     selector: 'cart-content',
     templateUrl: './product-cart.component.html',
-    styleUrls: ['./product-cart.component.css']
+    styleUrls: ['./product-cart.component.css'],
+    standalone: true,
+    imports: [AsyncPipe, CurrencyPipe, GroupByPipe]
 })
 export class ProductCartComponent implements OnInit {
 

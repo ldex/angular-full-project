@@ -8,7 +8,7 @@ import {
   Signal
 } from "@angular/core";
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import {
   Observable,
   tap,
@@ -16,13 +16,17 @@ import {
   debounceTime,
   filter
 } from "rxjs";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
+import { OrderBy } from "../orderBy.pipe";
+import { UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe } from "@angular/common";
 
 @Component({
-  selector: 'app-product-list-signals',
-  templateUrl: './product-list-signals.component.html',
-  styleUrls: ['./product-list-signals.component.css']
+    selector: 'app-product-list-signals',
+    templateUrl: './product-list-signals.component.html',
+    styleUrls: ['./product-list-signals.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, RouterLink, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, OrderBy]
 })
 export class ProductListSignalsComponent {
 
