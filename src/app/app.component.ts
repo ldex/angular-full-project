@@ -1,13 +1,17 @@
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { AuthService, CartService, CartSubjectService, NetworkStatusService } from './services/';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/environment';
+import { AsyncPipe } from '@angular/common';
+import { NotificationComponent } from './shared/notification/notification.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  imports: [RouterModule, AsyncPipe, NotificationComponent],
+  standalone: true
 })
 export class AppComponent implements OnInit {
   title = 'Angular Store';

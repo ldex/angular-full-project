@@ -14,6 +14,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ErrorHandlerModule } from './errors/error-handler.module';
 
 const moduleServices = [
+    ProductService,
     FavouriteService,
     AuthService,
     AdminService,
