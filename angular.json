@@ -49,7 +49,7 @@
             "webWorkerTsConfig": "tsconfig.worker.json",
             "allowedCommonJsDependencies": [
               "stacktrace-js"
-          ],
+            ],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,

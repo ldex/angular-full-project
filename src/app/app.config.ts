@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   ErrorHandler,
   importProvidersFrom,
+  isDevMode,
 } from "@angular/core";
 import {
   PreloadAllModules,
@@ -43,7 +44,7 @@ import {
   NotificationService,
 } from "./services";
 import { config, environment } from "src/environments/environment";
-import { ServiceWorkerModule } from "@angular/service-worker";
+import { provideServiceWorker, ServiceWorkerModule } from "@angular/service-worker";
 import { GlobalErrorHandler } from "./errors/global-error-handler";
 import { HttpErrorInterceptor } from "./errors/http-error.interceptor";
 
@@ -120,6 +121,10 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules),
       withRouterConfig({ onSameUrlNavigation: "reload" })
     ),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     provideAnimationsAsync(),
   ],
 };
