@@ -2,6 +2,7 @@ import { AuthService, FavouriteService, ProductService, SeoService } from "./../
 import { Product } from "./../product.interface";
 import {
   Component,
+  HostBinding,
   OnInit,
   ViewEncapsulation
 } from "@angular/core";
@@ -18,16 +19,19 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { OrderBy } from "../orderBy.pipe";
 import { AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe } from "@angular/common";
+import { fadeInAnimation } from "src/app/animations";
 
 @Component({
     selector: "app-product-list",
     templateUrl: "./product-list.component.html",
     styleUrls: ["./product-list.component.css"],
     encapsulation: ViewEncapsulation.Emulated,
+    animations: [fadeInAnimation],
     standalone: true,
     imports: [FormsModule, ReactiveFormsModule, RouterLink, AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe, OrderBy]
 })
 export class ProductListComponent implements OnInit {
+  @HostBinding('@fadeInAnimation') animation = true;
 
   constructor(
     private productService: ProductService,

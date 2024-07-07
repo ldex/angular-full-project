@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, filter, map } from 'rxjs';
+import { Observable, filter, map, of } from 'rxjs';
 import { Product } from '../product.interface';
-import { CartSubjectService, SeoService } from './../../services';
+import { CartService, CartSubjectService, SeoService } from './../../services';
 import { GroupByPipe } from '../groupBy.pipe';
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { config } from 'src/environments/environment';
 
 @Component({
     selector: 'cart-content',
@@ -16,15 +17,22 @@ export class ProductCartComponent implements OnInit {
 
     products$: Observable<Product[]>;
     productsTotal$: Observable<number>;
+    useCartSubject = config.useCartSubject;
 
     constructor(
-        private cartService: CartSubjectService,
+        private cartService:CartService,
+        private cartServiceSubject:CartSubjectService,
         private seoService: SeoService
     ) { }
 
     ngOnInit() {
         this.seoService.setTitle('Shopping Cart');
-        this.products$ = this.cartService.products$;
+
+        if(this.useCartSubject)
+            this.products$ = this.cartServiceSubject.products$;
+        else
+            this.products$ = of(this.cartService.getProducts())
+
         this.productsTotal$ = this
                                 .products$
                                 .pipe(
