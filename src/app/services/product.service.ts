@@ -18,10 +18,10 @@ import { config } from "../../environments/environment";
 
 @Injectable()
 export class ProductService {
-  private baseUrl: string = `${config.apiUrl}/products`;
+  private readonly baseUrl: string = `${config.apiUrl}/products`;
 
-  private products = new BehaviorSubject<Product[]>([]);
-  products$: Observable<Product[]> = this.products.asObservable();
+  private readonly products = new BehaviorSubject<Product[]>([]);
+  readonly products$: Observable<Product[]> = this.products.asObservable();
   mostExpensiveProduct$: Observable<Product>;
   productsTotalNumber$: BehaviorSubject<number> = new BehaviorSubject(0);
   productsToLoad = 10;

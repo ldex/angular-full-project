@@ -1,11 +1,12 @@
-import { AuthService, FavouriteService, ProductService } from "./../../services";
+import { AuthService, FavouriteService, ProductSignalService } from "./../../services";
 import { Product } from "./../product.interface";
 import {
   Component,
   signal,
   effect,
   computed,
-  Signal
+  Signal,
+  inject
 } from "@angular/core";
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from "@angular/router";
@@ -34,12 +35,16 @@ export class ProductListSignalsComponent {
 
   message = signal("");
 
-  products: Signal<Product[]>;
-  productsNumber: Signal<number>;
-  productsTotalNumber: Signal<number>;
-  mostExpensiveProduct: Signal<Product>;
-  favourites: Signal<number>;
+  private readonly productService = inject(ProductSignalService);
+  private readonly favouriteService = inject(FavouriteService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
+  products: Signal<Product[]> = this.productService.products;
+  productsNumber: Signal<number>;
+  productsTotalNumber: Signal<number> = this.productService.productsTotalNumber;
+  mostExpensiveProduct: Signal<Product> = this.productService.mostExpensiveProduct;
+  favourites: Signal<number> = signal(this.favouriteService.getFavouritesNb());
 
   selectedProduct: Product;
   sorter = signal("-modifiedDate");
@@ -58,16 +63,7 @@ export class ProductListSignalsComponent {
   productsToLoad = computed(() => this.pageSize() * 2);
 
   constructor(
-    private productService: ProductService,
-    favouriteService: FavouriteService,
-    private router: Router,
-    private authService: AuthService
   ) {
-    this.products = toSignal(this.productService.products$.pipe(filter(products => products.length > 0)), {initialValue: []});
-    this.productsTotalNumber = toSignal(this.productService.productsTotalNumber$.asObservable(), {initialValue: 0});
-    this.mostExpensiveProduct = toSignal(this.productService.mostExpensiveProduct$);
-    this.favourites = signal(favouriteService.getFavouritesNb());
-
     this.filter$ = this.filter.valueChanges
       .pipe(
         debounceTime(500),
@@ -100,14 +96,14 @@ export class ProductListSignalsComponent {
   nextPage(): void {
     this.start.update(value => value + this.pageSize());
     this.end.update(value => value + this.pageSize());
-    this.currentPage.update(value => value++);
+    this.currentPage.update(value => ++value);
     this.selectedProduct = null;
   }
 
   previousPage(): void {
     this.start.update(value => value - this.pageSize());
     this.end.update(value => value - this.pageSize());
-    this.currentPage.update(value => value--);
+    this.currentPage.update(value => --value);
     this.selectedProduct = null;
   }
 

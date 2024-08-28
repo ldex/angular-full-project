@@ -12,5 +12,6 @@ export * from './loading-dialog.service';
 export * from './loading-interceptor.service';
 export * from './notification.service';
 export * from './product.service';
+export * from './product-signal.service';
 export * from './seo.service';
 export * from './network-status.service';

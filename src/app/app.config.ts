@@ -28,6 +28,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 
 import {
   ProductService,
+  ProductSignalService,
   FavouriteService,
   AuthService,
   AdminService,
@@ -41,7 +42,7 @@ import {
   LoadingDialogService,
   LoadingInterceptor,
   NetworkStatusService,
-  NotificationService,
+  NotificationService
 } from "./services";
 import { config, environment } from "src/environments/environment";
 import { provideServiceWorker, ServiceWorkerModule } from "@angular/service-worker";
@@ -50,6 +51,7 @@ import { HttpErrorInterceptor } from "./errors/http-error.interceptor";
 
 const appServices = [
   ProductService,
+  ProductSignalService,
   FavouriteService,
   AuthService,
   AdminService,
