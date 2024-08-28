@@ -1,5 +1,5 @@
-import { AuthService, FavouriteService, ProductSignalService } from "./../../services";
-import { Product } from "./../product.interface";
+import { AuthService, FavouriteService } from "../../services";
+import { Product } from "../product.interface";
 import {
   Component,
   signal,
@@ -21,21 +21,22 @@ import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { OrderBy } from "../orderBy.pipe";
 import { UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe } from "@angular/common";
+import { ProductStore } from "src/app/store/product.store";
 
 @Component({
-    selector: 'app-product-list-signals',
-    templateUrl: './product-list-signals.component.html',
-    styleUrls: ['./product-list-signals.component.css'],
+    selector: 'app-product-list-signal-store',
+    templateUrl: './product-list-signal-store.component.html',
+    styleUrls: ['./product-list-signal-store.component.css'],
     standalone: true,
     imports: [FormsModule, ReactiveFormsModule, RouterLink, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, OrderBy]
 })
-export class ProductListSignalsComponent {
+export class ProductListSignalStoreComponent {
 
   title = signal("Products");
 
   message = signal("");
 
-  private readonly productService = inject(ProductSignalService);
+  private readonly productService = inject(ProductStore);
   private readonly favouriteService = inject(FavouriteService);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);

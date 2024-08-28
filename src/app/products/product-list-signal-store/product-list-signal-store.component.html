@@ -1,18 +1,20 @@
 <h2>
-  {{ title }}
+  {{ title() }} (with NgRx Signal Store)
 </h2>
 
-<h3>{{ message }}</h3>
+<h3>{{ message() }}</h3>
 
-@if ((products$ | async)?.length > 0) {
+@if (products()?.length > 0) {
   <div class="right">
-    {{ productsNumber$ | async | i18nPlural:{"=0": "no product to display", "=1": "1 product displayed", "other": "# products displayed"} }} @if (filtered) {
+    {{ productsNumber() }} products displayed @if (filtered) {
     <span>(filtered)</span>
     } |
-    {{ productsTotalNumber$ | async }} on server |
+    {{ productsTotalNumber() }} on server |
     <span>
-      {favourites, plural, =0 {no favourite} =1 {1 favourite} other
-      {{{favourites}} favourites} }
+      {favourites(),
+      plural, =0
+      {no favourite} =1
+      {1 favourite} other {{{favourites()}} favourites} }
     </span>
   </div>
   <div>
@@ -22,13 +24,16 @@
     Search :
     <input type="text" [formControl]="filter" placeholder="filter by name" maxlength="50" style="width:100px" />
   </div>
-  @if (filteredProducts$ | async; as products) {
-    <ul class="products">
-      @for (product of products | orderBy: [sorter] | slice: start:end; track product.id) {
+  @if (filteredProducts(); as products) {
+    <ul
+      class="products"
+      >
+      @for (product of products | orderBy: [sorter()] | slice: start():end(); track product.id) {
         <li
           [title]="product | json"
           (click)="onSelect(product)"
           [class.discontinued]="product.discontinued"
+          [class.selected]="product === selectedProduct"
           >
           <span class="name">{{ product.name | uppercase }}</span>
           <span class="description">{{ product.description }}</span>
@@ -41,12 +46,12 @@
   }
   <div class="left">
     @if (isLoggedIn) {
-    <a routerLink="insert/reactive">Add new product</a> |
-     }
+      <a routerLink="/products/insert/reactive">Add new product</a> |
+       }
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
-    <a routerLink="signals">Signals version</a> |
-    <a routerLink="signalstore">Signal Store version</a> |
-    @if (mostExpensiveProduct$ | async; as mostExpensiveProduct) {
+    <a routerLink="/products">RxJS version</a> |
+    <a routerLink="/products/signals">Signals version</a> |
+    @if (mostExpensiveProduct(); as mostExpensiveProduct) {
       <span>
         Most expensive:
         {{ mostExpensiveProduct?.name }}
@@ -55,11 +60,11 @@
     }
   </div>
   <div class="right">
-    <button (click)="previousPage()" [disabled]="start == 0">
+    <button (click)="previousPage()" [disabled]="start() == 0">
       < Previous Page
     </button>
-    Page {{ currentPage }}
-    @if ((productsNumber$ | async) > end) {
+    Page {{ currentPage() }}
+    @if (productsNumber() > end()) {
       <button
         (click)="nextPage()"
         >
@@ -68,13 +73,13 @@
     }
     @if (
       !filtered &&
-      (productsNumber$ | async) <= end &&
-      (productsNumber$ | async) < (productsTotalNumber$ | async)
+      productsNumber() <= end() &&
+      productsNumber() < productsTotalNumber()
       ) {
       <button
         (click)="loadMore()"
         >
-        Load {{productsToLoad}} more...
+        Load {{productsToLoad()}} more...
       </button>
     }
   </div>

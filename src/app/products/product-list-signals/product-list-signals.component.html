@@ -28,7 +28,7 @@
     <ul
       class="products"
       >
-      @for (product of products | orderBy: [sorter()] | slice: start():end(); track product) {
+      @for (product of products | orderBy: [sorter()] | slice: start():end(); track product.id) {
         <li
           [title]="product | json"
           (click)="onSelect(product)"
@@ -50,6 +50,7 @@
        }
     <a href="javascript:void(0)" (click)="refreshList()">Refresh list</a> |
     <a routerLink="/products">RxJS version</a> |
+    <a routerLink="/products/signalstore">Signal Store version</a> |
     @if (mostExpensiveProduct(); as mostExpensiveProduct) {
       <span>
         Most expensive:

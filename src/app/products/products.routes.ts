@@ -8,10 +8,12 @@ import { ProductListSignalsComponent } from "./product-list-signals/product-list
 import { ProductListComponent } from "./product-list/product-list.component";
 import { ProductUpdateComponent } from "./product-update/product-update.component";
 import { productResolver } from "./product.resolver";
+import { ProductListSignalStoreComponent } from "./product-list-signal-store/product-list-signal-store.component";
 
 export const productsRoutes: Routes = [
   { path: '',       component: ProductListComponent, title: 'Products List' },
   { path: 'signals',       component: ProductListSignalsComponent, title: 'Products List' },
+  { path: 'signalstore', component: ProductListSignalStoreComponent, title: 'Products List' },
   { path: 'insert/reactive', component: ProductInsertReactiveComponent, canDeactivate: [CanDeactivateGuardService], title: 'Creating a new Product' },
   { path: 'insert/template', component: ProductInsertTemplateComponent, canDeactivate: [CanDeactivateGuardService], title: 'Creating a new Product' },
   { path: 'update/:id', component: ProductUpdateComponent, canDeactivate: [CanDeactivateGuardService], resolve: { product: productResolver } },
