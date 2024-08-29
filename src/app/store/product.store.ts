@@ -13,12 +13,17 @@ import { delay, filter, first, map, mergeMap, Observable, of, pipe, shareReplay,
 import { config } from 'src/environments/environment';
 import { Product } from '../products/product.interface';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { NotificationService } from '../services';
+import { tapResponse } from '@ngrx/operators';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 export const ProductStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('products'),
   withState({
-    baseUrl: `${config.apiUrl}/products`,
-    products: [],
+    _baseUrl: `${config.apiUrl}/products`,
+    products: [] as Product[],
     productsTotalNumber: 0,
     productsToLoad: 10
   }),
@@ -42,7 +47,21 @@ export const ProductStore = signalStore(
         mostExpensiveProduct: toSignal(mostExpensiveProduct$),
     }
   }),
-  withMethods((store, http = inject(HttpClient)) => ({
+  withMethods(
+    (store) => ({
+      clearList() {
+        patchState(store, { products: [] });
+        this.loadProducts();
+      }
+    })
+  ),
+  withMethods(
+    (
+      store,
+      http = inject(HttpClient),
+      router = inject(Router),
+      notificationService = inject(NotificationService)
+    ) => ({
 
     loadProducts(skip: number = 0, take: number = store.productsToLoad()) {
         if (skip == 0 && store.products().length > 0) return;
@@ -60,7 +79,7 @@ export const ProductStore = signalStore(
         };
 
         http
-          .get(store.baseUrl(), options)
+          .get(store._baseUrl(), options)
           .pipe(
             delay(200),
             tap(response => {
@@ -80,29 +99,41 @@ export const ProductStore = signalStore(
 
     },
 
-    deleteProduct(id: number): Observable<any> {
-        return http.delete(store.baseUrl() + '/' + id);
+    deleteProduct: rxMethod<Number>(
+      pipe(
+        switchMap((id) =>
+          http.delete(store._baseUrl() + '/' + id).pipe(
+            tapResponse({
+              next: () => {
+                store.clearList();
+                notificationService.notifyMessage('Product deleted');
+                router.navigateByUrl("/products?refresh")
+              },
+              error: ({ error }) => notificationService.notifyError('Could not delete product. ' + error),
+            }),
+          ),
+        ),
+      ),
+    ),
+
+    _deleteProduct(id: number): Observable<any> {
+        return http.delete(store._baseUrl() + '/' + id);
     },
 
     insertProduct(newProduct: Product): Observable<Product> {
         newProduct.modifiedDate = new Date();
-        return http.post<Product>(store.baseUrl(), newProduct);
+        return http.post<Product>(store._baseUrl(), newProduct);
     },
 
     updateProduct(id: number, updatedProduct: Product): Observable<Product> {
         updatedProduct.id = id;
         updatedProduct.modifiedDate = new Date();
-        return http.put<Product>(store.baseUrl() + '/' + id, updatedProduct);
+        return http.put<Product>(store._baseUrl() + '/' + id, updatedProduct);
     },
 
     getProduct(id: number | string): Observable<Product> {
-        let url: string = store.baseUrl() + '/' + id;
+        let url: string = store._baseUrl() + '/' + id;
         return http.get<Product>(url);
-    },
-
-    clearList() {
-        patchState(store, { products: [] });
-        this.loadProducts();
     }
   })),
   withHooks({
