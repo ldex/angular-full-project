@@ -23,9 +23,9 @@ export const ProductStore = signalStore(
   withDevtools('products'),
   withState({
     _baseUrl: `${config.apiUrl}/products`,
-    products: [] as Product[],
-    productsTotalNumber: 0,
-    productsToLoad: 10
+    _pageToLoad: 1,
+    _productsToLoad: 10,
+    products: [] as Product[]
   }),
   withComputed(({ products }) => {
     const mostExpensiveProduct$: Observable<Product> = toObservable<Product[]>(products).pipe(
@@ -51,6 +51,7 @@ export const ProductStore = signalStore(
     (store) => ({
       clearList() {
         patchState(store, { products: [] });
+        patchState(store, { _pageToLoad: 1 });
         this.loadProducts();
       }
     })
@@ -63,34 +64,28 @@ export const ProductStore = signalStore(
       notificationService = inject(NotificationService)
     ) => ({
 
-    loadProducts(skip: number = 0, take: number = store.productsToLoad()) {
-        if (skip == 0 && store.products().length > 0) return;
-
+    loadProducts() {
         const params = {
-            _start: skip,
-            _limit: take,
-            _sort: 'modifiedDate',
-            _order: 'desc'
+          page: store._pageToLoad(),
+          limit: store._productsToLoad(),
+          sortBy: 'modifiedDate',
+          order: 'desc'
         }
 
+        patchState(store, { _pageToLoad: store._pageToLoad()+1 });
+
         const options = {
-          params: params,
-          observe: 'response' as 'response' // in order to read params from the response header
+          params: params
         };
 
         http
-          .get(store._baseUrl(), options)
+          .get<Product[]>(store._baseUrl(), options)
           .pipe(
             delay(200),
-            tap(response => {
-              let count = response.headers.get('X-Total-Count') // total number of products
-              if(count)
-                patchState(store, { productsTotalNumber: Number(count) });
-            }),
             shareReplay()
           )
-          .subscribe((response: HttpResponse<Product[]>) => {
-            let newProducts = response.body;
+          .subscribe(response => {
+            let newProducts = response;
 
             let currentProducts = store.products();
             let mergedProducts = currentProducts.concat(newProducts);
@@ -134,11 +129,11 @@ export const ProductStore = signalStore(
     getProduct(id: number | string): Observable<Product> {
         let url: string = store._baseUrl() + '/' + id;
         return http.get<Product>(url);
-    }
+    },
   })),
   withHooks({
     onInit: ({ loadProducts }) => {
-        loadProducts();
+      loadProducts();
     },
   })
 );

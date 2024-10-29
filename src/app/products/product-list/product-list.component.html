@@ -6,10 +6,9 @@
 
 @if ((products$ | async)?.length > 0) {
   <div class="right">
-    {{ productsNumber$ | async | i18nPlural:{"=0": "no product to display", "=1": "1 product displayed", "other": "# products displayed"} }} @if (filtered) {
+    {{ productsNumber$ | async | i18nPlural:{"=0": "no product", "=1": "1 product loaded", "other": "# products loaded"} }} @if (filtered) {
     <span>(filtered)</span>
     } |
-    {{ productsTotalNumber$ | async }} on server |
     <span>
       {favourites, plural, =0 {no favourite} =1 {1 favourite} other
       {{{favourites}} favourites} }
@@ -68,13 +67,11 @@
     }
     @if (
       !filtered &&
-      (productsNumber$ | async) <= end &&
-      (productsNumber$ | async) < (productsTotalNumber$ | async)
-      ) {
+      (productsNumber$ | async) <= end) {
       <button
         (click)="loadMore()"
         >
-        Load {{productsToLoad}} more...
+        Load 10 more...
       </button>
     }
   </div>

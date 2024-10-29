@@ -43,7 +43,7 @@ export class ProductListSignalStoreComponent {
 
   products: Signal<Product[]> = this.productService.products;
   productsNumber: Signal<number>;
-  productsTotalNumber: Signal<number> = this.productService.productsTotalNumber;
+  //productsTotalNumber: Signal<number> = this.productService.productsTotalNumber;
   mostExpensiveProduct: Signal<Product> = this.productService.mostExpensiveProduct;
   favourites: Signal<number> = signal(this.favouriteService.getFavouritesNb());
 
@@ -109,10 +109,7 @@ export class ProductListSignalStoreComponent {
   }
 
   loadMore(): void {
-    let take = this.productsToLoad();
-    let skip = this.end();
-
-    this.productService.loadProducts(skip, take);
+    this.productService.loadProducts();
   }
 
   sortList(propertyName: string): void {

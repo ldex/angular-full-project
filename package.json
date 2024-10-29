@@ -2,6 +2,7 @@
   "name": "demo-app",
   "version": "0.0.0",
   "scripts": {
+    "explorer": "source-map-explorer dist/DemoApp/**/*.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

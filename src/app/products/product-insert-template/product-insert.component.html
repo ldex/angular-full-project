@@ -81,7 +81,7 @@
     placeholder="http://"
     ngModel
     #imageUrl="ngModel"
-    pattern="^(https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,5}(?:/S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+.(?:jpg|jpeg|gif|png))(\\?(?:&?[^=&]*=[^=&]*)*)?$">
+    pattern="^(https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,5}(?:/S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+.)(\\?(?:&?[^=&]*=[^=&]*)*)?$">
     @if (imageUrl.dirty && imageUrl.invalid) {
       <div
         class="errorMessage">

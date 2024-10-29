@@ -1,10 +1,9 @@
 import { Product } from "../products/product.interface";
 import { Injectable, Signal, signal, computed, inject } from "@angular/core";
-import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import {
   Observable,
-  BehaviorSubject,
   of,
   first,
   shareReplay,
@@ -30,10 +29,8 @@ export class ProductSignalService {
   readonly #products = signal<Product[]>([]);
   public readonly products = this.#products.asReadonly();
 
-  readonly #productsTotalNumber = signal(0);
-  public readonly productsTotalNumber = this.#productsTotalNumber.asReadonly();
-
-  public productsToLoad = signal(10);
+  pageToLoad = 1;
+  productsToLoad = 10;
 
   private readonly mostExpensiveProduct$: Observable<Product> = toObservable<Product[]>(this.products).pipe(
     filter((products) => products.length != 0),
@@ -75,34 +72,26 @@ export class ProductSignalService {
     return this.#http.get<Product>(url);
   }
 
-  loadProducts(skip: number = 0, take: number = this.productsToLoad()): void {
-    if (skip == 0 && this.#products().length > 0) return;
-
+  loadProducts(): void {
     const params = {
-        _start: skip,
-        _limit: take,
-        _sort: 'modifiedDate',
-        _order: 'desc'
+      page: this.pageToLoad++,
+      limit: this.productsToLoad,
+      sortBy: 'modifiedDate',
+      order: 'desc'
     }
 
     const options = {
-      params: params,
-      observe: 'response' as 'response' // in order to read params from the response header
+      params: params
     };
 
     this.#http
-      .get(this.#baseUrl, options)
+      .get<Product[]>(this.#baseUrl, options)
       .pipe(
         delay(200),
-        tap(response => {
-          let count = response.headers.get('X-Total-Count') // total number of products
-          if(count)
-            this.#productsTotalNumber.set(Number(count))
-        }),
         shareReplay()
       )
-      .subscribe((response: HttpResponse<Product[]>) => {
-        let newProducts = response.body;
+      .subscribe(response => {
+        let newProducts = response;
 
         let currentProducts = this.#products();
         let mergedProducts = currentProducts.concat(newProducts);
@@ -112,6 +101,7 @@ export class ProductSignalService {
 
   clearList() {
     this.#products.set([]);
+    this.pageToLoad = 1;
     this.loadProducts();
   }
 }

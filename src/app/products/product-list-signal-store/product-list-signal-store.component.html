@@ -6,10 +6,9 @@
 
 @if (products()?.length > 0) {
   <div class="right">
-    {{ productsNumber() }} products displayed @if (filtered) {
+    {{ productsNumber() }} products loaded @if (filtered) {
     <span>(filtered)</span>
     } |
-    {{ productsTotalNumber() }} on server |
     <span>
       {favourites(),
       plural, =0
@@ -73,9 +72,7 @@
     }
     @if (
       !filtered &&
-      productsNumber() <= end() &&
-      productsNumber() < productsTotalNumber()
-      ) {
+      productsNumber() <= end()) {
       <button
         (click)="loadMore()"
         >

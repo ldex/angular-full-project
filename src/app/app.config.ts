@@ -81,10 +81,6 @@ const appInterceptors = [
         provide: HTTP_INTERCEPTORS,
         useClass: HttpErrorInterceptor,
         multi: true,
-      },
-      {
-        provide: ErrorHandler,
-        useClass: GlobalErrorHandler,
       }
 ]
 
@@ -128,5 +124,9 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     provideAnimationsAsync(),
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
   ],
 };

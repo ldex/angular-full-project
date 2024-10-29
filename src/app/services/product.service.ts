@@ -23,7 +23,7 @@ export class ProductService {
   private readonly products = new BehaviorSubject<Product[]>([]);
   readonly products$: Observable<Product[]> = this.products.asObservable();
   mostExpensiveProduct$: Observable<Product>;
-  productsTotalNumber$: BehaviorSubject<number> = new BehaviorSubject(0);
+  pageToLoad = 1;
   productsToLoad = 10;
 
   constructor(private http: HttpClient) {
@@ -76,34 +76,26 @@ export class ProductService {
     );
   }
 
-  loadProducts(skip: number = 0, take: number = this.productsToLoad): void {
-    if (skip == 0 && this.products.value.length > 0) return;
-
+  loadProducts(): void {
     const params = {
-        _start: skip,
-        _limit: take,
-        _sort: 'modifiedDate',
-        _order: 'desc'
+        page: this.pageToLoad++,
+        limit: this.productsToLoad,
+        sortBy: 'modifiedDate',
+        order: 'desc'
     }
 
     const options = {
-      params: params,
-      observe: 'response' as 'response' // in order to read params from the response header
+      params: params
     };
 
     this.http
-      .get(this.baseUrl, options)
+      .get<Product[]>(this.baseUrl, options)
       .pipe(
         delay(500),
-        tap(response => {
-          let count = response.headers.get('X-Total-Count') // total number of products
-          if(count)
-            this.productsTotalNumber$.next(Number(count))
-        }),
         shareReplay()
       )
-      .subscribe((response: HttpResponse<Product[]>) => {
-        let newProducts = response.body;
+      .subscribe(response => {
+        let newProducts = response;
         let currentProducts = this.products.value;
         let mergedProducts = currentProducts.concat(newProducts);
         this.products.next(mergedProducts);
@@ -112,6 +104,7 @@ export class ProductService {
 
   clearList() {
     this.products.next([]);
+    this.pageToLoad = 1;
     this.loadProducts();
   }
 }

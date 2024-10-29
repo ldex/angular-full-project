@@ -48,7 +48,6 @@ export class ProductListComponent implements OnInit {
 
   products$: Observable<Product[]>;
   productsNumber$: Observable<number>;
-  productsTotalNumber$: Observable<number>;
   mostExpensiveProduct$: Observable<Product>;
 
   sorter = "-modifiedDate";
@@ -59,8 +58,7 @@ export class ProductListComponent implements OnInit {
   filtered = false;
 
   // Pagination
-  productsToLoad = this.productService.productsToLoad;
-  pageSize = this.productsToLoad / 2;
+  pageSize = 5;
   start = 0;
   end = this.pageSize;
   currentPage = 1;
@@ -84,10 +82,7 @@ export class ProductListComponent implements OnInit {
   }
 
   loadMore(): void {
-    let take: number = this.productsToLoad;
-    let skip: number = this.end;
-
-    this.productService.loadProducts(skip, take);
+    this.productService.loadProducts();
   }
 
   sortList(propertyName: string): void {
@@ -120,7 +115,6 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.productService.products$.pipe(filter(products => products.length > 0))
-    this.productsTotalNumber$ = this.productService.productsTotalNumber$.asObservable();
     this.mostExpensiveProduct$ = this.productService.mostExpensiveProduct$;
 
     this.filter$ = this.filter.valueChanges
