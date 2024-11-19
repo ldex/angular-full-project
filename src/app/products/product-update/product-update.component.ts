@@ -10,7 +10,6 @@ import { CustomValidators } from '../../customValidators';
     selector: 'app-product-update',
     templateUrl: './product-update.component.html',
     styleUrls: ['./product-update.component.css'],
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ProductUpdateComponent  implements OnInit {

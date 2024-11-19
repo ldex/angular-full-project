@@ -27,7 +27,6 @@ import { fadeInAnimation } from "src/app/animations";
     styleUrls: ["./product-list.component.css"],
     encapsulation: ViewEncapsulation.Emulated,
     animations: [fadeInAnimation],
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule, RouterLink, AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe, OrderBy]
 })
 export class ProductListComponent implements OnInit {

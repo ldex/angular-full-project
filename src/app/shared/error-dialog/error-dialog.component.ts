@@ -6,7 +6,6 @@ import { MatButtonModule } from "@angular/material/button";
     selector: "app-error-dialog",
     templateUrl: "./error-dialog.component.html",
     styleUrls: ["./error-dialog.component.css"],
-    standalone: true,
     imports: [MatDialogModule, MatButtonModule]
 })
 export class ErrorDialogComponent {

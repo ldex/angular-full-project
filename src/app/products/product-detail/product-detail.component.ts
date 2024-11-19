@@ -13,7 +13,6 @@ import { ConfirmDirective } from '../confirm.directive';
     templateUrl: './product-detail.component.html',
     styleUrls: ['./product-detail.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [ConfirmDirective, AsyncPipe, UpperCasePipe, CurrencyPipe, DatePipe, DefaultPipe]
 })
 export class ProductDetailComponent {

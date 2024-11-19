@@ -7,11 +7,10 @@ import { AsyncPipe } from '@angular/common';
 import { NotificationComponent } from './shared/notification/notification.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  imports: [RouterModule, AsyncPipe, NotificationComponent],
-  standalone: true
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    imports: [RouterModule, AsyncPipe, NotificationComponent]
 })
 export class AppComponent implements OnInit {
   title = 'Angular Store';

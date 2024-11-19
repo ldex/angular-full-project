@@ -10,7 +10,6 @@ import { config } from 'src/environments/environment';
     selector: 'cart-content',
     templateUrl: './product-cart.component.html',
     styleUrls: ['./product-cart.component.css'],
-    standalone: true,
     imports: [AsyncPipe, CurrencyPipe, GroupByPipe]
 })
 export class ProductCartComponent implements OnInit {

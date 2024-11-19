@@ -8,7 +8,6 @@ import { fadeInAnimation } from '../../animations';
 @Component({
     templateUrl: './error.component.html',
     animations: [fadeInAnimation],
-    standalone: true,
     imports: [RouterLink]
 })
 export class ErrorComponent implements OnInit {

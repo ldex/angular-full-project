@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-product-insert-template',
     templateUrl: './product-insert.component.html',
     styleUrls: ['./product-insert.component.css'],
-    standalone: true,
     imports: [FormsModule]
 })
 export class ProductInsertTemplateComponent {

@@ -21,7 +21,6 @@ interface ProductForm {
     selector: 'app-product-insert-reactive',
     templateUrl: './product-insert.component.html',
     styleUrls: ['./product-insert.component.css'],
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ProductInsertReactiveComponent  implements OnInit {

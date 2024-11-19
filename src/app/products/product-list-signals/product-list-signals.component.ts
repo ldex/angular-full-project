@@ -26,7 +26,6 @@ import { UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe } from "@angular/commo
     selector: 'app-product-list-signals',
     templateUrl: './product-list-signals.component.html',
     styleUrls: ['./product-list-signals.component.css'],
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule, RouterLink, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, OrderBy]
 })
 export class ProductListSignalsComponent {

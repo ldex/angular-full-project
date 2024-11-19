@@ -6,7 +6,6 @@ import { MatDialogModule } from "@angular/material/dialog";
     selector: "app-loading-dialog",
     templateUrl: "./loading-dialog.component.html",
     styleUrls: ["./loading-dialog.component.css"],
-    standalone: true,
     imports: [MatDialogModule, MatProgressSpinnerModule]
 })
 export class LoadingDialogComponent {

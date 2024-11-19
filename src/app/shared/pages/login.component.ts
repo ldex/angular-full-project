@@ -9,7 +9,6 @@ import { fadeInAnimation } from '../../animations';
     styleUrls: ['./login.component.css'],
     animations: [fadeInAnimation],
     host: { '[@fadeInAnimation]': '' },
-    standalone: true,
     imports: [FormsModule]
 })
 export class LoginComponent implements AfterViewInit, OnInit {

@@ -27,7 +27,6 @@ import { ProductStore } from "src/app/store/product.store";
     selector: 'app-product-list-signal-store',
     templateUrl: './product-list-signal-store.component.html',
     styleUrls: ['./product-list-signal-store.component.css'],
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule, RouterLink, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, OrderBy]
 })
 export class ProductListSignalStoreComponent {
