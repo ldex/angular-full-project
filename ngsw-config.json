@@ -30,7 +30,7 @@
     {
       "name": "products-api",
       "urls": [
-        "https://retoolapi.dev/U1A9pK/products/"
+        "https://671d383409103098807c943e.mockapi.io/api/products/"
       ],
       "cacheConfig": {
         "strategy": "performance",
