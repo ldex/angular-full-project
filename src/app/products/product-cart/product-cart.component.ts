@@ -35,7 +35,7 @@ export class ProductCartComponent implements OnInit {
         this.productsTotal$ = this
                                 .products$
                                 .pipe(
-                                    map(list => list.reduce((total, product) => total + product.price, 0))
+                                    map(list => list.reduce((total, product) => total + Number(product.price), 0))
                                 )
     }
 
