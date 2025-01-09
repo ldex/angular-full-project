@@ -54,6 +54,9 @@ export class ProductService {
   }
 
   insertProduct(newProduct: Product): Observable<Product> {
+    if(!newProduct.name || !newProduct.price) {
+      return
+    }
     newProduct.modifiedDate = new Date();
     return this.http.post<Product>(this.baseUrl, newProduct);
   }
