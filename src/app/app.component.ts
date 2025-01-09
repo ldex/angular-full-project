@@ -52,6 +52,6 @@ export class AppComponent implements OnInit {
 
     this.cartProductsNb$ = this
                             .cartServiceSubject
-                            .productsNb$;
+                            .productsNb$
   }
 }
