@@ -1,5 +1,5 @@
 import { Router, RouterModule } from '@angular/router';
-import { Component, OnInit, VERSION } from '@angular/core';
+import { Component, isDevMode, OnInit, VERSION } from '@angular/core';
 import { AuthService, CartService, CartSubjectService, NetworkStatusService } from './services/';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/environment';
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   isOnline$: Observable<boolean>;
   cartProductsNb$: Observable<number>;
   useCartSubject = config.useCartSubject;
+  isDevMode = isDevMode();
 
   constructor(
     private authService: AuthService,

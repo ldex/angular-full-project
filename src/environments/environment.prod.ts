@@ -3,7 +3,7 @@ export const environment = {
 };
 
 export const config = {
-  apiUrl: 'https://retoolapi.dev/U1A9pK',
+  apiUrl: 'https://671d383409103098807c943e.mockapi.io/api',
   adminApiUrl: 'https://angular.wiremockapi.cloud/admin/',
   authUrl: 'https://angular.wiremockapi.cloud/auth/',
   storageTokenKey: 'auth_token',

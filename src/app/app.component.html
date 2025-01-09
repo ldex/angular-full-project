@@ -25,6 +25,8 @@
   <hr>
     <a href="http://www.angularacademy.ca" target="_blank">www.angularacademy.ca</a> 2024 (using Angular {{version}})
     <div class="right">
+      <span>{{isDevMode ? "dev" : "production"}} mode</span> |
+
       @if (isOnline$ | async) {
         <span>
           online
