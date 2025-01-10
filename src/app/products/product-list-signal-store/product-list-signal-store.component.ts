@@ -35,15 +35,14 @@ export class ProductListSignalStoreComponent {
 
   message = signal("");
 
-  private readonly productService = inject(ProductStore);
+  private readonly productStore = inject(ProductStore);
   private readonly favouriteService = inject(FavouriteService);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
 
-  products: Signal<Product[]> = this.productService.products;
+  products: Signal<Product[]> = this.productStore.products;
   productsNumber: Signal<number>;
-  //productsTotalNumber: Signal<number> = this.productService.productsTotalNumber;
-  mostExpensiveProduct: Signal<Product> = this.productService.mostExpensiveProduct;
+  mostExpensiveProduct: Signal<Product> = this.productStore.mostExpensiveProduct;
   favourites: Signal<number> = signal(this.favouriteService.getFavouritesNb());
 
   selectedProduct: Product;
@@ -108,7 +107,7 @@ export class ProductListSignalStoreComponent {
   }
 
   loadMore(): void {
-    this.productService.loadProducts();
+    this.productStore.loadProducts();
   }
 
   sortList(propertyName: string): void {
@@ -122,7 +121,7 @@ export class ProductListSignalStoreComponent {
   }
 
   refreshList() {
-    this.productService.clearList();
+    this.productStore.clearList();
     this.firstPage();
   }
 
