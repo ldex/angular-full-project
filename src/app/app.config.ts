@@ -44,9 +44,9 @@ import {
   NetworkStatusService,
   NotificationService
 } from "./services";
-import { config, environment } from "src/environments/environment";
-import { provideServiceWorker, ServiceWorkerModule } from "@angular/service-worker";
-import { GlobalErrorHandler } from "./errors/global-error-handler";
+import { config } from "src/environments/environment";
+import { provideServiceWorker } from "@angular/service-worker";
+import { provideAppErrorHandler } from "./errors/global-error-handler";
 import { HttpErrorInterceptor } from "./errors/http-error.interceptor";
 
 const appServices = [
@@ -118,9 +118,6 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     provideAnimationsAsync(),
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler,
-    },
+    provideAppErrorHandler()
   ],
 };

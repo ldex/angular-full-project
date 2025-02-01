@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from "@angular/core";
+import { EnvironmentProviders, ErrorHandler, Injectable, makeEnvironmentProviders } from "@angular/core";
 import { ErrorService } from "../services";
 import { ErrorDialogService } from "../services/error-dialog.service";
 
@@ -17,4 +17,10 @@ export class GlobalErrorHandler implements ErrorHandler {
     );
     console.error("Error from global error handler", error);
   }
+}
+
+export function provideAppErrorHandler(): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+  ]);
 }
