@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from "@angular/router";
-import { AuthService } from "./services";
+import { AuthService } from "../services";
 
 export const loginRouteGuard: CanActivateFn = (
   next: ActivatedRouteSnapshot,

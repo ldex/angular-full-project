@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { loginRouteGuard } from './login-route.guard';
 import { AdminComponent } from './shared/pages/admin.component';
 import { ContactComponent } from './shared/pages/contact.component';
 import { DemoWorkerComponent } from './shared/pages/demo-worker.component';
@@ -7,6 +6,7 @@ import { ErrorComponent } from './shared/pages/error.component';
 import { HomeComponent } from './shared/pages/home.component';
 import { LoginComponent } from './shared/pages/login.component';
 import { TestComponent } from './shared/pages/test.component';
+import { loginRouteGuard } from './guards/login-route.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo:'/home', pathMatch:'full' },

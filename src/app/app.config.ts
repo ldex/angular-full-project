@@ -1,6 +1,5 @@
 import {
   ApplicationConfig,
-  ErrorHandler,
   importProvidersFrom,
   isDevMode,
 } from "@angular/core";
@@ -15,9 +14,8 @@ import {
 
 import { routes } from "./app.routes";
 import {
-  HTTP_INTERCEPTORS,
   provideHttpClient,
-  withInterceptorsFromDi,
+  withInterceptors
 } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -32,7 +30,6 @@ import {
   FavouriteService,
   AuthService,
   AdminService,
-  AuthInterceptor,
   CanDeactivateGuardService,
   CartService,
   CartSubjectService,
@@ -40,14 +37,15 @@ import {
   ErrorDialogService,
   ErrorService,
   LoadingDialogService,
-  LoadingInterceptor,
   NetworkStatusService,
   NotificationService
 } from "./services";
 import { config } from "src/environments/environment";
 import { provideServiceWorker } from "@angular/service-worker";
 import { provideAppErrorHandler } from "./errors/global-error-handler";
-import { HttpErrorInterceptor } from "./errors/http-error.interceptor";
+import { httpErrorInterceptor } from "./interceptors/http-error.interceptor";
+import { authInterceptor } from "./interceptors/auth.interceptor";
+import { loadingInterceptor } from "./interceptors/loading.interceptor";
 
 const appServices = [
   ProductService,
@@ -65,24 +63,6 @@ const appServices = [
   ErrorDialogService,
   NetworkStatusService
 ];
-
-const appInterceptors = [
-    {
-        provide: HTTP_INTERCEPTORS,
-        useClass: AuthInterceptor,
-        multi: true,
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: LoadingInterceptor,
-        multi: true,
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpErrorInterceptor,
-        multi: true,
-      }
-]
 
 const appModules = [
   BrowserModule,
@@ -103,9 +83,14 @@ const appModules = [
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(...appModules),
-    ...appInterceptors,
     ...appServices,
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(
+      withInterceptors([
+        authInterceptor,
+        loadingInterceptor,
+        httpErrorInterceptor,
+      ])
+    ),
     provideRouter(
       routes,
      // withDebugTracing(),
