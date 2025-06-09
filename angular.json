@@ -98,7 +98,12 @@
               ],
               "serviceWorker": "ngsw-config.json"
             },
-            "development": {}
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
           },
           "defaultConfiguration": "production"
         },
