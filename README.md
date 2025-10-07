@@ -15,8 +15,11 @@ Visit www.angularacademy.ca for our list of Angular related courses:
 * <a href="https://www.angularacademy.ca/courses/testing-angular-training" target="_blank">Testing Angular</a>
 * <a href="https://www.angularacademy.ca/courses/angular-rxjs-training" target="_blank">RxJS Workshop</a>
 * <a href="https://www.angularacademy.ca/courses/angular-performance-optimization" target="_blank">Angular Performance Optimization</a>
-* <a href="https://www.angularacademy.ca/courses/angular-architecture-training" target="_blank">Angular Architecture</a>
+* <a href="https://www.angularacademy.ca/courses/angular-component-libraries" target="_blank">Component Libraries: Architecture & Process</a>
+* <a href="https://www.angularacademy.ca/courses/ai-for-developer-productivity" target="_blank">AI for Developer Productivity</a>
 * <a href="https://www.angularacademy.ca/courses/advanced-angular-testing-training" target="_blank">Advanced Angular Testing</a>
+* <a href="https://www.angularacademy.ca/courses/professional-ngrx-signal-store" target="_blank">Professional NgRx Signal Store</a>
+* <a href="https://www.angularacademy.ca/courses/angular-architecture-training" target="_blank">Angular Architecture</a>
 
 ## Angular Certifications!
 

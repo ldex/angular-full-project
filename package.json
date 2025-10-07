@@ -13,7 +13,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-architects/ngrx-toolkit": "^19.0.1",
+    "@angular-architects/ngrx-toolkit": "^20.4.2",
     "@angular/animations": "^20.0.4",
     "@angular/cdk": "^20.0.3",
     "@angular/common": "^20.0.4",

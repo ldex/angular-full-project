@@ -16,7 +16,6 @@ export class DemoWorkerComponent {
         this.useWorker ? this.runInWorker() : this.blockingScript(2000);
     }
 
-
     private blockingScript(milliseconds) {
         const date = Date.now();
         let currentDate = null;
