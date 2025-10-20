@@ -1,12 +1,12 @@
 import { config } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class AdminService {
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
 
   private baseUrl: string = config.adminApiUrl;
   private readonly storageKey: string = config.storageTokenKey;

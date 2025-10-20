@@ -1,11 +1,6 @@
 import { AuthService, FavouriteService, ProductService, SeoService } from "./../../services";
 import { Product } from "./../product.interface";
-import {
-  Component,
-  HostBinding,
-  OnInit,
-  ViewEncapsulation
-} from "@angular/core";
+import { Component, HostBinding, OnInit, ViewEncapsulation, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import {
   Observable, combineLatest,
@@ -30,17 +25,14 @@ import { fadeInAnimation } from "src/app/animations";
     imports: [FormsModule, ReactiveFormsModule, RouterLink, AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe, OrderBy]
 })
 export class ProductListComponent implements OnInit {
+  private productService = inject(ProductService);
+  private favouriteService = inject(FavouriteService);
+  private router = inject(Router);
+  private seoService = inject(SeoService);
+  private authService = inject(AuthService);
+
   @HostBinding('@fadeInAnimation') animation = true;
 
-  constructor(
-    private productService: ProductService,
-    private favouriteService: FavouriteService,
-    private router: Router,
-    private seoService: SeoService,
-    private authService: AuthService
-  ) {
-
-  }
 
   title = "Products";
   message = "";

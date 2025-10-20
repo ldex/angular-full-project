@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable, filter, map, of } from 'rxjs';
 import { Product } from '../product.interface';
 import { CartService, CartSubjectService, SeoService } from './../../services';
@@ -13,16 +13,14 @@ import { config } from 'src/environments/environment';
     imports: [AsyncPipe, CurrencyPipe, GroupByPipe]
 })
 export class ProductCartComponent implements OnInit {
+    private cartService = inject(CartService);
+    private cartServiceSubject = inject(CartSubjectService);
+    private seoService = inject(SeoService);
+
 
     products$: Observable<Product[]>;
     productsTotal$: Observable<number>;
     useCartSubject = config.useCartSubject;
-
-    constructor(
-        private cartService:CartService,
-        private cartServiceSubject:CartSubjectService,
-        private seoService: SeoService
-    ) { }
 
     ngOnInit() {
         this.seoService.setTitle('Shopping Cart');

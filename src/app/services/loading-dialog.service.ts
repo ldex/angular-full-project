@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { LoadingDialogComponent } from '../shared/loading-dialog/loading-dialog.component';
 
 @Injectable()
 export class LoadingDialogService {
+  private dialog = inject(MatDialog);
+
   private opened = false;
   private dialogRef: MatDialogRef<LoadingDialogComponent>;
 
-  constructor(private dialog: MatDialog) {}
 
   openDialog(): void {
     if (!this.opened) {

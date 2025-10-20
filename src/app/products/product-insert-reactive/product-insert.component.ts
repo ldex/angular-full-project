@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotificationService, DialogService } from '../../services';
 import { Observable, from } from 'rxjs';
@@ -24,16 +24,16 @@ interface ProductForm {
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ProductInsertReactiveComponent  implements OnInit {
+  private fb = inject(FormBuilder);
+  private productService = inject(ProductService);
+  private notificationService = inject(NotificationService);
+  private router = inject(Router);
+  private dialogService = inject(DialogService);
+
 
   insertForm: FormGroup<ProductForm>;
   submitted: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService,
-    private notificationService: NotificationService,
-    private router: Router,
-    private dialogService: DialogService) { }
 
   onSubmit() {
     let newProduct: Product = this.insertForm.getRawValue();

@@ -1,7 +1,7 @@
 import { Observable, Subscription } from 'rxjs';
 import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService, AuthService } from './../../services';
 import { Product } from './../product.interface';
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from "@angular/router";
 import { config } from 'src/environments/environment';
 import { DefaultPipe } from '../default.pipe';
@@ -16,6 +16,14 @@ import { ConfirmDirective } from '../confirm.directive';
     imports: [ConfirmDirective, AsyncPipe, UpperCasePipe, CurrencyPipe, DatePipe, DefaultPipe]
 })
 export class ProductDetailComponent {
+  private favouriteService = inject(FavouriteService);
+  private productService = inject(ProductService);
+  private cartService = inject(CartService);
+  private cartServiceSubject = inject(CartSubjectService);
+  private notificationService = inject(NotificationService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
 
   @Input() product: Product;
 
@@ -29,15 +37,6 @@ export class ProductDetailComponent {
   useCartSubject = config.useCartSubject;
   showDeleteConfirmDialog: boolean = false;
 
-  constructor(
-    private favouriteService: FavouriteService,
-    private productService: ProductService,
-    private cartService:CartService,
-    private cartServiceSubject:CartSubjectService,
-    private notificationService: NotificationService,
-    private router: Router,
-    private authService: AuthService
-  ) { }
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

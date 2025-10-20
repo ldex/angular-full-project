@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthService, SeoService } from '../../services';
-import { Component, ViewChild, AfterViewInit, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ElementRef, OnInit, inject } from '@angular/core';
 import { NgForm, FormsModule } from "@angular/forms";
 import { fadeInAnimation } from '../../animations';
 
@@ -12,13 +12,11 @@ import { fadeInAnimation } from '../../animations';
     imports: [FormsModule]
 })
 export class LoginComponent implements AfterViewInit, OnInit {
-    error = '';
+    private authService = inject(AuthService);
+    private router = inject(Router);
+    private seoService = inject(SeoService);
 
-    constructor(
-        private authService: AuthService,
-        private router: Router,
-        private seoService: SeoService
-    ) { }
+    error = '';
 
     loginUser(form: NgForm) {
         if (form.valid) {

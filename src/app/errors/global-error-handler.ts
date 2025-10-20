@@ -1,13 +1,12 @@
-import { EnvironmentProviders, ErrorHandler, Injectable, makeEnvironmentProviders } from "@angular/core";
+import { EnvironmentProviders, ErrorHandler, Injectable, makeEnvironmentProviders, inject } from "@angular/core";
 import { ErrorService } from "../services";
 import { ErrorDialogService } from "../services/error-dialog.service";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(
-    private errorDialogService: ErrorDialogService,
-    private errorService: ErrorService
-  ) {}
+  private errorDialogService = inject(ErrorDialogService);
+  private errorService = inject(ErrorService);
+
 
   handleError(error: Error) {
     // Handle Client Error (Angular Error, ReferenceError...)

@@ -1,5 +1,5 @@
 import { Router, RouterModule } from '@angular/router';
-import { Component, isDevMode, OnInit, VERSION } from '@angular/core';
+import { Component, isDevMode, OnInit, VERSION, inject } from '@angular/core';
 import { AuthService, CartService, CartSubjectService, NetworkStatusService } from './services/';
 import { Observable } from 'rxjs';
 import { config } from 'src/environments/environment';
@@ -13,6 +13,12 @@ import { NotificationComponent } from './shared/notification/notification.compon
     imports: [RouterModule, AsyncPipe, NotificationComponent]
 })
 export class AppComponent implements OnInit {
+  private authService = inject(AuthService);
+  private cartService = inject(CartService);
+  private cartServiceSubject = inject(CartSubjectService);
+  private networkStatusService = inject(NetworkStatusService);
+  private router = inject(Router);
+
   title = 'Angular Store';
   version = VERSION.full;
   isOnline$: Observable<boolean>;
@@ -20,14 +26,6 @@ export class AppComponent implements OnInit {
   useCartSubject = config.useCartSubject;
   isDevMode = isDevMode();
 
-  constructor(
-    private authService: AuthService,
-    private cartService:CartService,
-    private cartServiceSubject:CartSubjectService,
-    private networkStatusService: NetworkStatusService,
-    private router: Router) {
-
-    }
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

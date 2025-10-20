@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -11,14 +11,13 @@ import { fadeInAnimation } from '../../animations';
     imports: [RouterLink]
 })
 export class ErrorComponent implements OnInit {
+    private activatedRoute = inject(ActivatedRoute);
+    private seoService = inject(SeoService);
+
     @HostBinding('@fadeInAnimation') animation = true;
 
     routeParams;
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private seoService: SeoService) {
-    }
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(res => this.routeParams = res);

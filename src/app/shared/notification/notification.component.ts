@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppNotification } from 'src/app/appnotification.interface';
 import { NotificationService } from 'src/app/services';
@@ -9,7 +9,9 @@ import { NotificationService } from 'src/app/services';
     standalone: true
 })
    export class NotificationComponent implements OnInit, OnDestroy {
-   
+    private notificationService = inject(NotificationService);
+
+
     notification: AppNotification;
     showNotification: boolean;
 
@@ -18,24 +20,20 @@ import { NotificationService } from 'src/app/services';
      clear() {
        this.showNotification = false;
      }
-   
-     constructor(
-      private notificationService: NotificationService,
-     ) {
-     }
-   
+
+
      ngOnInit() {
-         this.notificationSubscription = 
+         this.notificationSubscription =
           this
             .notificationService
             .notification$
             .subscribe( data => {
               this.notification = data;
               this.showNotification = true;
-            } 
+            }
          );
      }
-   
+
      ngOnDestroy() {
        if (this.notificationSubscription) {
          this.notificationSubscription.unsubscribe();

@@ -1,5 +1,5 @@
 import { Product } from "./../products/product.interface";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import {
   Observable,
@@ -18,6 +18,8 @@ import { config } from "../../environments/environment";
 
 @Injectable()
 export class ProductService {
+  private http = inject(HttpClient);
+
   private readonly baseUrl: string = `${config.apiUrl}/products`;
 
   private readonly products = new BehaviorSubject<Product[]>([]);
@@ -26,7 +28,8 @@ export class ProductService {
   pageToLoad = 1;
   productsToLoad = 10;
 
-  constructor(private http: HttpClient) {
+
+  constructor() {
     this.loadProducts();
     this.initMostExpensiveProduct();
   }

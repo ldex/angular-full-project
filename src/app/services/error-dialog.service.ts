@@ -1,12 +1,13 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
 
 @Injectable()
 export class ErrorDialogService {
+  private dialog = inject(MatDialog);
+
   private opened = false;
 
-  constructor(private dialog: MatDialog) {}
 
   openDialog(message: string, status?: number): void {
     if (!this.opened) {

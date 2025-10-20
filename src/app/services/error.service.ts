@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -6,11 +6,8 @@ import * as StackTrace from 'stacktrace-js';
 
 @Injectable()
 export class ErrorService {
+  private locationStrategy = inject(LocationStrategy);
 
-  constructor(
-    private locationStrategy: LocationStrategy
-  ) {
-  }
 
   log(error) {
     // Get error details

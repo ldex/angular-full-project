@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, inject } from '@angular/core';
 import { AdminService, SeoService } from '../../services';
 import { fadeInAnimation } from '../../animations';
 
@@ -8,13 +8,12 @@ import { fadeInAnimation } from '../../animations';
     standalone: true
 })
 export class AdminComponent implements OnInit {
+    private adminService = inject(AdminService);
+    private seoService = inject(SeoService);
+
 
     @HostBinding('@fadeInAnimation') animation = true;
 
-    constructor(
-        private adminService: AdminService,
-        private seoService: SeoService
-    ) { }
 
     profile: string = '';
 

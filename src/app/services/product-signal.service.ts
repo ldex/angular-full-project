@@ -27,6 +27,7 @@ export class ProductSignalService {
   readonly #http = inject(HttpClient);
 
   readonly #products = signal<Product[]>([]);
+
   public readonly products = this.#products.asReadonly();
 
   pageToLoad = 1;
@@ -48,9 +49,11 @@ export class ProductSignalService {
     )
   );
 
-  public readonly mostExpensiveProduct: Signal<Product> = computed<Product>(
-    toSignal(this.mostExpensiveProduct$)
-  )
+  public readonly mostExpensiveProduct: Signal<Product> = toSignal(this.mostExpensiveProduct$)
+
+  // public readonly mostExpensiveProduct: Signal<Product> = computed<Product>(
+  //   toSignal(this.mostExpensiveProduct$)
+  // )
 
   deleteProduct(id: number): Observable<any> {
     return this.#http.delete(this.#baseUrl + '/' + id);

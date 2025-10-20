@@ -1,6 +1,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService, DialogService, NotificationService } from './../../services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../product.interface';
 import { Observable, from } from 'rxjs';
@@ -13,6 +13,13 @@ import { CustomValidators } from '../../customValidators';
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ProductUpdateComponent  implements OnInit {
+  private fb = inject(FormBuilder);
+  private productService = inject(ProductService);
+  private notificationService = inject(NotificationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private dialogService = inject(DialogService);
+
 
   updateForm: FormGroup;
   name: FormControl;
@@ -24,13 +31,6 @@ export class ProductUpdateComponent  implements OnInit {
   product: Product;
   submitted: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService,
-    private notificationService: NotificationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialogService: DialogService) { }
 
   onSubmit() {
     let updatedProduct = this.updateForm.value;

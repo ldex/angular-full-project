@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { fadeInAnimation } from 'src/app/animations';
 
@@ -10,10 +10,8 @@ import { fadeInAnimation } from 'src/app/animations';
     standalone: true
 })
 export class TestComponent {
-    constructor(
-        private router: Router,
-        private http: HttpClient
-    ) {}
+    private router = inject(Router);
+    private http = inject(HttpClient);
 
     code_error(): void {
         throw new Error("App Component has thrown an error!");

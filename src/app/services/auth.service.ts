@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable, of, map, catchError } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { config } from "../../environments/environment";
@@ -11,10 +11,12 @@ interface AuthResponse {
 
 @Injectable()
 export class AuthService {
+  private http = inject(HttpClient);
+  private jwtHelper = inject(JwtHelperService);
+
   private readonly storageTokenKey: string = config.storageTokenKey;
   private baseUrl: string = config.authUrl;
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   login(username: string, password: string): Observable<boolean> {
     // Use http and your backend to async authenticate the user

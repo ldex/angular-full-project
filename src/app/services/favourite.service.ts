@@ -1,13 +1,11 @@
 import { Product } from './../products/product.interface';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NotificationService } from './notification.service';
 
 @Injectable()
 export class FavouriteService {
+    private notificationService = inject(NotificationService);
 
-    constructor(
-        private notificationService: NotificationService
-    ) { }
 
     private _favourites: Set<Product> = new Set();
     get favourites(): Set<Product> {
