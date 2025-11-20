@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { ProductService, FavouriteService, SeoService, NotificationService, CartSubjectService, CartService, AuthService } from './../../services';
+import { ProductService, FavouriteService, NotificationService, CartSubjectService, CartService, AuthService } from './../../services';
 import { Product } from './../product.interface';
 import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from "@angular/router";

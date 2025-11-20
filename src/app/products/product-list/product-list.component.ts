@@ -14,14 +14,11 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { OrderBy } from "../orderBy.pipe";
 import { AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe } from "@angular/common";
-import { fadeInAnimation } from "src/app/animations";
 
 @Component({
     selector: "app-product-list",
     templateUrl: "./product-list.component.html",
     styleUrls: ["./product-list.component.css"],
-    encapsulation: ViewEncapsulation.Emulated,
-    animations: [fadeInAnimation],
     imports: [FormsModule, ReactiveFormsModule, RouterLink, AsyncPipe, UpperCasePipe, JsonPipe, SlicePipe, CurrencyPipe, I18nPluralPipe, OrderBy]
 })
 export class ProductListComponent implements OnInit {
@@ -30,9 +27,6 @@ export class ProductListComponent implements OnInit {
   private router = inject(Router);
   private seoService = inject(SeoService);
   private authService = inject(AuthService);
-
-  @HostBinding('@fadeInAnimation') animation = true;
-
 
   title = "Products";
   message = "";

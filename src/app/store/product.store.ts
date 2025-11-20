@@ -15,12 +15,10 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services';
 import { tapResponse } from '@ngrx/operators';
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { ProductStoreService } from './product.service';
 
 export const ProductStore = signalStore(
   { providedIn: 'root' },
-  withDevtools('products'),
   withState({
     _pageToLoad: 1,
     _productsToLoad: 10,

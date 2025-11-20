@@ -19,9 +19,6 @@ import {
 } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import {
-  provideAnimationsAsync
-} from "@angular/platform-browser/animations/async";
 import { JwtModule } from "@auth0/angular-jwt";
 
 import {
@@ -102,7 +99,6 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    provideAnimationsAsync(),
     provideAppErrorHandler()
   ],
 };

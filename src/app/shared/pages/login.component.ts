@@ -2,13 +2,10 @@ import { Router } from '@angular/router';
 import { AuthService, SeoService } from '../../services';
 import { Component, ViewChild, AfterViewInit, ElementRef, OnInit, inject } from '@angular/core';
 import { NgForm, FormsModule } from "@angular/forms";
-import { fadeInAnimation } from '../../animations';
 
 @Component({
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    animations: [fadeInAnimation],
-    host: { '[@fadeInAnimation]': '' },
     imports: [FormsModule]
 })
 export class LoginComponent implements AfterViewInit, OnInit {

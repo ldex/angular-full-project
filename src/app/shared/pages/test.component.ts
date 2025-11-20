@@ -1,12 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { fadeInAnimation } from 'src/app/animations';
 
 @Component({
     templateUrl: './test.component.html',
-    animations: [fadeInAnimation],
-    host: { '[@fadeInAnimation]': '' },
     standalone: true
 })
 export class TestComponent {

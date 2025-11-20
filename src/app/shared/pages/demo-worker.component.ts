@@ -1,14 +1,10 @@
 import { Component, HostBinding } from '@angular/core';
-import { fadeInAnimation } from 'src/app/animations';
 
 @Component({
     templateUrl: './demo-worker.component.html',
-    animations: [fadeInAnimation],
     standalone: true
 })
 export class DemoWorkerComponent {
-
-    @HostBinding('@fadeInAnimation') animation = true;
 
     useWorker: boolean = true;
 
